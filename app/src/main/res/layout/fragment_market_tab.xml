@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tenders.tabs.MarketTab">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+
+
+
+      <LinearLayout
+          android:layout_marginBottom="25dp"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="מס'"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:textColor="#222b92" />
+
+            <TextView
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:text="שם פריט"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:textColor="#222b92" />
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:text="כמות"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:textColor="#222b92" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מחיר"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:textColor="#222b92" />
+
+
+         </LinearLayout>
+
+         <ListView
+             android:textDirection="rtl"
+             android:id="@+id/list"
+             android:layout_width="match_parent"
+             android:layout_height="150dp">
+         </ListView>
+
+         <TextView
+             android:layout_gravity="end"
+             android:id="@+id/all_prices"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="סה''כ: "
+             android:textSize="20dp"
+             android:textStyle="bold"
+             tools:textColor="#222b92" />
+
+         <LinearLayout
+             android:id="@+id/market_details"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+
+
+      <LinearLayout
+          android:layout_marginBottom="10dp"
+          android:orientation="horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+         <LinearLayout
+             android:layout_marginEnd="30dp"
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="התחלת מכרז: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/dateStart"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="19/02/18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:layout_weight="0.5"
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="שעה: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/timeStart"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="9:00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+         </LinearLayout>
+
+      </LinearLayout>
+
+         <LinearLayout
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginEnd="55dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+               <TextView
+                   android:textStyle="bold"
+                   android:textSize="15dp"
+                   android:text="סוף מכרז: "
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/dateEnd"
+                   android:textStyle="bold"
+                   android:textSize="15dp"
+                   android:text="21/02/18"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+               <TextView
+                   android:textStyle="bold"
+                   android:textSize="15dp"
+                   android:text="שעה: "
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/timeEnd"
+                   android:textStyle="bold"
+                   android:textSize="15dp"
+                   android:text="9:00"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:layout_weight="0.5"
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="זמן נותר: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="3 Days, 11:05:07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:layout_weight="0.5"
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="הערות ספק: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/editComments"
+                android:layout_width="170dp"
+                android:layout_height="100dp" />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/image"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/layoutadd"
+             android:gravity="center"
+             android:layout_marginBottom="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+           <Button
+               android:layout_marginEnd="35dp"
+               android:text="הגש"
+               android:id="@+id/addTender"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginStart="35dp"
+                android:text="טיוטה"
+                android:id="@+id/tyotaTender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+         </LinearLayout>
+
+
+         </LinearLayout>
+      </LinearLayout>
+
+
+   </ScrollView>
+
+
+</FrameLayout>

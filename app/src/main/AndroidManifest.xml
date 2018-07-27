@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.skyapps.bennyapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".tenders.tabs.TabsActivity"
+            android:label="@string/title_activity_tabs"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".tenders.DetailsPublic" />
+
+        <service
+            android:name=".FireBaseBackgroundService"
+            android:exported="false"
+            android:process=":remote" />
+
+        <receiver android:name=".StartFirebaseAtBoot">
+            <intent-filter>
+                <action android:name="mybroad.tal" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".tenders.TendersActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".support.SupportedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".support.ManageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tenders.MyTendersActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tenders.TyototActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".tenders.tabs.Mifrat" />
+        <activity android:name=".tenders.tabs.PriceItem" />
+        <activity
+            android:name=".tenders.WinTendersActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tenders.notificationstabs.MyNotificationsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

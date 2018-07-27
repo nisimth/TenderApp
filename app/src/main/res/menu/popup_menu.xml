@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/details"
+        android:title="Details"/>
+    <item
+        android:id="@+id/call"
+        android:title="CallMe"/>
+    <item
+        android:id="@+id/email"
+        android:title="Email"/>
+</menu>

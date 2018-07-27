@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    
+    <TextView
+    android:id="@+id/dialogChoosePic"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="Choose Image From Gallery"
+    android:textColor="@android:color/black"
+    android:textSize="15dp"
+        android:drawableRight="@drawable/ic_menu_gallery"
+        android:drawablePadding="5dp"
+        android:singleLine="true"
+    android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/dialogChooseCam"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Choose Image From Camera"
+        android:textColor="@android:color/black"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/dialogChoosePic"
+        android:drawableRight="@drawable/ic_menu_camera"
+        android:drawablePadding="5dp"
+        android:singleLine="true"/>
+
+</RelativeLayout>
