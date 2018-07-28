@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,13 +52,17 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private EditText editMqt, editName, editNameProject, editAddress, editContact, editPhone, editEmail, editCredit, editMaam, editDhifot, editHovala;
     private ImageButton uploadFromCam;
     private ImageButton uploadFromGallery;
-    private Button uploadImage;
-
+    private Button uploadPdf;
+    ///////// new 28.07.2018 ////////////
+    private Uri pdfUrl ;
+    private static final int FILES_PERMISSION_CODE = 9 ;
+    private static final int FILES_REQUEST_CODE = 100 ;
+    /////////////////////////////////////
 
 
     private static final int CAMERA_REQUEST_CODE = 69 ;
     private static final int GALLERY_REQUEST_CODE = 70 ;
-    private static final int PICK_FILE_REQUEST_CODE = 71 ;
+
 
     private ImageView image; /// now using this
     private Button btn;
@@ -107,7 +112,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
 
 
-        /// set the company name  ////
+        /// get the company name  ////
         name = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "");
 
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from fireBase to EditTexts...
@@ -210,17 +215,28 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         });
 
 //////////////////////////////////////////////////////////////////////////////////////
-        uploadImage = view.findViewById(R.id.uploadImage);
-        uploadImage.setOnClickListener(new View.OnClickListener() {
+        uploadPdf = view.findViewById(R.id.uploadImage);
+        uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectPhotoDialog dialog = new SelectPhotoDialog() ;
+             /*   SelectPhotoDialog dialog = new SelectPhotoDialog() ;
                 dialog.show(getFragmentManager(),getString(R.string.dialog_select_photo));
-                dialog.setTargetFragment( DetailsTab.this ,36);
+                dialog.setTargetFragment( DetailsTab.this ,36);*/
+             if(ContextCompat.checkSelfPermission( getContext(),
+                     Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED ){
+                 selectPdf();
+             }else{
+                 ActivityCompat.requestPermissions((Activity) getContext(), new String[] {  Manifest.permission.READ_EXTERNAL_STORAGE  },FILES_PERMISSION_CODE );
+             }
+             if(pdfUrl != null){
+                 uploadPdf(pdfUrl);
+             }
 
             }
 
         });
+
+
 //////////////////////////////////////////////////////////////////////////////
         view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,7 +245,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 ////////////////////// Dialog that show the loaded img ////////////////////
-        image.setOnClickListener(new View.OnClickListener() {
+        /*image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -252,7 +268,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 dialog.show();
 
             }
-        });
+        });*/
 
 
         return view;
@@ -270,6 +286,14 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         if(requestCode == CAMERA_REQUEST_CODE){
             if(grantResults[0] ==   PackageManager.PERMISSION_GRANTED){
                 invokeCamera();
+            }
+        }
+        if (requestCode == 9){
+            if(grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                selectPdf();
+            }
+            else{
+                Toast.makeText(getContext(),"אנא אשר גישה לאיחסון חיצוני",Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -342,12 +366,44 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         } else {
             mProgressDialog.dismiss();
         }
+        if( requestCode == FILES_REQUEST_CODE && resultCode == RESULT_OK && data != null ){
+            pdfUrl = data.getData();
+        }
 
     }
+////////////////////////// new 28.07.2018 ////////////////////////////////////////////////
+    private void selectPdf(){
+        Intent pIntent = new Intent();
+        pIntent.setType("application/pdf");
+        pIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(pIntent,FILES_REQUEST_CODE);
+    }
 
+    private void uploadPdf(Uri pdfUrl){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://tenders-83c71.appspot.com/");
+        final StorageReference ref = storageRef.child("Pdf/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("name", "") + "/" + getContext()
+                .getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
+                .getString("company", "") + "/" + System.currentTimeMillis() + ".pdf");
+        UploadTask uploadTask = ref.putFile(pdfUrl);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("hmmmmm filed... ", exception.toString());
+                Toast.makeText(getContext(),"some error",Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+            }
+        });
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                boolean filter) {
     float ratio = Math.min(
             maxImageSize / realImage.getWidth(),

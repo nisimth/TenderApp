@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/all_tenders"
-            android:icon="@android:drawable/ic_dialog_info"
+            android:icon="@drawable/alltenders"
             android:title="כל המכרזים" />
         <item
             android:id="@+id/tyotot"
-            android:icon="@android:drawable/star_off"
+            android:icon="@drawable/drafts"
             android:title="טיוטות להצעות" />
         <item
             android:id="@+id/my_tenders"
-            android:icon="@android:drawable/star_on"
+            android:icon="@drawable/tenderssended"
             android:title="ההצעות שהגשתי" />
 
         <item
             android:id="@+id/win_tenders"
-            android:icon="@mipmap/ic_winner_foreground"
+            android:icon="@drawable/tenderswin"
             android:title="המכרזים שזכיתי" />
 
         <item
             android:id="@+id/notifications"
-            android:icon="@android:drawable/ic_popup_reminder"
+            android:icon="@drawable/mynotifications"
             android:title="ההתראות שלי" />
 
     </group>
@@ -33,18 +34,18 @@
         <menu>
             <item
                 android:id="@+id/support"
-                android:icon="@mipmap/ic_support_foreground"
+                android:icon="@drawable/support"
                 android:title="תמיכה" />
             <item
                 android:id="@+id/manage"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/details"
                 android:title="עריכת פרטים" />
         </menu>
     </item>
 
     <item
         android:id="@+id/disconnect"
-        android:icon="@mipmap/ic_disconnect_foreground"
+        android:icon="@drawable/logut"
         android:title="התנתק" />
 
 

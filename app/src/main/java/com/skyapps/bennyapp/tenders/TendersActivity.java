@@ -109,6 +109,7 @@ public class TendersActivity extends AppCompatActivity
         //drawer.openDrawer(Gravity.START);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
 

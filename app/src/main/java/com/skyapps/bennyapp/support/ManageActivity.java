@@ -53,6 +53,7 @@ public class ManageActivity extends AppCompatActivity  implements NavigationView
         //drawer.openDrawer(Gravity.START);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         name_user = navigationView.getHeaderView(0).findViewById(R.id.name_user);
