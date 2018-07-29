@@ -19,7 +19,8 @@ public class Tender {
         this.masad = masad;
         this.name = name;
         this.project = project;
-        this.time = 0;
+        this.time = calcTimer(endTender,endTime);
+        //this.time = 0;
         this.startTender = startTender;
         this.endTender = endTender;
         this.startTime = startTime;

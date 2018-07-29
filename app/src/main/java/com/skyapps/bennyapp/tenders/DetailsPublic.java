@@ -55,7 +55,7 @@ public class DetailsPublic extends AppCompatActivity {
                 ((EditText) findViewById(R.id.editDetails)).setText(dataSnapshot.child("details").getValue()+"");
 
                 ((EditText) findViewById(R.id.editStartDate)).setText(dataSnapshot.child("startDate").getValue()+"");
-                ((EditText) findViewById(R.id.editEndDate)).setText(dataSnapshot.child("endDate").getValue()+"");
+                ((EditText) findViewById(R.id.editEndDate)).setText(dataSnapshot.child("endDateSelcted").getValue()+"");
                 ((EditText) findViewById(R.id.editStartTime)).setText(dataSnapshot.child("startHour").getValue()+"");
                 ((EditText) findViewById(R.id.editEndTime)).setText(dataSnapshot.child("endHour").getValue()+"");
 

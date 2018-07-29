@@ -17,7 +17,10 @@
             android:text="מכרזים פרטיים"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הגדרות סינון"/>
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
@@ -29,15 +32,44 @@
            <SearchView
                android:focusableInTouchMode="true"
                android:id="@+id/byname"
-               android:layout_width="190dp"
+               android:layout_width="180dp"
                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
+
 
             </LinearLayout>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="עד"
+                />
+            <ImageButton
+                android:id="@+id/filter_end_date_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar"
+                android:layout_weight="1"/>
+
+
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="חפש"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/reset_filter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="אפס"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

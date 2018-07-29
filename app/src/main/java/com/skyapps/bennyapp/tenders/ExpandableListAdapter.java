@@ -157,7 +157,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         //else time.setText("הזמן נגמר");
 
 
-
+        Log.e("timer",tender.getTime()+"");
         CountDownTimer c = new CountDownTimer(tender.getTime(), 1000) {
 
             public void onTick(long millisUntilFinished) {

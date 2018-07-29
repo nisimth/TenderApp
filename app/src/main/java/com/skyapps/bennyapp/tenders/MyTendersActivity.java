@@ -4,13 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -47,13 +47,13 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawer;
     private TextView name_user;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tenders);
 
         listTenders = findViewById(R.id.listTenders);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_menu_foreground);
@@ -224,4 +224,6 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
