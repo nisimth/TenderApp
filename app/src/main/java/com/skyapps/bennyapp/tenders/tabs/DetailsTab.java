@@ -2,7 +2,8 @@ package com.skyapps.bennyapp.tenders.tabs;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -55,8 +56,10 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private Button uploadPdf;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
+    private String pdfUrlString;
     private static final int FILES_PERMISSION_CODE = 9 ;
     private static final int FILES_REQUEST_CODE = 100 ;
+    private ImageButton pdfWebViewBtn;
     /////////////////////////////////////
 
 
@@ -174,6 +177,14 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                             url = postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()+"";
                             Glide.with(getContext()).load(postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()).into(image);
                         }
+                        if (postSnapshot.getKey().equals(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
+                                .getString("username", ""))) {
+                            pdfUrlString = postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp",
+                                    Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue()+"";
+
+                        }
+
+
                     } catch (Exception e){
 
                     }
@@ -202,8 +213,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         uploadFromCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if ( PermissionChecker.checkSelfPermission( getContext(), Manifest.permission.CAMERA ) != PackageManager.PERMISSION_GRANTED ) {
 
                     ActivityCompat.requestPermissions((Activity) getContext(), new String[] {  Manifest.permission.CAMERA  },CAMERA_REQUEST_CODE );
@@ -228,14 +237,24 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
              }else{
                  ActivityCompat.requestPermissions((Activity) getContext(), new String[] {  Manifest.permission.READ_EXTERNAL_STORAGE  },FILES_PERMISSION_CODE );
              }
-             if(pdfUrl != null){
-                 uploadPdf(pdfUrl);
-             }
+             /*if(pdfUrl != null){
+                 pdfLoader(pdfUrl);
+             }*/
 
             }
 
         });
 
+
+        pdfWebViewBtn = view.findViewById(R.id.pdf_icon);
+        pdfWebViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebPage(pdfUrlString);
+
+
+            }
+        });
 
 //////////////////////////////////////////////////////////////////////////////
         view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
@@ -244,31 +263,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 TabsActivity.viewPager.setCurrentItem(1);
             }
         });
-////////////////////// Dialog that show the loaded img ////////////////////
-        /*image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog5);
-
-                ImageView img = (ImageView) dialog.findViewById(R.id.imageview);
-                Glide.with(getContext()).load(url).into(img);
-
-
-
-                Button btn = (Button) dialog.findViewById(R.id.btn);
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-            }
-        });*/
 
 
         return view;
@@ -368,18 +363,20 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         }
         if( requestCode == FILES_REQUEST_CODE && resultCode == RESULT_OK && data != null ){
             pdfUrl = data.getData();
+            pdfLoader(pdfUrl);
+            Toast.makeText(getContext(),"הקובץ עלה בהצלחה",Toast.LENGTH_LONG).show();
         }
 
     }
 ////////////////////////// new 28.07.2018 ////////////////////////////////////////////////
     private void selectPdf(){
-        Intent pIntent = new Intent();
-        pIntent.setType("application/pdf");
-        pIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(pIntent,FILES_REQUEST_CODE);
+        Intent pdfIntent = new Intent();
+        pdfIntent.setType("application/pdf");
+        pdfIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(pdfIntent,FILES_REQUEST_CODE);
     }
 
-    private void uploadPdf(Uri pdfUrl){
+    private void pdfLoader(Uri pdfUrl){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://tenders-83c71.appspot.com/");
         final StorageReference ref = storageRef.child("Pdf/" +
@@ -390,15 +387,31 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.e("hmmmmm filed... ", exception.toString());
-                Toast.makeText(getContext(),"some error",Toast.LENGTH_LONG).show();
+                Log.e("something not ok ", exception.toString());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                final Uri downloadUri = taskSnapshot.getDownloadUrl();
+                mProgressDialog.dismiss();
+                dRef = FirebaseDatabase.getInstance().getReference().child("users");
 
+                dRef.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                        .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                        .child("Pdf")
+                        .setValue(downloadUri.toString());
             }
         });
+
+    }
+    public void openWebPage(String url) {
+        if(url != null) {
+            Uri webPage = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
+            startActivity(intent);
+        }
+        Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
