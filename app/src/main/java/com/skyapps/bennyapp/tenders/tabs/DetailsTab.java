@@ -266,7 +266,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
-////////////////////// Dialog that show the loaded img ////////////////////
+////////////////////// Dialog that show the loaded img /////////////////////
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
