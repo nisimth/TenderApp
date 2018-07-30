@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class privateTenders extends Fragment  {
+public class privateTenders extends Fragment {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -45,14 +45,15 @@ public class privateTenders extends Fragment  {
     private static final int LOAD_ALL = 0;
     private static final int LOAD_FILTERED_BY_ENDDATE = 1;
 
-
+    ImageButton filterStartDate;
     ImageButton filterEndDate;
     Button searchBtn;
     Button resetSearchBtn;
 
-    long endDateSelcted;
+    long startDateSelcted, endDateSelcted;
 
-    private DatePickerDialog.OnDateSetListener onDateSetListener;
+
+    private DatePickerDialog.OnDateSetListener start_dateListener, end_dateListener;
 
 
 
@@ -66,9 +67,42 @@ public class privateTenders extends Fragment  {
         //Toast.makeText(getContext(), getActivity().getTitle() +"", Toast.LENGTH_SHORT).show();
         //Log.e("TalHere: " , getActivity().getTitle()+"");
 
+        filterStartDate = (ImageButton) view.findViewById(R.id.filter_start_date_btn) ;
         filterEndDate = (ImageButton) view.findViewById(R.id.filter_end_date_btn);
         searchBtn = (Button) view.findViewById(R.id.search_btn);
         resetSearchBtn = (Button) view.findViewById(R.id.reset_filter_btn);
+
+        filterStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), start_dateListener,year,month,day);
+                dialog.show();
+            }
+        });
+
+        start_dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String dayString = String.valueOf(day);
+                String monthString = String.valueOf(month+1);
+
+                if(dayString.length() == 1){
+                    dayString = "0" + dayString;
+                }
+                if(monthString.length() == 1){
+                    monthString = "0" + monthString;
+                }
+
+                String date =  dayString + "/" + monthString + "/" + year;
+                startDateSelcted = convertStringToDate(date);
+                Log.e("start_selcted_date",date);
+            }
+        };
 
         filterEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,18 +115,29 @@ public class privateTenders extends Fragment  {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(getContext(),onDateSetListener,year,month,day);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), end_dateListener,year,month, day);
                 dialog.show();
 
 
             }
         });
 
-        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        end_dateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String date = day + "/" + month + "/" + year;
+                String dayString = String.valueOf(day);
+                String monthString = String.valueOf(month+1);
+
+                if(dayString.length() == 1){
+                    dayString = "0" + dayString;
+                }
+                if(monthString.length() == 1){
+                    monthString = "0" + monthString;
+                }
+
+                String date =  dayString + "/" + monthString + "/" + year;
                 endDateSelcted = convertStringToDate(date);
+                Log.e("end_selcted_date",date);
             }
         };
         listDataHeader = new ArrayList<Tender>();
@@ -167,6 +212,9 @@ public class privateTenders extends Fragment  {
                         listDataHeader.clear();
                         listDataChild.clear();
 
+                        startDateSelcted = 0;
+                        endDateSelcted = 0;
+
 
                         for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
 
@@ -213,7 +261,8 @@ public class privateTenders extends Fragment  {
             }
         });
 
-        // search tenders by end date selected from the date picker dialog
+
+        // search tenders by start and end date selected from the date picker dialogs
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,8 +276,21 @@ public class privateTenders extends Fragment  {
 
                         for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
 
+
                             for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-                                if(endDateSelcted >= convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "")) {
+                                Long startCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Long endCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "");
+
+                                Date currentTime  = Calendar.getInstance().getTime();
+                                Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");
+
+                                if((startDateSelcted - currentTime.getTime() <= startCurrent - currentTime.getTime()) && endDateSelcted - currentTime.getTime() >= endCurrent - currentTime.getTime()
+                                    || (startDateSelcted == 0 && endDateSelcted- currentTime.getTime() >= endCurrent- currentTime.getTime())
+                                        || (startDateSelcted- currentTime.getTime() <= startCurrent- currentTime.getTime() && endDateSelcted==0)) {
 
                                     listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
                                             snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
@@ -450,8 +512,8 @@ public class privateTenders extends Fragment  {
     // for filtering tenders
     public long convertStringToDate(String date){
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-        Date convertedDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date convertedDate = null;
 
         try {
             convertedDate = dateFormat.parse(date);
