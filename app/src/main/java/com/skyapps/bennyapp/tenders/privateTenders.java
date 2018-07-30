@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -20,9 +22,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
@@ -39,7 +38,6 @@ import java.util.List;
 public class privateTenders extends Fragment {
     ////////////new/////////////
 
-    private DatabaseReference tenderCountRef ;
     private int tenderCounter = 0;
     private TextView counter;
     ////////////////////////////
@@ -53,13 +51,14 @@ public class privateTenders extends Fragment {
 
     int lastPosition = -1;
 
-    private static final int LOAD_ALL = 0;
-    private static final int LOAD_FILTERED_BY_ENDDATE = 1;
 
     ImageButton filterStartDate;
     ImageButton filterEndDate;
     Button searchBtn;
     Button resetSearchBtn;
+
+    CheckBox lowCheckBox;
+    CheckBox highCheckBox;
 
     long startDateSelcted, endDateSelcted;
 
@@ -71,31 +70,19 @@ public class privateTenders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_private_tenders, container, false);
-        //////// 30.07.2018 //////////
+
         counter = (TextView) view.findViewById(R.id.counter_tender) ;
-        tenderCountRef = FirebaseDatabase.getInstance().getReference().child("Tenders").child("חשמל");
-                tenderCountRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
-                    @Override
-                    public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-                        tenderCounter = (int) dataSnapshot.getChildrenCount();
-                        counter.setText(" ( " +Integer.toString(tenderCounter)+ " ) ");
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        counter.setText(" ( 0 ) ");
-                    }
-                });
-        //////////////////////////////
         expListView = view.findViewById(R.id.privateList);
-
-        //Toast.makeText(getContext(), getActivity().getTitle() +"", Toast.LENGTH_SHORT).show();
-        //Log.e("TalHere: " , getActivity().getTitle()+"");
 
         filterStartDate = (ImageButton) view.findViewById(R.id.filter_start_date_btn) ;
         filterEndDate = (ImageButton) view.findViewById(R.id.filter_end_date_btn);
         searchBtn = (Button) view.findViewById(R.id.search_btn);
         resetSearchBtn = (Button) view.findViewById(R.id.reset_filter_btn);
+
+        lowCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_low);
+        highCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_high);
+
 
         filterStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +162,8 @@ public class privateTenders extends Fragment {
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
 
+
+
         // load all tenders
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -187,7 +176,7 @@ public class privateTenders extends Fragment {
                 for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                     for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-
+                        tenderCounter ++;
                     listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
@@ -216,7 +205,7 @@ public class privateTenders extends Fragment {
                 listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                 expListView.setAdapter(listAdapter);
 
-
+                counter.setText(" ( " +listDataHeader.size()+ " ) ");
                 mProgressDialog.dismiss();
 
             }
@@ -226,6 +215,135 @@ public class privateTenders extends Fragment {
 
             }
         });
+
+
+
+        lowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            if(lowCheckBox.isChecked()) {
+                highCheckBox.setChecked(false);
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        int i = 0;
+                        listDataHeader.clear();
+                        listDataChild.clear();
+
+
+                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                            for (int num = 1; num <= snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("נמוכה") ) {
+                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                    ));
+
+
+                                    List<Item> list = new ArrayList<Item>();
+                                    list.add(new Item(postSnapshot.getKey() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                            num));
+                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                    i++;
+                                    //ExpandableListAdapter.countAll = i;
+                                }
+                            }
+
+                        }
+
+                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                        mProgressDialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+            }
+            }
+        });
+
+        highCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            if(highCheckBox.isChecked()){
+                lowCheckBox.setChecked(false);
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    int i = 0;
+                    listDataHeader.clear();
+                    listDataChild.clear();
+
+
+                    for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                        for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                            if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("גבוהה")) {
+                                listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                ));
+
+
+                                List<Item> list = new ArrayList<Item>();
+                                list.add(new Item(postSnapshot.getKey() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                        num));
+                                listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                i++;
+                                //ExpandableListAdapter.countAll = i;
+
+                            }
+                        }
+                    }
+
+                    listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                    expListView.setAdapter(listAdapter);
+
+                    //counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                    mProgressDialog.dismiss();
+
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+            }
+            }
+        });
+
+
+
+
+
+
         // reset filter
         resetSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +357,9 @@ public class privateTenders extends Fragment {
 
                         startDateSelcted = 0;
                         endDateSelcted = 0;
+
+                        lowCheckBox.setChecked(false);
+                        highCheckBox.setChecked(false);
 
 
                         for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -273,7 +394,7 @@ public class privateTenders extends Fragment {
                         listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                         expListView.setAdapter(listAdapter);
 
-
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
                         mProgressDialog.dismiss();
 
                     }
@@ -282,6 +403,7 @@ public class privateTenders extends Fragment {
                     public void onCancelled(FirebaseError firebaseError) {
 
                     }
+
                 });
             }
         });
@@ -345,7 +467,7 @@ public class privateTenders extends Fragment {
                         listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                         expListView.setAdapter(listAdapter);
 
-
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
                         mProgressDialog.dismiss();
                     }
 
@@ -416,7 +538,7 @@ public class privateTenders extends Fragment {
                             listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                             expListView.setAdapter(listAdapter);
 
-
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
                             mProgressDialog.dismiss();
 
                         }
@@ -496,6 +618,7 @@ public class privateTenders extends Fragment {
                             expListView.setAdapter(listAdapter);
 
                         }
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
                         progress.dismiss();
                     }
 
