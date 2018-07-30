@@ -2,6 +2,7 @@ package com.skyapps.bennyapp.tenders.tabs;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -265,10 +266,36 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
+////////////////////// Dialog that show the loaded img ////////////////////
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog5);
+
+                ImageView img = (ImageView) dialog.findViewById(R.id.imageview);
+                Glide.with(getContext()).load(url).into(img);
+
+
+
+                Button btn = (Button) dialog.findViewById(R.id.btn);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
+            }
+        });
 
         return view;
     }
+
+
 
     private void invokeCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

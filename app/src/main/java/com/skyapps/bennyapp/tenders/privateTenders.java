@@ -325,7 +325,7 @@ public class privateTenders extends Fragment {
                     listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                     expListView.setAdapter(listAdapter);
 
-                    //counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                    counter.setText(" ( " +listDataHeader.size()+ " ) ");
                     mProgressDialog.dismiss();
 
                 }
