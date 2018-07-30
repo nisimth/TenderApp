@@ -2,8 +2,6 @@ package com.skyapps.bennyapp.tenders.tabs;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +54,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private Button uploadPdf;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
-    private String pdfUrlString;
+    private String pdfUrlString = null ;
     private static final int FILES_PERMISSION_CODE = 9 ;
     private static final int FILES_REQUEST_CODE = 100 ;
     private ImageButton pdfWebViewBtn;
@@ -69,7 +67,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
     private ImageView image; /// now using this
     private Button btn;
-    private String name;
+    private String companyName;
     private ProgressDialog mProgressDialog;
 
 
@@ -116,7 +114,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
 
         /// get the company name  ////
-        name = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "");
+        companyName = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "");
 
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from fireBase to EditTexts...
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
@@ -132,12 +130,12 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    if (postSnapshot.getKey().equals(name)) {
+                    if (postSnapshot.getKey().equals(companyName)) {
 
                         Log.e("testing deatils : " , getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)+"");
 
                         editMqt.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
-                        editName.setText(name + "");
+                        editName.setText(companyName + "");
                         editNameProject.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("name").getValue() + "");
                         editAddress.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("address").getValue() + "");
                         editContact.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("contact").getValue() + "");
@@ -174,12 +172,12 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                     try {
                         if (postSnapshot.getKey().equals(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
                                 .getString("username", ""))) {
-                            url = postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()+"";
-                            Glide.with(getContext()).load(postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()).into(image);
+                            url = postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()+"";
+                            Glide.with(getContext()).load(postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Image").getValue()).into(image);
                         }
                         if (postSnapshot.getKey().equals(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
                                 .getString("username", ""))) {
-                            pdfUrlString = postSnapshot.child(name).child("מכרז" + getContext().getSharedPreferences("BennyApp",
+                            pdfUrlString = postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp",
                                     Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue()+"";
 
                         }
@@ -228,9 +226,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*   SelectPhotoDialog dialog = new SelectPhotoDialog() ;
-                dialog.show(getFragmentManager(),getString(R.string.dialog_select_photo));
-                dialog.setTargetFragment( DetailsTab.this ,36);*/
              if(ContextCompat.checkSelfPermission( getContext(),
                      Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED ){
                  selectPdf();
@@ -250,7 +245,13 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         pdfWebViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebPage(pdfUrlString);
+                if(pdfUrlString != null){
+                    openWebPage(pdfUrlString);
+                }
+                else{
+                    Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
+                }
+
 
 
             }
@@ -283,7 +284,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 invokeCamera();
             }
         }
-        if (requestCode == 9){
+        if (requestCode == FILES_PERMISSION_CODE){
             if(grantResults[1] == PackageManager.PERMISSION_GRANTED){
                 selectPdf();
             }
@@ -411,7 +412,10 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
             startActivity(intent);
         }
-        Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
+        }
+
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////

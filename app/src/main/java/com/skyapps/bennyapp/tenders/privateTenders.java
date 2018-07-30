@@ -14,11 +14,15 @@ import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
@@ -33,6 +37,13 @@ import java.util.List;
 
 
 public class privateTenders extends Fragment {
+    ////////////new/////////////
+
+    private DatabaseReference tenderCountRef ;
+    private int tenderCounter = 0;
+    private TextView counter;
+    ////////////////////////////
+
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -52,7 +63,6 @@ public class privateTenders extends Fragment {
 
     long startDateSelcted, endDateSelcted;
 
-
     private DatePickerDialog.OnDateSetListener start_dateListener, end_dateListener;
 
 
@@ -61,7 +71,22 @@ public class privateTenders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_private_tenders, container, false);
+        //////// 30.07.2018 //////////
+        counter = (TextView) view.findViewById(R.id.counter_tender) ;
+        tenderCountRef = FirebaseDatabase.getInstance().getReference().child("Tenders").child("חשמל");
+                tenderCountRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+                    @Override
+                    public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                        tenderCounter = (int) dataSnapshot.getChildrenCount();
+                        counter.setText(" ( " +Integer.toString(tenderCounter)+ " ) ");
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        counter.setText(" ( 0 ) ");
+                    }
+                });
+        //////////////////////////////
         expListView = view.findViewById(R.id.privateList);
 
         //Toast.makeText(getContext(), getActivity().getTitle() +"", Toast.LENGTH_SHORT).show();

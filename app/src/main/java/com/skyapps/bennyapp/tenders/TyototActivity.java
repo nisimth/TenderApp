@@ -23,6 +23,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DatabaseReference;
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
@@ -88,6 +89,8 @@ public class TyototActivity extends AppCompatActivity implements NavigationView.
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
+
+
 
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
