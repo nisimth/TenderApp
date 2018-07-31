@@ -177,12 +177,14 @@ public class privateTenders extends Fragment {
 
                     for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
                         tenderCounter ++;
-                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+
+
 
 
                     ));
@@ -429,11 +431,11 @@ public class privateTenders extends Fragment {
                                 Long endCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "");
 
                                 Date currentTime  = Calendar.getInstance().getTime();
-                                Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
                                 Log.e("start_current",startCurrent+"" );
                                 Log.e("start_current_d",new Date(startCurrent)+"");
                                 Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
 
                                 if((startDateSelcted - currentTime.getTime() <= startCurrent - currentTime.getTime()) && endDateSelcted - currentTime.getTime() >= endCurrent - currentTime.getTime()
                                     || (startDateSelcted == 0 && endDateSelcted- currentTime.getTime() >= endCurrent- currentTime.getTime())
@@ -671,6 +673,7 @@ public class privateTenders extends Fragment {
 
         return convertedDate.getTime();
     }
+
 
 
 }

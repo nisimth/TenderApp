@@ -3,7 +3,6 @@ package com.skyapps.bennyapp.tenders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -153,68 +151,61 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         name.setText(tender.getName());
         project.setText(tender.getProject());
 
-        //if (tender.getTime() > ??)
-        //else time.setText("הזמן נגמר");
 
 
-        Log.e("timer",tender.getTime()+"");
-        CountDownTimer c = new CountDownTimer(tender.getTime(), 1000) {
+/*
+             CountDownTimer c = new CountDownTimer(tender.calcTimer(tender.getEndTender(),tender.getEndTime()), 1000) {
 
-            public void onTick(long millisUntilFinished) {
-
-
-
-                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
-
-                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
-
-                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
-
-                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                public void onTick(long millisUntilFinished) {
 
 
-                if (days == 0) {
-                    if (hours == 0) {
+                    long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+
+                    long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                    long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                    long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+
+
+                    if (days == 0) {
+                        if (hours == 0) {
+                            time.setText(minutes + ":" + seconds);
+                        } else {
+                            time.setText(hours + ":" + minutes + ":" + seconds);
+                        }
+                    } else if (hours == 0) {
                         time.setText(minutes + ":" + seconds);
                     } else {
-                        time.setText(hours + ":" + minutes + ":" + seconds);
+                        time.setText(days + " ימים , " + hours + ":" + minutes + ":" + seconds);
                     }
-                } else if (hours == 0) {
-                    time.setText(minutes + ":" + seconds);
-                } else {
-                    time.setText(days + " ימים , " + hours + ":" + minutes + ":" + seconds);
+
+
                 }
 
+                public void onFinish() {
+
+                    time.setText("עבר הזמן");
+                }
+
+            };*/
 
 
-            }
+        if (tender.calcTimer(tender.getStartTender(),tender.getStartTime())  >= 0) {
+            time.setText("טרם \n התחיל");
 
-            public void onFinish() {
-
-                time.setText("עבר הזמן");
-            }
-
-        };
-
-
-        try {
-            if (tender.calcTimer(tender.getStartTender(), tender.getStartTime()) >= 0) {
-                time.setText("טרם \n התחיל");
-
-            } else if (tender.getTime() <= 0) {
-                time.setText("עבר הזמן");
-            }
-        } catch (Exception e){
-
+        } else if (tender.calcTimer(tender.getEndTender(),tender.getEndTime()) <= 0) {
+            time.setText("עבר הזמן");
         }
-        if (time.getText().toString().equals("שעה ותאריך")) {
+        else
+            time.setText("פעיל");
 
-            c.start();
 
-        }
+
+
         Log.e("the tender: " , time.getText().toString()+"");
         return convertView;
     }

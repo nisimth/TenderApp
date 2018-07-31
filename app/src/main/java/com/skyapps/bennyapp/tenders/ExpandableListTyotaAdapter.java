@@ -210,7 +210,7 @@ public class ExpandableListTyotaAdapter extends BaseExpandableListAdapter {
         };
 
 
-        if(tender.calcTimer(tender.getStartTender(),tender.getStartTime())>=0){
+        if(tender.getTime()>=0){
             time.setText("טרם \n התחיל");
 
         }
