@@ -195,7 +195,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         if (tender.calcTimer(tender.getStartTender(),tender.getStartTime())  >= 0) {
-            time.setText("טרם \n התחיל");
+            time.setText("טרם\nהתחיל");
 
         } else if (tender.calcTimer(tender.getEndTender(),tender.getEndTime()) <= 0) {
             time.setText("עבר הזמן");

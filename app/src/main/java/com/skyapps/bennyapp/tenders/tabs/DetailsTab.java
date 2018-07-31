@@ -55,7 +55,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private Button uploadPdf;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
-    private String pdfUrlString = null ;
+    String pdfUrlString = null ;
     private static final int FILES_PERMISSION_CODE = 9 ;
     private static final int FILES_REQUEST_CODE = 100 ;
     private ImageButton pdfWebViewBtn;
@@ -390,8 +390,21 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             mProgressDialog.dismiss();
         }
         if( requestCode == FILES_REQUEST_CODE && resultCode == RESULT_OK && data != null ){
-            pdfUrl = data.getData();
-            pdfLoader(pdfUrl);
+            boolean c ;
+            try{
+                pdfUrl = data.getData();
+                c = true ;
+            }catch (Exception e)
+            {
+                c = false ;
+            }
+            if ( c ){
+                try {
+                    pdfLoader(pdfUrl);
+                }catch (Exception e){
+                    Toast.makeText(getContext(), "ישנה שגיאה, נסה שנית", Toast.LENGTH_SHORT).show();
+                }
+            }
             Toast.makeText(getContext(),"הקובץ עלה בהצלחה",Toast.LENGTH_LONG).show();
         }
 

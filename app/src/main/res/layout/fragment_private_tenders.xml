@@ -5,92 +5,129 @@
     android:layout_height="match_parent"
     tools:context=".tenders.privateTenders">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/a"
             android:textStyle="bold"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="35dp"
             android:text="מכרזים פרטיים"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            />
         <TextView
             android:id="@+id/counter_tender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="100"
             android:textSize="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="270dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="הגדרות סינון"/>
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/search_bar1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/a"
+            android:layout_marginTop="10dp">
 
            <SearchView
                android:focusableInTouchMode="true"
                android:id="@+id/byname"
                android:layout_width="180dp"
-               android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-
-            </LinearLayout>
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="מ"
+               android:layout_height="45dp"
+               android:layout_alignParentRight="true"/>
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:text="חפש"
+                android:textColor="#ffffff"
+                android:background="@drawable/rounded_btn"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="182dp"
                 />
+            <Button
+                android:id="@+id/reset_filter_btn"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:text="אפס"
+                android:textColor="#ffffff"
+                android:background="@drawable/rounded_btn"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="274dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_bar1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:text="חיפוש לפי תאריך:"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+            <TextView
+                android:id="@+id/m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מ-"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="95dp"/>
             <ImageButton
                 android:id="@+id/filter_start_date_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar"
-                android:layout_weight="1"/>
+                android:src="@drawable/calendar"
+                android:background="@drawable/calendar"
+                android:layout_alignRight="@+id/m"
+                android:layout_marginRight="20dp"
+                />
             <TextView
-
+                android:id="@+id/ad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="עד"
+                android:text="עד-"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="170dp"
+                android:layout_centerVertical="true"
                 />
             <ImageButton
                 android:id="@+id/filter_end_date_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar"
-                android:layout_weight="1"/>
+                android:src="@drawable/calendar"
+                android:background="@drawable/calendar"
+                android:layout_alignRight="@+id/ad"
+                android:layout_marginRight="27dp"
+                />
 
+        </RelativeLayout>
 
-            <Button
-                android:id="@+id/search_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="חפש"
-                android:layout_weight="1"/>
-            <Button
-                android:id="@+id/reset_filter_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="אפס"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
         <LinearLayout
+            android:id="@+id/dhifut_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dates">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,9 +151,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/cotertarot"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dhifut_check"
+            android:background="@drawable/round"
+            >
 
 
             <TextView
@@ -158,9 +199,11 @@
         <ExpandableListView
             android:id="@+id/privateList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ExpandableListView>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cotertarot">
+        </ExpandableListView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </FrameLayout>

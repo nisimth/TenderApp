@@ -19,7 +19,9 @@
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:text="מס''ד"
-            android:textColor="#335ae5"
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/holo_blue_light"
             android:textSize="15dp"
             android:textStyle="bold" />
 
@@ -29,7 +31,8 @@
             android:layout_height="wrap_content"
             android:text="חברה"
             android:gravity="right"
-            android:textColor="#335ae5"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/holo_blue_light"
             android:textSize="15dp"
             android:textStyle="bold" />
 
@@ -38,16 +41,20 @@
             android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:text="פרוייקט"
-            android:textColor="#335ae5"
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/holo_blue_light"
             android:textSize="15dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="שעה ותאריך"
-            android:textColor="#335ae5"
+            android:text="סטטוס"
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/holo_blue_light"
             android:textSize="15dp"
             android:textStyle="bold" />
 
