@@ -379,6 +379,22 @@ public class MarketTab extends Fragment {
 
                         }
 
+                        if (dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                                .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                                .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                                .child("Pdf").getValue() != null) {
+
+
+                        } else {
+
+                            myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                                    .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                                    .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                                    .child("Pdf").setValue("empty");
+
+
+                        }
+
 
                         if (dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
                                 .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
@@ -387,6 +403,8 @@ public class MarketTab extends Fragment {
 
 
                         } else {
+
+
 
                             myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
                                     .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
@@ -483,7 +501,7 @@ public class MarketTab extends Fragment {
         refcounter.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                counter = dataSnapshot.getChildrenCount() - 2;
+                counter = dataSnapshot.getChildrenCount() - 3; // TODO -3
             }
 
             @Override

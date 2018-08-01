@@ -55,7 +55,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private Button uploadPdf;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
-    String pdfUrlString = null ;
+    String pdfUrlString  = null;
     private static final int FILES_PERMISSION_CODE = 9 ;
     private static final int FILES_REQUEST_CODE = 100 ;
     private ImageButton pdfWebViewBtn;
@@ -180,6 +180,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                                 .getString("username", ""))) {
                             pdfUrlString = postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp",
                                     Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue()+"";
+                            //getContext().getSharedPreferences()
 
                         }
 
@@ -246,12 +247,22 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         pdfWebViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //pdfUrlString = (String) dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                //                                .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                //                                .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                //                                .child("Pdf").getValue()
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if(pdfUrlString != null){
-                    openWebPage(pdfUrlString);
+                    try {
+                        openWebPage(pdfUrlString);
+                    }catch (Exception e){
+                        Log.e("the pdf_error:" , e.toString());
+                        Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
-                }
+
 
 
 
@@ -396,16 +407,19 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 c = true ;
             }catch (Exception e)
             {
+                Log.e("the pdf_error:" , e.toString());
+                Toast.makeText(getContext(), "הPDF גדול מדיי, נסה שנית", Toast.LENGTH_SHORT).show();
                 c = false ;
             }
             if ( c ){
                 try {
                     pdfLoader(pdfUrl);
+                    Toast.makeText(getContext(),"הקובץ עלה בהצלחה",Toast.LENGTH_LONG).show();
                 }catch (Exception e){
                     Toast.makeText(getContext(), "ישנה שגיאה, נסה שנית", Toast.LENGTH_SHORT).show();
                 }
             }
-            Toast.makeText(getContext(),"הקובץ עלה בהצלחה",Toast.LENGTH_LONG).show();
+
         }
 
     }

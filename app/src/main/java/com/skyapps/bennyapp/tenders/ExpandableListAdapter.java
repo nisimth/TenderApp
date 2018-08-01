@@ -99,6 +99,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("name", item.getName());
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+
+                    /*if(){
+                        //TODO i.putExtra("Final", "Final");
+                    }*/
+
+
+
                     //_context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("tender", item.getTender()).commit();
                     Log.e("the num now : " , item.getNum()+"");
                     _context.startActivity(i);

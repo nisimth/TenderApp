@@ -46,7 +46,8 @@
                 android:id="@+id/editMqt"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:singleLine="false" />
+                android:singleLine="false"
+                />
 
         </LinearLayout>
 
