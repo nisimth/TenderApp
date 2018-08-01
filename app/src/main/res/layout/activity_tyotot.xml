@@ -42,7 +42,15 @@
                 android:text="הטיוטות שלי"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/counter_tender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="35dp"
 
+
+                />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -77,7 +85,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="זמן שנותר"
+                    android:text="סטטוס"
                     android:textSize="15dp"
                     android:textStyle="bold"
                     tools:textColor="#222b92" />

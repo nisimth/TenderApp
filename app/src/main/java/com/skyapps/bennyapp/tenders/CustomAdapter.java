@@ -3,6 +3,7 @@ package com.skyapps.bennyapp.tenders;
 import android.app.Activity;
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,9 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
 
         project.setText(tender.getEmail());
 
+
+
+
         if (mContext.getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("")){
             time.setText("למינויים בלבד");
             name.setText("למינויים בלבד");
@@ -48,7 +52,7 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
 
 
 
-            new CountDownTimer(tender.getTime(), 1000) {
+            CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
@@ -80,12 +84,29 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
                     //mTextField.setText("done!");
                 }
 
-            }.start();
+            };
+            if (tender.calcStarts()  >= 0) {
+                time.setText("טרם\nהתחיל");
+
+            } else if (tender.calcEnds() <= 0) {
+                time.setText("עבר הזמן");
+            }
+            else if (tender.calcEnds() <= TimeUnit.HOURS.toMillis(2)) {
+                time.setText("עומד\n להגמר");
+                //time.setTextColor(Color.RED);
+
+            }
+            else {
+                time.setText("פעיל");
+                //time.setTextColor(Color.GREEN);
+                //c.start();
+
+            }
 
         }
 
 
-
+        Log.e("pubtender" ,tender.getMasad().toString() + " " + time.getText().toString() +"");
 
         return rowView;
     }

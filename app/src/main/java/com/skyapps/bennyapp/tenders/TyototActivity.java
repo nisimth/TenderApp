@@ -23,7 +23,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.database.DatabaseReference;
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
@@ -48,6 +47,8 @@ public class TyototActivity extends AppCompatActivity implements NavigationView.
     private int lastPosition = -1;
     private DrawerLayout drawer;
     private TextView name_user;
+
+    private TextView tenderCounter;
 
 
     @Override
@@ -81,6 +82,8 @@ public class TyototActivity extends AppCompatActivity implements NavigationView.
 
         listDataHeader = new ArrayList<Tender>();
         listDataChild = new HashMap<Tender, List<Item>>();
+
+        tenderCounter = (TextView) findViewById(R.id.counter_tender);
 
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
@@ -160,7 +163,7 @@ public class TyototActivity extends AppCompatActivity implements NavigationView.
                 listAdapter = new ExpandableListTyotaAdapter(TyototActivity.this, listDataHeader, listDataChild);
                 listTyotot.setAdapter(listAdapter);
 
-
+                tenderCounter.setText("(" +listDataHeader.size()+ ")");
                 mProgressDialog.dismiss();
 
             }

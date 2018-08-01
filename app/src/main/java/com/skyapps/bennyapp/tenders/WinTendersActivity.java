@@ -46,6 +46,8 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout drawer;
     private TextView name_user;
 
+    private TextView tenderCounter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
 
         listDataHeader = new ArrayList<Tender>();
         listDataChild = new HashMap<Tender, List<Item>>();
+
+        tenderCounter = (TextView) findViewById(R.id.counter_tender);
 
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
@@ -151,7 +155,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
                 listAdapter = new ExpandableListWinAdapter(WinTendersActivity.this, listDataHeader, listDataChild);
                 listWin.setAdapter(listAdapter);
 
-
+                tenderCounter.setText("(" +listDataHeader.size()+ ")");
                 mProgressDialog.dismiss();
 
             }

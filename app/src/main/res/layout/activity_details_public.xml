@@ -331,6 +331,154 @@
 
             </LinearLayout>
 
+           <LinearLayout
+               android:id="@+id/public_timer_details"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <LinearLayout
+                   android:layout_marginBottom="10dp"
+                   android:orientation="horizontal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <LinearLayout
+                       android:layout_marginEnd="30dp"
+                       android:layout_marginBottom="10dp"
+                       android:orientation="horizontal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <TextView
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="התחלת מכרז: "
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:id="@+id/dateStart"
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="19/02/18"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_weight="0.5"
+                       android:layout_marginBottom="10dp"
+                       android:orientation="horizontal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <TextView
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="שעה: "
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:id="@+id/timeStart"
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="9:00"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                   </LinearLayout>
+
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_marginBottom="10dp"
+                   android:orientation="horizontal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <LinearLayout
+                       android:layout_weight="0.5"
+                       android:layout_marginEnd="55dp"
+                       android:layout_marginBottom="10dp"
+                       android:orientation="horizontal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <TextView
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="סוף מכרז: "
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:id="@+id/dateEnd"
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="21/02/18"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_weight="0.5"
+                       android:layout_marginBottom="10dp"
+                       android:orientation="horizontal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <TextView
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="שעה: "
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:id="@+id/timeEnd"
+                           android:textStyle="bold"
+                           android:textSize="15dp"
+                           android:text="9:00"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+
+               <LinearLayout
+                   android:layout_weight="0.5"
+                   android:layout_marginBottom="10dp"
+                   android:orientation="horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <TextView
+                       android:textStyle="bold"
+                       android:textSize="15dp"
+                       android:text="זמן נותר: "
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+                   <TextView
+                       android:id="@+id/timer"
+                       android:textStyle="bold"
+                       android:textSize="15dp"
+                       android:text="3 Days, 11:05:07"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+               </LinearLayout>
+
+
+
+
+           </LinearLayout>
             <LinearLayout
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"

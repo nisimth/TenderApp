@@ -47,6 +47,8 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawer;
     private TextView name_user;
 
+    private TextView tenderCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,8 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
 
         listDataHeader = new ArrayList<Tender>();
         listDataChild = new HashMap<Tender, List<Item>>();
+
+        tenderCounter = (TextView) findViewById(R.id.counter_tender);
 
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
@@ -153,7 +157,7 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
                 listAdapter = new ExpandableListAdapter(MyTendersActivity.this, listDataHeader, listDataChild);
                 listTenders.setAdapter(listAdapter);
 
-
+                tenderCounter.setText("(" +listDataHeader.size()+ ")");
                 mProgressDialog.dismiss();
 
             }

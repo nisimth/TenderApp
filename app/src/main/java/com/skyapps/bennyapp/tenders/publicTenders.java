@@ -32,6 +32,8 @@ public class publicTenders extends Fragment {
     private ProgressDialog mProgressDialog;
     private Activity activity;
 
+    private TextView tenderCounter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class publicTenders extends Fragment {
 
         final ListView list = view.findViewById(R.id.publicList);
         tenderArrayList= new ArrayList<>();
+        tenderCounter = (TextView) view.findViewById(R.id.counter_tender);
 
         Firebase.setAndroidContext(getContext());
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/TendersPublic/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category",""));
@@ -59,10 +62,13 @@ public class publicTenders extends Fragment {
 
                         Log.e("publictal", postSnapshot.child("מכרז" + (j + 1)).child("name").getValue() + "");
 
-                        tenderArrayList.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("mqt").getValue() + "", postSnapshot.getKey(),
+                        tenderArrayList.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("mqt").getValue() + "",
+                                postSnapshot.getKey(),
                                 postSnapshot.child("מכרז" + (j + 1)).child("name").getValue() + "",
-                                //(long) snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("timer").getValue()
-                                111
+                                snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("startDate").getValue() + "",
+                                snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("endDate").getValue() + "",
+                                snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("startHour").getValue() + "",
+                                snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("endHour").getValue() + ""
                                 , (j+1)));
 
 
@@ -75,7 +81,7 @@ public class publicTenders extends Fragment {
 
                 CustomAdapter adapter = new CustomAdapter(tenderArrayList, getContext());
                 list.setAdapter(adapter);
-
+                tenderCounter.setText("(" +tenderArrayList.size()+ ")");
                 mProgressDialog.dismiss();
 
             }

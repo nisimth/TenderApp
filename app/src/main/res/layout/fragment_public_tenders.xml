@@ -20,6 +20,15 @@
             android:text="מכרזים ציבוריים"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/counter_tender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textSize="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="270dp"
+            />
 
         <LinearLayout
             android:orientation="horizontal"

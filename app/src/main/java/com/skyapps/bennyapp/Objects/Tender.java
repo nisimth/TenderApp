@@ -19,8 +19,6 @@ public class Tender {
         this.masad = masad;
         this.name = name;
         this.project = project;
-        //this.time = calcTimer(endTender,endTime);
-        //this.time = 0;
         this.startTender = startTender;
         this.endTender = endTender;
         this.startTime = startTime;
@@ -34,12 +32,16 @@ public class Tender {
         this.phone = phone;
     }
 
-    public Tender(String masad, String name, String email, long time, int num) {
+    public Tender(String masad, String name, String email,String startTender, String endTender, String startTime, String endTime, int num) {
         this.masad = masad;
         this.name = name;
         this.time = time;
         this.email = email;
         this.num = num;
+        this.startTender = startTender;
+        this.endTender = endTender;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getName() {
@@ -130,8 +132,31 @@ public class Tender {
         this.endTime = endTime;
     }
 
-    public Long calcTimer(String endDate, String endTime)  {
+    // unused
+    /*public Long calcTimer(String endDate, String endTime)  {
         String time = endDate + " " + endTime;
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+        Date d = null;
+        Date currentDate = Calendar.getInstance().getTime();
+        Long diff = null;
+        try {
+            d = df.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            diff = d.getTime() - currentDate.getTime();
+        } catch (Exception e){
+
+        }
+
+        return diff;
+    }*/
+    public Long calcEnds()  {
+        String time = endTender + " " + endTime;
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
         Date d = null;
@@ -153,5 +178,27 @@ public class Tender {
         return diff;
     }
 
+    public Long calcStarts()  {
+        String time = startTender + " " + startTime;
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+        Date d = null;
+        Date currentDate = Calendar.getInstance().getTime();
+        Long diff = null;
+        try {
+            d = df.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            diff = d.getTime() - currentDate.getTime();
+        } catch (Exception e){
+
+        }
+
+        return diff;
+    }
 
 }

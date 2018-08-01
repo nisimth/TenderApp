@@ -3,6 +3,7 @@ package com.skyapps.bennyapp.tenders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -153,8 +155,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
 
-/*
-             CountDownTimer c = new CountDownTimer(tender.calcTimer(tender.getEndTender(),tender.getEndTime()), 1000) {
+
+             CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
 
                 public void onTick(long millisUntilFinished) {
 
@@ -191,22 +193,29 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     time.setText("עבר הזמן");
                 }
 
-            };*/
+            };
 
 
-        if (tender.calcTimer(tender.getStartTender(),tender.getStartTime())  >= 0) {
+        if (tender.calcStarts()  >= 0) {
             time.setText("טרם\nהתחיל");
 
-        } else if (tender.calcTimer(tender.getEndTender(),tender.getEndTime()) <= 0) {
+        } else if (tender.calcEnds() <= 0) {
             time.setText("עבר הזמן");
         }
-        else
+        else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
+            time.setText("עומד\n להגמר");
+            //time.setTextColor(Color.RED);
+        }
+        if(time.getText().toString().equals("סטטוס")) {
             time.setText("פעיל");
+            //time.setTextColor(Color.GREEN);
+            //c.start();
+        }
 
 
 
 
-        Log.e("the tender: " , time.getText().toString()+"");
+        Log.e("the tender: " ,tender.getMasad().toString() + " " + time.getText().toString() +"");
         return convertView;
     }
 
