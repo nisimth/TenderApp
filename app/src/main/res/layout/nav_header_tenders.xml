@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/name_user"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_above="@+id/image_user"
         android:layout_alignParentStart="true"

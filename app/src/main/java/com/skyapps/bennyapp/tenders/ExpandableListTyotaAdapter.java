@@ -210,17 +210,20 @@ public class ExpandableListTyotaAdapter extends BaseExpandableListAdapter {
         };
 
 
-        if(tender.getTime()>=0){
-            time.setText("טרם \n התחיל");
+        if (tender.calcStarts()  >= 0) {
+            time.setText("טרם\nהתחיל");
 
-        }
-        else if(tender.getTime()<=0){
+        } else if (tender.calcEnds() <= 0) {
             time.setText("עבר הזמן");
         }
-        if (time.getText().toString().equals("שעה ותאריך")) {
-
-            c.start();
-
+        else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
+            time.setText("עומד\n להגמר");
+            //time.setTextColor(Color.RED);
+        }
+        if(time.getText().toString().equals("סטטוס")) {
+            time.setText("פעיל");
+            //time.setTextColor(Color.GREEN);
+            //c.start();
         }
 
 

@@ -46,7 +46,6 @@
                 android:id="@+id/counter_tender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
                 android:textSize="35dp"
 
 

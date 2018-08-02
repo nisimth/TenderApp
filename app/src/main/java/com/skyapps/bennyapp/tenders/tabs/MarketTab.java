@@ -117,6 +117,7 @@ public class MarketTab extends Fragment {
         final LinearLayout d = view.findViewById(R.id.market_details);
 
         try {
+            //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
                 d.setVisibility(View.INVISIBLE);
             }

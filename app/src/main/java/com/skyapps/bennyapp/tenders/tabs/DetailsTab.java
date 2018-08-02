@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -60,7 +61,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private static final int FILES_REQUEST_CODE = 100 ;
     private ImageButton pdfWebViewBtn;
     /////////////////////////////////////
-
+    private TextView t ;
 
     private static final int CAMERA_REQUEST_CODE = 69 ;
     private static final int GALLERY_REQUEST_CODE = 70 ;
@@ -106,6 +107,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         editHovala = view.findViewById(R.id.editHovala);
         editComments = view.findViewById(R.id.editComments);
         editAddressForSend = view.findViewById(R.id.editAddressForSend);
+        t = view.findViewById(R.id.numtender);
         image = view.findViewById(R.id.image);
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
@@ -148,7 +150,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                         editHovala.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("transit").getValue() + "");
                         editAddressForSend.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("addressforsend").getValue() + "");
                         editComments.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("comments").getValue() + "");
-
+                        t.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
 
 
 
@@ -180,7 +182,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                                 .getString("username", ""))) {
                             pdfUrlString = postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp",
                                     Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue()+"";
-                            //getContext().getSharedPreferences()
+
 
                         }
 
@@ -228,12 +230,12 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             if(ContextCompat.checkSelfPermission( getContext(),
-                     Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED ){
-                 selectPdf();
-             }else{
-                 ActivityCompat.requestPermissions((Activity) getContext(), new String[] {  Manifest.permission.READ_EXTERNAL_STORAGE  },FILES_PERMISSION_CODE );
-             }
+                if(ContextCompat.checkSelfPermission( getContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED ){
+                    selectPdf();
+                }else{
+                    ActivityCompat.requestPermissions((Activity) getContext(), new String[] {  Manifest.permission.READ_EXTERNAL_STORAGE  },FILES_PERMISSION_CODE );
+                }
              /*if(pdfUrl != null){
                  pdfLoader(pdfUrl);
              }*/
@@ -342,7 +344,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         mProgressDialog.setMessage("מעלה את התמונה שלך ושומר אותה...");
         mProgressDialog.show();
 
-        if( (requestCode == CAMERA_REQUEST_CODE &&  resultCode == RESULT_OK) 
+        if( (requestCode == CAMERA_REQUEST_CODE &&  resultCode == RESULT_OK)
                 || (requestCode == GALLERY_REQUEST_CODE &&  resultCode == RESULT_OK)  ){
 
             Boolean b;
@@ -423,7 +425,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         }
 
     }
-////////////////////////// new 28.07.2018 ////////////////////////////////////////////////
+    ////////////////////////// new 28.07.2018 ////////////////////////////////////////////////
     private void selectPdf(){
         Intent pdfIntent = new Intent();
         pdfIntent.setType("application/pdf");
@@ -459,6 +461,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
+
     }
     public void openWebPage(String url) {
         if(url != null) {
@@ -475,17 +478,17 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
-                               boolean filter) {
-    float ratio = Math.min(
-            maxImageSize / realImage.getWidth(),
-            maxImageSize / realImage.getHeight());
-    int width = Math.round(ratio * realImage.getWidth());
-    int height = Math.round(ratio * realImage.getHeight());
+                                   boolean filter) {
+        float ratio = Math.min(
+                maxImageSize / realImage.getWidth(),
+                maxImageSize / realImage.getHeight());
+        int width = Math.round(ratio * realImage.getWidth());
+        int height = Math.round(ratio * realImage.getHeight());
 
-    Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, 550,
-            300, filter);
-    realImage.recycle();
-    return newBitmap;
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, 550,
+                300, filter);
+        realImage.recycle();
+        return newBitmap;
     }
 
 
