@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#66ccff"
             android:id="@+id/title"
             android:textStyle="bold"
             android:textSize="25dp"
@@ -21,38 +21,47 @@
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="מפרט - פריט מס'" />
+            android:text="מפרט פריט מס'"
+            android:background="@drawable/round"/>
 
         <LinearLayout
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="מק''ט: "
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 
             <EditText
                 android:enabled="false"
                 android:id="@+id/editMqt"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="שם פריט:"
                 android:layout_width="wrap_content"
@@ -61,20 +70,25 @@
             <EditText
                 android:enabled="false"
                 android:id="@+id/editName"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="תיאור: "
                 android:layout_width="wrap_content"
@@ -83,19 +97,24 @@
             <EditText
                 android:enabled="false"
                 android:id="@+id/editDetails"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="כמות: "
                 android:layout_width="wrap_content"
@@ -105,20 +124,26 @@
                 android:enabled="false"
                 android:inputType="number"
                 android:id="@+id/editMount"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="#000000"
+                />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="יח' מידה: "
                 android:layout_width="wrap_content"
@@ -127,26 +152,14 @@
             <EditText
                 android:enabled="false"
                 android:id="@+id/editSize"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="#000000"/>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
@@ -155,6 +168,7 @@
 
             <TextView
                 android:textStyle="bold"
+                android:textColor="#000099"
                 android:textSize="15dp"
                 android:text="מחיר מטרה: "
                 android:layout_width="wrap_content"
@@ -163,17 +177,62 @@
             <EditText
                 android:enabled="false"
                 android:id="@+id/editPrice"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
-
-            <Button
-                android:id="@+id/btn"
-                android:text="הצעת מחיר"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content" />
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="#000000"/>
 
         </LinearLayout>
+
+        <TextView
+            android:textColor="#66ccff"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="תמונת פריט"
+            android:background="@drawable/round"
+            android:layout_marginBottom="5dp"
+            />
+
+        <RelativeLayout
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:layout_marginBottom="5dp"
+            />
+
+
+        <Button
+            android:id="@+id/btn"
+            android:text="הצעת מחיר"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded3"
+            android:textColor="#ffffff"/>
 
     </LinearLayout>
 

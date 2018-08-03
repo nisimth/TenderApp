@@ -53,7 +53,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private EditText editMqt, editName, editNameProject, editAddress, editContact, editPhone, editEmail, editCredit, editMaam, editDhifot, editHovala;
     private ImageButton uploadFromCam;
     private ImageButton uploadFromGallery;
-    private Button uploadPdf;
+    private ImageButton uploadPdf;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
     String pdfUrlString  = null;
@@ -226,7 +226,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         });
 
 //////////////////////////////////////////////////////////////////////////////////////
-        uploadPdf = view.findViewById(R.id.uploadImage);
+        uploadPdf = view.findViewById(R.id.uploadPdf);
         uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,6 +305,26 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
+      //  final ImageView im = view.findViewById(R.id.image);
+
+// TODO /////////////////////////////////////////////
+        /*myFirebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                url = (String) dataSnapshot.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
+                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "")).child("image").getValue();
+                if (url == "empty"){
+                    im.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return view;
     }
 

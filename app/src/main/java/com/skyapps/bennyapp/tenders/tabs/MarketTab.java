@@ -214,6 +214,7 @@ public class MarketTab extends Fragment {
                         String price = (String) dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username",""))
                                 .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Item" + i).child("Price").getValue();
 
+
                         String details =  (String) dataSnapshot.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category",""))
                                 .child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items").child("item" + i).child("details").getValue();
 
@@ -229,7 +230,7 @@ public class MarketTab extends Fragment {
                                 listData.add(new ItemMarket(number, name, mount, (Long.parseLong(price) * mount) + "", details, mqt, size));
 
                                 prices = (Long.parseLong(price) * mount) + prices;
-                                all_prices.setText("סה''כ עלות: " + prices + " ₪");
+                                all_prices.setText("סה''כ עלות תימחור: " + prices + " ₪");
                             } catch (Exception e){
                                 listData.add(new ItemMarket(number, name, mount, "", details, mqt, size));
 
