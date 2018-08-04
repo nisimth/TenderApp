@@ -98,7 +98,7 @@ public class MyNotificationsActivity extends AppCompatActivity implements Naviga
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ChatTab(), "צ'אטים");
+        adapter.addFragment(new ChatTab(), "הודעות לקוח");
         adapter.addFragment(new WinTab(), "זכיות");
         adapter.addFragment(new NewTab(), "מכרזים חדשים");
         viewPager.setAdapter(adapter);

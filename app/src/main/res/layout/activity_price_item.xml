@@ -147,6 +147,14 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/round"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+        </LinearLayout>
+
         <Button
             android:id="@+id/save"
             android:text="שמור"

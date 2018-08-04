@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         register_text = (TextView) findViewById(R.id.register_text);
-        register_text.setText(Html.fromHtml("<p>במידה ואינך רשום, להרשמה <a href='http://walla.co.il'>לחץ כאן</a></p>"));
+        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים <a href='http://walla.co.il'>לחץ כאן</a></p>"));
         register_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         if (!getSharedPreferences("BennyApp", MODE_PRIVATE).getString("username", "").equals("")){
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (username.getText().toString().equals("") && password.getText().toString().equals("")){
 
-                    Toast.makeText(MainActivity.this, "ישנה בעיה באחד הפרטים, אנא נסה שנית", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "שם המשתמש או הסיסמא שגויים, אנא נסה שנית", Toast.LENGTH_SHORT).show();
                     
                 } else {
                     mProgressDialog = new ProgressDialog(MainActivity.this);

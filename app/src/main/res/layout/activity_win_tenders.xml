@@ -10,7 +10,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:textDirection="rtl">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,10 +28,9 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:textStyle="bold"
@@ -38,21 +38,33 @@
                 android:textSize="35dp"
                 android:text="המכרזים שזכיתי"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
             <TextView
                 android:id="@+id/counter_tender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
                 android:textSize="35dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="270dp"
+                android:layout_marginRight="288dp"
                 />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/coteretwin"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dhifut_check"
+                android:background="@drawable/round"
+                >
 
 
                 <TextView
@@ -62,7 +74,7 @@
                     android:text="מס''ד"
                     android:textSize="15dp"
                     android:textStyle="bold"
-                    tools:textColor="#222b92" />
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
                     android:layout_width="85dp"
@@ -70,7 +82,7 @@
                     android:text="שם חברה"
                     android:textSize="15dp"
                     android:textStyle="bold"
-                    tools:textColor="#222b92" />
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
                     android:layout_width="95dp"
@@ -78,20 +90,19 @@
                     android:text="שם פרוייקט"
                     android:textSize="15dp"
                     android:textStyle="bold"
-                    tools:textColor="#222b92" />
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="זמן שנותר"
+                    android:text="סטטוס"
                     android:textSize="15dp"
                     android:textStyle="bold"
-                    tools:textColor="#222b92" />
-
-
+                    android:textColor="@color/colorPrimaryDark"/>
             </LinearLayout>
 
             <ExpandableListView
+                android:layout_marginTop="10dp"
                 android:id="@+id/listWin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></ExpandableListView>

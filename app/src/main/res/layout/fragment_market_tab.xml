@@ -235,8 +235,11 @@
                 android:layout_weight="0.5"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/round">
 
                <TextView
                    android:textStyle="bold"
@@ -276,7 +279,6 @@
                    android:id="@+id/editComments"
                    android:layout_width="180dp"
                    android:layout_height="wrap_content"
-                   android:text="sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsds"
                    android:textColor="#000099"
                    android:textColorHighlight="#000000"
                    />

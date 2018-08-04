@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/a"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="35dp"
             android:text="מכרזים פרטיים"
             android:layout_width="wrap_content"
@@ -166,7 +166,7 @@
                 android:text="מס''ד"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:layout_width="85dp"
@@ -174,7 +174,7 @@
                 android:text="שם חברה"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:layout_width="95dp"
@@ -182,7 +182,7 @@
                 android:text="שם פרוייקט"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:layout_width="100dp"
@@ -190,7 +190,7 @@
                 android:text="סטטוס"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark"/>
 
 
         </LinearLayout>

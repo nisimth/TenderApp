@@ -10,24 +10,226 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginStart="15dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:textDirection="rtl">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round"
+                >
+                <TextView
+                    android:id="@+id/publicone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="מכרז מספר"
+                    android:textSize="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="75dp"
+                    android:textColor="#66ccff"/>
+                <TextView
+                    android:id="@+id/publictender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="75dp"
+                    android:textColor="#66ccff"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/public_timer_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/round">
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    >
+
+                    <LinearLayout
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="התחלת מכרז: "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:id="@+id/dateStart"
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="19/02/18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000099"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="0.5"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="שעה: "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:id="@+id/timeStart"
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="9:00"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000099"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    >
+
+                    <LinearLayout
+                        android:layout_weight="0.5"
+                        android:layout_marginEnd="55dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="סוף מכרז: "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:id="@+id/dateEnd"
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="21/02/18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000099"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="0.5"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="שעה: "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:id="@+id/timeEnd"
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:text="9:00"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000099"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round"
+
+                    >
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:text="זמן נותר: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        />
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:text="3 Days, 11:05:07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000099"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="10dp"
                 android:id="@+id/title"
                 android:textStyle="bold"
                 android:textSize="25dp"
-                android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="פרטי חברה" />
+                android:text="פרטי חברה"
+                android:background="@drawable/round"
+                android:layout_marginBottom="10dp"/>
+
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -35,9 +237,10 @@
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
-                    android:text="ח.פ. חברה:"
+                    android:text="מס' מכרז:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
                     android:focusable="false"
@@ -45,7 +248,10 @@
                     android:id="@+id/editMqt"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:background="@null"
+                    android:textColor="#000000"
+                    android:layout_marginLeft="5dp"
+                    />
 
             </LinearLayout>
 
@@ -53,22 +259,27 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="שם חברה:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editName"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editName"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -76,22 +287,28 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="שם פרוייקט:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editNameProject"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editNameProject"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"
+                    />
 
             </LinearLayout>
 
@@ -100,22 +317,28 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="כתובת: "
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editAddress"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editAddress"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"
+                    />
 
             </LinearLayout>
 
@@ -123,22 +346,27 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="איש קשר:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editContact"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editContact"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -146,22 +374,27 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="טלפון:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editPhone"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editPhone"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -169,22 +402,27 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="דוא''ל:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+                    android:id="@+id/editEmail"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editEmail"
-                    android:layout_width="150dp"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -192,22 +430,28 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="מחיר מסמכים:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
+
+                    android:id="@+id/editPrice"
                     android:focusable="false"
                     android:enabled="false"
-                    android:id="@+id/editPrice"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -215,271 +459,40 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:text="תיאור:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000099"/>
 
                 <EditText
-                    android:focusable="false"
-                    android:enabled="false"
                     android:id="@+id/editDetails"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="תאריך התחלה:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
                     android:focusable="false"
                     android:enabled="false"
-                    android:inputType="date"
-                    android:id="@+id/editStartDate"
+                    android:singleLine="false"
+                    android:background="@null"
+                    android:textColor="#000000"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="5dp"
+                    />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="תאריך סיום:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:focusable="false"
-                    android:enabled="false"
-                    android:inputType="date"
-                    android:id="@+id/editEndDate"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="שעת התחלה:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:focusable="false"
-                    android:enabled="false"
-                    android:inputType="time"
-                    android:id="@+id/editStartTime"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                android:layout_height="5dp"
+                android:background="@drawable/round">
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="שעת סיום:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:focusable="false"
-                    android:enabled="false"
-                    android:inputType="time"
-                    android:id="@+id/editEndTime"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-           <LinearLayout
-               android:id="@+id/public_timer_details"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="vertical">
-
-               <LinearLayout
-                   android:layout_marginBottom="10dp"
-                   android:orientation="horizontal"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content">
-
-                   <LinearLayout
-                       android:layout_marginEnd="30dp"
-                       android:layout_marginBottom="10dp"
-                       android:orientation="horizontal"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-
-                       <TextView
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="התחלת מכרז: "
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                       <TextView
-                           android:id="@+id/dateStart"
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="19/02/18"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                   </LinearLayout>
-
-                   <LinearLayout
-                       android:layout_weight="0.5"
-                       android:layout_marginBottom="10dp"
-                       android:orientation="horizontal"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-
-                       <TextView
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="שעה: "
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                       <TextView
-                           android:id="@+id/timeStart"
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="9:00"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                   </LinearLayout>
-
-
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_marginBottom="10dp"
-                   android:orientation="horizontal"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content">
-
-                   <LinearLayout
-                       android:layout_weight="0.5"
-                       android:layout_marginEnd="55dp"
-                       android:layout_marginBottom="10dp"
-                       android:orientation="horizontal"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-
-                       <TextView
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="סוף מכרז: "
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                       <TextView
-                           android:id="@+id/dateEnd"
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="21/02/18"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                   </LinearLayout>
-
-                   <LinearLayout
-                       android:layout_weight="0.5"
-                       android:layout_marginBottom="10dp"
-                       android:orientation="horizontal"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-
-                       <TextView
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="שעה: "
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                       <TextView
-                           android:id="@+id/timeEnd"
-                           android:textStyle="bold"
-                           android:textSize="15dp"
-                           android:text="9:00"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-
-                   </LinearLayout>
-
-               </LinearLayout>
-
-
-               <LinearLayout
-                   android:layout_weight="0.5"
-                   android:layout_marginBottom="10dp"
-                   android:orientation="horizontal"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content">
-
-                   <TextView
-                       android:textStyle="bold"
-                       android:textSize="15dp"
-                       android:text="זמן נותר: "
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-
-                   <TextView
-                       android:id="@+id/timer"
-                       android:textStyle="bold"
-                       android:textSize="15dp"
-                       android:text="3 Days, 11:05:07"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-
-               </LinearLayout>
-
-
-
-
-           </LinearLayout>
-            <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:gravity="center"
@@ -490,7 +503,10 @@
                     android:text="לאתר החברה"
                     android:id="@+id/btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded3"
+                    android:textColor="#ffffff"
+                    android:gravity="center"/>
 
             </LinearLayout>
 

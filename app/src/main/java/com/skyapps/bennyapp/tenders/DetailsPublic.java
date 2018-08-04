@@ -28,6 +28,7 @@ public class DetailsPublic extends AppCompatActivity {
     private String site;
 
     private TextView dateStart, timeStart, dateEnd, timeEnd, timer;
+    private TextView pt ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +68,9 @@ public class DetailsPublic extends AppCompatActivity {
                 ((EditText) findViewById(R.id.editEmail)).setText(dataSnapshot.child("email").getValue()+"");
                 ((EditText) findViewById(R.id.editPrice)).setText(dataSnapshot.child("filesprice").getValue()+" ₪");
                 ((EditText) findViewById(R.id.editDetails)).setText(dataSnapshot.child("details").getValue()+"");
+                ((TextView) findViewById(R.id.publictender)).setText(dataSnapshot.child("mqt").getValue()+"");
 
-                ((EditText) findViewById(R.id.editStartDate)).setText(dataSnapshot.child("startDate").getValue()+"");
-                ((EditText) findViewById(R.id.editEndDate)).setText(dataSnapshot.child("endDate").getValue()+"");
-                ((EditText) findViewById(R.id.editStartTime)).setText(dataSnapshot.child("startHour").getValue()+"");
-                ((EditText) findViewById(R.id.editEndTime)).setText(dataSnapshot.child("endHour").getValue()+"");
+
 
                 dateStart.setText(dataSnapshot.child("startDate").getValue()+"");
                 dateEnd.setText(dataSnapshot.child("endDate").getValue()+"");

@@ -62,7 +62,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private ImageButton pdfWebViewBtn;
     /////////////////////////////////////
     private TextView t ;
-
+    ////////////////////////////////////
     private static final int CAMERA_REQUEST_CODE = 69 ;
     private static final int GALLERY_REQUEST_CODE = 70 ;
 
@@ -113,8 +113,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
-
-
 
         /// get the company name  ////
         companyName = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "");

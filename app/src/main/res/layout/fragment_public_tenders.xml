@@ -6,35 +6,40 @@
     tools:context=".tenders.publicTenders">
 
 
-    <LinearLayout
+    <RelativeLayout
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <TextView
+            android:id="@+id/p"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="35dp"
             android:text="מכרזים ציבוריים"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"/>
         <TextView
             android:id="@+id/counter_tender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
             android:textSize="35dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="270dp"
+            android:layout_marginRight="282dp"
             />
 
+
         <LinearLayout
+            android:id="@+id/z"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/counter_tender"
+            android:background="@drawable/round">
 
             <TextView
                 android:layout_marginStart="35dp"
@@ -43,7 +48,7 @@
                 android:text="מס''ד"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark"  />
 
             <TextView
                 android:layout_width="85dp"
@@ -51,7 +56,7 @@
                 android:text="שם חברה"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark"  />
 
             <TextView
                 android:layout_width="95dp"
@@ -59,7 +64,7 @@
                 android:text="שם פרוייקט"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark"  />
 
             <TextView
                 android:layout_width="100dp"
@@ -67,18 +72,20 @@
                 android:text="זמן שנותר"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                tools:textColor="#222b92" />
+                android:textColor="@color/colorPrimaryDark"  />
 
 
         </LinearLayout>
 
 
         <ListView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/z"
             android:textDirection="rtl"
             android:id="@+id/publicList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

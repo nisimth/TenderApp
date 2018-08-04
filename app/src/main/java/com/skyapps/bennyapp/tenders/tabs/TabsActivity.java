@@ -67,7 +67,7 @@ public class TabsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DetailsTab(), "פרטי דרישה");
-        adapter.addFragment(new MarketTab(), "פרטים לתמחור");
+        adapter.addFragment(new MarketTab(), "פריטים לתימחור");
         adapter.addFragment(new ChatFragment(), "הודעות");
         viewPager.setAdapter(adapter);
 
