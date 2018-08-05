@@ -56,7 +56,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
 
-    private EditText editMqt, editName, editNameProject, editAddress, editContact, editPhone, editEmail, editCredit, editMaam, editDhifot, editHovala;
+    private EditText editMqt, editName, editNameProject, editAddress, editContact, editPhone,
+            editEmail, editCredit, editMaam, editDhifot, editHovala;
     private ImageButton uploadFromCam;
     private ImageButton uploadFromGallery;
     private ImageButton uploadPdf;
@@ -69,7 +70,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private static final int FILES_REQUEST_CODE = 100 ;
     private ImageButton pdfWebViewBtn;
     /////////////////////////////////////
-    private TextView t ;
+    private TextView amountOftenders;
     ////////////////////////////////////
     private static final int CAMERA_REQUEST_CODE = 69 ;
     private static final int GALLERY_REQUEST_CODE = 70 ;
@@ -120,7 +121,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         editHovala = view.findViewById(R.id.editHovala);
         editComments = view.findViewById(R.id.editComments);
         editAddressForSend = view.findViewById(R.id.editAddressForSend);
-        t = view.findViewById(R.id.numtender);
+        amountOftenders = view.findViewById(R.id.numtender);
         image = view.findViewById(R.id.image);
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
@@ -162,7 +163,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                         editHovala.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("transit").getValue() + "");
                         editAddressForSend.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("addressforsend").getValue() + "");
                         editComments.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("comments").getValue() + "");
-                        t.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
+                        amountOftenders.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
 
 
 
@@ -179,17 +180,17 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
-        final ImageButton a = view.findViewById(R.id.uploadImageFromGallery);
-        final ImageButton b = view.findViewById(R.id.cam);
-        final TextView c = view.findViewById(R.id.gallery_txt);
-        final TextView f = view.findViewById(R.id.cam_txt);
+        final ImageButton galleryBtn = view.findViewById(R.id.uploadImageFromGallery);
+        final ImageButton cameraBtn = view.findViewById(R.id.cam);
+        final TextView galleryTxt = view.findViewById(R.id.gallery_txt);
+        final TextView cameraTxt = view.findViewById(R.id.cam_txt);
         try {
             //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
-                a.setVisibility(View.INVISIBLE);
-                b.setVisibility(View.INVISIBLE);
-                c.setVisibility(View.INVISIBLE);
-                f.setVisibility(View.INVISIBLE);
+                galleryBtn.setVisibility(View.INVISIBLE);
+                cameraBtn.setVisibility(View.INVISIBLE);
+                galleryTxt.setVisibility(View.INVISIBLE);
+                cameraTxt.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e){
 
@@ -272,18 +273,11 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
         });
 
-
+/////////// open webView on click button /////////////////////
         pdfWebViewBtn = view.findViewById(R.id.pdf_icon);
         pdfWebViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //pdfUrlString = (String) dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                //                                .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                //                                .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
-                //                                .child("Pdf").getValue()
-
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if(pdfUrlString != null){
                     try {
                         openWebPage(pdfUrlString);
@@ -332,15 +326,15 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
             }
         });
-
+        // TODO //
         final ImageButton im = view.findViewById(R.id.pdf_icon);
         final int num = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0);
-        ////////////////////////timer/////////////////
+
+
+        //////////////////////// handle timer /////////////////
         ref3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //Log.e("the datasnap : " , dataSnapshot)
 
                 dateStart.setText(dataSnapshot.child("startTender").getValue()+"");
                 dateEnd.setText(dataSnapshot.child("endTender").getValue()+"");
@@ -348,7 +342,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 timeEnd.setText(dataSnapshot.child("timeEnd").getValue()+"");
 
                 long timerFireBase = calcTimer(dateEnd.getText().toString(),timeEnd.getText().toString());
-                //long timerFireBase = 10000000;
 
                 if(calcTimer(dateStart.getText().toString(),timeStart.getText().toString())>=0){
                     timer.setText("טרם התחיל");
@@ -422,56 +415,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
-// TODO /////////////////////////////////////////////
-       /* myFirebaseRef.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                /*url = (String) dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                        .child("מכרז"+getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue();*/
-
-                //Log.e("the number is : " ,  + "");
-
-                /*if ( dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                        .child("מכרז"+num).getValue()==null){
-                    im.setVisibility(View.INVISIBLE);
-                } else {
-
-                        if ( dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                                .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                                .child("מכרז"+num).child("Pdf").getValue().equals("empty")){
-                            im.setVisibility(View.INVISIBLE);
-                        }
-
-                }*/
-
-                /*if (dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                        .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
-                        .child("Pdf").getValue() != null) {
-
-
-
-
-                } else {
-
-                    /*myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
-                            .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
-                            .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
-                            .child("Pdf").setValue("empty");*/
-
-               //     im.setVisibility(View.INVISIBLE);
-             //   }
-           // }
-
-           // @Override
-           // public void onCancelled(FirebaseError firebaseError) {
-
-          //  }
-       // });*/
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return view;
     }
 
@@ -486,6 +429,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         if(requestCode == CAMERA_REQUEST_CODE){
             if(grantResults[0] ==   PackageManager.PERMISSION_GRANTED){
                 invokeCamera();
@@ -511,6 +455,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         mProgressDialog.setMessage("מעלה את התמונה שלך ושומר אותה...");
         mProgressDialog.show();
 
+        /////// onActivityResult for camera & gallery ////////
         if( (requestCode == CAMERA_REQUEST_CODE &&  resultCode == RESULT_OK)
                 || (requestCode == GALLERY_REQUEST_CODE &&  resultCode == RESULT_OK)  ){
 
@@ -569,6 +514,8 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         } else {
             mProgressDialog.dismiss();
         }
+
+        //////  onActivityResult for selecting PDF file /////////
         if( requestCode == FILES_REQUEST_CODE && resultCode == RESULT_OK && data != null ){
             boolean c ;
             try{
@@ -592,14 +539,14 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         }
 
     }
-    ////////////////////////// new 28.07.2018 ////////////////////////////////////////////////
+    ////////////////////////// Intent for picking PDF file /////////////////////////////////////////
     private void selectPdf(){
         Intent pdfIntent = new Intent();
         pdfIntent.setType("application/pdf");
         pdfIntent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(pdfIntent,FILES_REQUEST_CODE);
     }
-
+    ///////////////////////// loading process of PDF file //////////////////////
     private void pdfLoader(Uri pdfUrl){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://tenders-83c71.appspot.com/");
@@ -630,6 +577,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
 
     }
+    ///////// opens webView //////////////
     public void openWebPage(String url) {
         if(url != null) {
             Uri webPage = Uri.parse(url);

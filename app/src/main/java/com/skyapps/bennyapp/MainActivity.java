@@ -25,7 +25,7 @@ import com.skyapps.bennyapp.tenders.TendersActivity;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView register_text;
+    private TextView register_text; // message for user abaut  username & password
     private Button enter;
     private EditText username, password;
     private ProgressDialog mProgressDialog;
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים <a href='http://walla.co.il'>לחץ כאן</a></p>"));
         register_text.setMovementMethod(LinkMovementMethod.getInstance());
 
+        //// check if username & password are not empty - if not moves him to Tender activity
         if (!getSharedPreferences("BennyApp", MODE_PRIVATE).getString("username", "").equals("")){
             Log.e("the user : ",getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
             getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("activity" , "").commit();
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Firebase.setAndroidContext(MainActivity.this);
                     final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
-
                     final Firebase ref = myFirebaseRef.child("users");
 
 
