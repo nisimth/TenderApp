@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -164,6 +165,22 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
             }
         });
+
+        final ImageButton a = view.findViewById(R.id.uploadImageFromGallery);
+        final ImageButton b = view.findViewById(R.id.cam);
+        final TextView c = view.findViewById(R.id.gallery_txt);
+        final TextView f = view.findViewById(R.id.cam_txt);
+        try {
+            //// check if it Tender win if yes : hides d layout
+            if (TabsActivity.finall.equals("Final")) {
+                a.setVisibility(View.INVISIBLE);
+                b.setVisibility(View.INVISIBLE);
+                c.setVisibility(View.INVISIBLE);
+                f.setVisibility(View.INVISIBLE);
+            }
+        } catch (Exception e){
+
+        }
 /////////////////////////////// retrive image url from fireBase //////////////////////////////////////////
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -303,25 +320,58 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
-      //  final ImageView im = view.findViewById(R.id.image);
+        final ImageButton im = view.findViewById(R.id.pdf_icon);
+        final int num = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0);
 
 // TODO /////////////////////////////////////////////
-        /*myFirebaseRef.addValueEventListener(new ValueEventListener() {
+       /* myFirebaseRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                url = (String) dataSnapshot.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
-                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "")).child("image").getValue();
-                if (url == "empty"){
+                /*url = (String) dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                        .child("מכרז"+getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue();*/
+
+                //Log.e("the number is : " ,  + "");
+
+                /*if ( dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                        .child("מכרז"+num).getValue()==null){
                     im.setVisibility(View.INVISIBLE);
-                }
-            }
+                } else {
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
+                        if ( dataSnapshot.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                                .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                                .child("מכרז"+num).child("Pdf").getValue().equals("empty")){
+                            im.setVisibility(View.INVISIBLE);
+                        }
 
-            }
-        });*/
+                }*/
+
+                /*if (dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                        .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                        .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                        .child("Pdf").getValue() != null) {
+
+
+
+
+                } else {
+
+                    /*myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                            .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                            .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                            .child("Pdf").setValue("empty");*/
+
+               //     im.setVisibility(View.INVISIBLE);
+             //   }
+           // }
+
+           // @Override
+           // public void onCancelled(FirebaseError firebaseError) {
+
+          //  }
+       // });*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return view;
     }

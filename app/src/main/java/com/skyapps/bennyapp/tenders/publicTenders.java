@@ -126,9 +126,6 @@ public class publicTenders extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-
                 //Primium
                 if (getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("premium")){
                     Tender t = (Tender) parent.getItemAtPosition(position);
@@ -160,6 +157,7 @@ public class publicTenders extends Fragment {
 
             }
         });
+
 
         return view;
     }

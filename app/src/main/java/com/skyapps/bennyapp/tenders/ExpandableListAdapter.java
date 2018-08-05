@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
@@ -95,20 +99,43 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    Intent i = new Intent(_context, TabsActivity.class);
+                   /* Intent i = new Intent(_context, TabsActivity.class);
                     i.putExtra("name", item.getName());
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+*/
 
-                    /*if(){
-                        //TODO i.putExtra("Final", "Final");
-                    }*/
+                    final Intent i = new Intent(_context, TabsActivity.class);
 
+                    final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                            _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +  item.getCompany() +
+                    "/מכרז" + item.getNum());
 
+                    userFirebise.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
+                                i.putExtra("name", item.getName());
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
 
-                    //_context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("tender", item.getTender()).commit();
-                    Log.e("the num now : " , item.getNum()+"");
-                    _context.startActivity(i);
+                                i.putExtra("Final", "Final");
+                                _context.startActivity(i);
+                            } else {
+                                i.putExtra("name", item.getName());
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+                                _context.startActivity(i);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+                    //_context.startActivity(i);
                 }
             });
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -157,6 +158,7 @@ public class privateTenders extends Fragment {
 
         Firebase.setAndroidContext(getContext());
         final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","") + "/");
+        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin");
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("אנא המתן...");
@@ -196,7 +198,10 @@ public class privateTenders extends Fragment {
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
                             num));
-                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+
+                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+
+
                         i++;
                         //ExpandableListAdapter.countAll = i;
 
@@ -646,6 +651,13 @@ public class privateTenders extends Fragment {
         });
 
 
+       /* expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+
+            }
+        });*/
 
 
 

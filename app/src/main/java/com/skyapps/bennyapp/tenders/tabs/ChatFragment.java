@@ -38,7 +38,8 @@ public class ChatFragment extends Fragment {
         Firebase.setAndroidContext(getContext());
         user = getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("username" , "");
         company =  getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("company" , "");
-        String line = "https://tenders-83c71.firebaseio.com/chats/" + user + "/" + company;
+        int num =  getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getInt("num" , 0);
+        String line = "https://tenders-83c71.firebaseio.com/chats/" + user + "/" + company + "/מכרז" + num;
         final Firebase ref1 = new Firebase(line);
 
         mProgressDialog = new ProgressDialog(getContext());
