@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -105,8 +106,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
 */
 
+//////////////////////////////////// check if tender is win and hide layout in market fragment //////////////////////////////////////
                     final Intent i = new Intent(_context, TabsActivity.class);
-
                     final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                             _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +  item.getCompany() +
                     "/מכרז" + item.getNum());
@@ -134,8 +135,37 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                         }
                     });
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //_context.startActivity(i);
+//////////////////////////////////////// check if tender is loss and hide layout in market fragment ////////////
+                    final Intent u = new Intent(_context, TabsActivity.class);
+                    final Firebase userlossFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                            _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +  item.getCompany() +
+                            "/מכרז" + item.getNum());
+
+                    userlossFirebise.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")){
+                                i.putExtra("name", item.getName());
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+
+                                i.putExtra("Final", "Final");
+                                _context.startActivity(i);
+                            } else {
+                                i.putExtra("name", item.getName());
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
+                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+                                _context.startActivity(i);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                 }
             });
 

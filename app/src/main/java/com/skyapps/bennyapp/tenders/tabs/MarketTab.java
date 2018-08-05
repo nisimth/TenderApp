@@ -116,10 +116,12 @@ public class MarketTab extends Fragment {
 
         final LinearLayout d = view.findViewById(R.id.market_details);
 
+
         try {
             //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
                 d.setVisibility(View.INVISIBLE);
+
             }
         } catch (Exception e){
 
@@ -150,6 +152,7 @@ public class MarketTab extends Fragment {
                         if (sampleString[i].equals(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))) {
                             Log.e("im here: ", "yes!!!");
                             d.setVisibility(View.INVISIBLE);
+                            //z.setVisibility(View.VISIBLE);
 
 
                         } else {
