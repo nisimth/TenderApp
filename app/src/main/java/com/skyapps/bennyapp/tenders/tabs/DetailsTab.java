@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +45,11 @@ import com.skyapps.bennyapp.SelectPhotoDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -55,6 +60,8 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     private ImageButton uploadFromCam;
     private ImageButton uploadFromGallery;
     private ImageButton uploadPdf;
+
+    private TextView dateStart, timeStart, dateEnd, timeEnd, timer;
     ///////// new 28.07.2018 ////////////
     private Uri pdfUrl ;
     String pdfUrlString  = null;
@@ -95,6 +102,11 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_details_tab, container, false);
+        dateStart = view.findViewById(R.id.dateStart);
+        timeStart = view.findViewById(R.id.timeStart);
+        dateEnd = view.findViewById(R.id.dateEnd);
+        timeEnd = view.findViewById(R.id.timeEnd);
+        timer = view.findViewById(R.id.timer);
         editMqt = view.findViewById(R.id.editMqt);
         editName = view.findViewById(R.id.editName);
         editNameProject = view.findViewById(R.id.editNameProject);
@@ -123,6 +135,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         final Firebase ref = myFirebaseRef.child("Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
                 .getString("category","") + "/" );
         final Firebase ref2 = myFirebaseRef.child("users");
+        final Firebase ref3 = myFirebaseRef.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Info");
 
         ((EditText)view.findViewById(R.id.category)).setText(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
                 .getString("category",""));
@@ -322,6 +335,92 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
         final ImageButton im = view.findViewById(R.id.pdf_icon);
         final int num = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0);
+        ////////////////////////timer/////////////////
+        ref3.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //Log.e("the datasnap : " , dataSnapshot)
+
+                dateStart.setText(dataSnapshot.child("startTender").getValue()+"");
+                dateEnd.setText(dataSnapshot.child("endTender").getValue()+"");
+                timeStart.setText(dataSnapshot.child("timeStart").getValue()+"");
+                timeEnd.setText(dataSnapshot.child("timeEnd").getValue()+"");
+
+                long timerFireBase = calcTimer(dateEnd.getText().toString(),timeEnd.getText().toString());
+                //long timerFireBase = 10000000;
+
+                if(calcTimer(dateStart.getText().toString(),timeStart.getText().toString())>=0){
+                    timer.setText("טרם התחיל");
+                }
+                else if(timerFireBase<=0){
+                    timer.setText("עבר הזמן");
+                }
+                else {
+
+                    new CountDownTimer(timerFireBase, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+                            long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                            millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+
+                            long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                            millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                            long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                            millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                            long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+
+
+                            if (days == 0) {
+                                if (hours == 0) {
+                                    timer.setText(minutes + ":" + seconds);
+                                } else {
+                                    timer.setText(hours + ":" + minutes + ":" + seconds);
+                                }
+                            } else if (hours == 0) {
+                                timer.setText(minutes + ":" + seconds);
+                            } else {
+                                timer.setText(days + " ימים , " + hours + ":" + minutes + ":" + seconds);
+                            }
+
+                        }
+
+                        public void onFinish() {
+                            timer.setText("עבר הזמן");
+                        }
+
+                    }.start();
+                }
+
+
+            }
+            private Long calcTimer(String endDate, String endTime)  {
+                String time = endDate + " " + endTime;
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+                Date d = null;
+                Date currentDate = Calendar.getInstance().getTime();
+                Long diff = null;
+                try {
+                    d = df.parse(time);
+                    diff = d.getTime() - currentDate.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                return diff;
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 // TODO /////////////////////////////////////////////
        /* myFirebaseRef.child("users").addValueEventListener(new ValueEventListener() {
