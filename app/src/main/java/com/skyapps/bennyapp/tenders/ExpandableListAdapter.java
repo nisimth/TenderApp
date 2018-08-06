@@ -9,8 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
@@ -90,20 +95,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-
+            //// more DetailsBtn ///
             convertView.findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Intent i = new Intent(_context, TabsActivity.class);
-                    i.putExtra("name", item.getName());
-                    _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
-                    _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
-                    _context.startActivity(i);
-
-
-//////////////////////////////////// check if tender is win and hide layout in market fragment //////////////////////////////////////
-                   /* final Intent i = new Intent(_context, TabsActivity.class);
+//////////////////////////////////// check if tender is win and send in putExtra "final"  //////////////////////////////////////
+                    final Intent i = new Intent(_context, TabsActivity.class);
                     final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                             _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +  item.getCompany() +
                     "/מכרז" + item.getNum());
@@ -118,6 +115,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                                 i.putExtra("Final", "Final");
                                 _context.startActivity(i);
+
                             } else {
                                 i.putExtra("name", item.getName());
                                 _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
@@ -132,7 +130,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         }
                     });
 
-//////////////////////////////////////// check if tender is loss and hide layout in market fragment ////////////
+//////////////////////////////////////// check if tender is loss and send in putExtra "final" ////////////
                     final Intent u = new Intent(_context, TabsActivity.class);
                     final Firebase userlossFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                             _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +  item.getCompany() +
@@ -160,7 +158,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         public void onCancelled(FirebaseError firebaseError) {
 
                         }
-                    });*/
+                    });
                 }
             });
 
@@ -193,7 +191,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         final Tender tender = (Tender) getGroup(groupPosition);
-        final Intent i = new Intent(_context, TabsActivity.class);
         //Log.e("count", count + "");
         //count++;
 
@@ -258,13 +255,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         if (tender.calcStarts()  >= 0) {
             time.setText("טרם\nהתחיל");
-            //i.putExtra("Final", "Final");
-           //_context.startActivity(i);
 
         } else if (tender.calcEnds() <= 0) {
             time.setText("עבר הזמן");
-            //i.putExtra("Final", "Final");
-            //_context.startActivity(i);
         }
         else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
             time.setText("עומד\n להגמר");

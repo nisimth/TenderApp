@@ -19,6 +19,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.skyapps.bennyapp.tenders.notificationstabs.MyNotificationsActivity;
 
 public class FireBaseBackgroundService extends IntentService {
 
@@ -74,8 +75,6 @@ public class FireBaseBackgroundService extends IntentService {
 
     private void postNotif(String notifString , String messageString) {
 
-        //Toast.makeText(this,  "הודעה חדשה , " + notifString, Toast.LENGTH_SHORT).show();
-
         final int NOTIFY_ID = 1002;
 
         // There are hardcoding only for show it's just strings
@@ -104,7 +103,7 @@ public class FireBaseBackgroundService extends IntentService {
             }
             builder = new NotificationCompat.Builder(this, id);
 
-            intent = new Intent(this, MainActivity.class);
+            intent = new Intent(this, MyNotificationsActivity.class); // TODO
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
@@ -120,7 +119,7 @@ public class FireBaseBackgroundService extends IntentService {
 
             builder = new NotificationCompat.Builder(this);
 
-            intent = new Intent(this, MainActivity.class);
+            intent = new Intent(this, MyNotificationsActivity.class); // TODO
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 

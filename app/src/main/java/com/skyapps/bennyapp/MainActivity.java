@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("the user : ",getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
             getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("activity" , "").commit();
 
+            // go to TenderActivity //
             startActivity(new Intent(MainActivity.this , TendersActivity.class));
             finish();
         }

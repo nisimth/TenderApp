@@ -37,6 +37,7 @@ public class NewTab extends Fragment {
         listData = new ArrayList<ItemNotification>();
 
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from firebase to EditTexts...
+        // put the message about new income Tender in list view
         myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", "") + "/MyNotifications/newtenders");
 
@@ -45,7 +46,6 @@ public class NewTab extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 listData.clear();
-
 
                 try {
 

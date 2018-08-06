@@ -86,11 +86,6 @@ public class MyNotificationsActivity extends AppCompatActivity implements Naviga
         image_user = navigationView.getHeaderView(0).findViewById(R.id.image_user);
 
 
-        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        //mViewPager = (ViewPager) findViewById(R.id.container);
-        //mViewPager.setAdapter(mSectionsPagerAdapter);
-
 
     }
 
