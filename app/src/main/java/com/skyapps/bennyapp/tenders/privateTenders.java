@@ -37,8 +37,8 @@ import java.util.List;
 
 
 public class privateTenders extends Fragment {
-    ////////////new/////////////
 
+    ////////////new/////////////
     private int tenderCounter = 0;
     private TextView counter;
     ////////////////////////////
@@ -51,7 +51,6 @@ public class privateTenders extends Fragment {
     private ProgressDialog mProgressDialog;
 
     int lastPosition = -1;
-
 
     ImageButton filterStartDate;
     ImageButton filterEndDate;
@@ -78,8 +77,11 @@ public class privateTenders extends Fragment {
 
         filterStartDate = (ImageButton) view.findViewById(R.id.filter_start_date_btn) ;
         filterEndDate = (ImageButton) view.findViewById(R.id.filter_end_date_btn);
+
         searchBtn = (Button) view.findViewById(R.id.search_btn);
+
         resetSearchBtn = (Button) view.findViewById(R.id.reset_filter_btn);
+
 
         lowCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_low);
         highCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_high);
@@ -120,9 +122,6 @@ public class privateTenders extends Fragment {
         filterEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*android.support.v4.app.DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getFragmentManager(),"date picker");*/
-
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -130,8 +129,6 @@ public class privateTenders extends Fragment {
 
                 DatePickerDialog dialog = new DatePickerDialog(getContext(), end_dateListener,year,month, day);
                 dialog.show();
-
-
             }
         });
 
@@ -153,6 +150,7 @@ public class privateTenders extends Fragment {
                 Log.e("end_selcted_date",date);
             }
         };
+
         listDataHeader = new ArrayList<Tender>();
         listDataChild = new HashMap<Tender, List<Item>>();
 
@@ -174,9 +172,7 @@ public class privateTenders extends Fragment {
                 listDataHeader.clear();
                 listDataChild.clear();
 
-
                 for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
-
                     for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
                         tenderCounter ++;
                         listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
@@ -185,25 +181,17 @@ public class privateTenders extends Fragment {
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
-
-
-
-
-                    ));
-
-
+                        ));
                         List<Item> list = new ArrayList<Item>();
-                    list.add(new Item(postSnapshot.getKey() + "",
+
+                        list.add(new Item(postSnapshot.getKey() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("contact").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
                             num));
-
                         listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
 
-
                         i++;
-                        //ExpandableListAdapter.countAll = i;
 
                     }
 

@@ -70,14 +70,10 @@ public class MarketTab extends Fragment {
         timer = view.findViewById(R.id.timer);
         all_prices = view.findViewById(R.id.all_prices);
         editComments = view.findViewById(R.id.editComments);
-        /*ImageView img = view.findViewById(R.id.gotoPrice);
-        img.getLayoutParams().height = 20;
-        img.getLayoutParams().width = 20;*/
 
 
 
         final ImageView image = view.findViewById(R.id.image);
-
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,30 +84,24 @@ public class MarketTab extends Fragment {
                 ImageView img = (ImageView) dialog.findViewById(R.id.imageview);
                 Glide.with(getContext()).load(url).into(img);
 
-
                 Button btn = (Button) dialog.findViewById(R.id.btn);
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        //getActivity().finish();
                         dialog.dismiss();
 
                     }
                 });
-
                 dialog.show();
 
             }
         });
 
-        //Log.e("taltestme : " , getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company",""));
 
 
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from firebase to EditTexts...
         myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
-        //Log.e("taltest : " , getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category",""));
-        //Log.e("taltest : " , getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company",""));
+
         final Firebase ref = myFirebaseRef.child("Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items");
         final Firebase ref2 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0));
         final Firebase ref4 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child("TenderWin");
@@ -120,7 +110,7 @@ public class MarketTab extends Fragment {
 
 
         try {
-            //// check if it Tender win if yes : hides d layout
+            //// check if it Tender win if yes : hides d layout in TenderWin activity
             if (TabsActivity.finall.equals("Final")) {
                 d.setVisibility(View.INVISIBLE);
                 all_prices.setText("זכית במכרז");
@@ -137,12 +127,6 @@ public class MarketTab extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int i = 0;
-                /*long count = dataSnapshot.getChildrenCount();
-
-                for (int i = 0; i <= count; i++) {
-                    Log.e("the children : ", count + ", the name : " + dataSnapshot.child().getKey());
-
-                }*/
 
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
                 int length = (int) dataSnapshot.getChildrenCount();
@@ -188,7 +172,6 @@ public class MarketTab extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 prices = 0;
-                //listData.removeAll();
                 listData.clear();
 
 
@@ -521,7 +504,7 @@ public class MarketTab extends Fragment {
         refcounter.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                counter = dataSnapshot.getChildrenCount() - 3; // TODO -3
+                counter = dataSnapshot.getChildrenCount() - 3; //
             }
 
             @Override

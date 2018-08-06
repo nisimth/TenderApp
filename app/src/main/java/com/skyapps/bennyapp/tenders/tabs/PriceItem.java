@@ -35,7 +35,6 @@ public class PriceItem extends AppCompatActivity {
 
         final String comments = getIntent().getStringExtra("comments");
         editPriceUser.setText(getIntent().getStringExtra("priceUser"));
-        //editPrice.setText(getIntent().getLongExtra("price",0) + "");
 
 
         final int mount = getIntent().getIntExtra("mount",0);

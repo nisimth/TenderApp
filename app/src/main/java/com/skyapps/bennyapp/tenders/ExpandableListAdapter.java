@@ -131,8 +131,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                         }
                     });
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    //_context.startActivity(i);
+
 //////////////////////////////////////// check if tender is loss and hide layout in market fragment ////////////
                     final Intent u = new Intent(_context, TabsActivity.class);
                     final Firebase userlossFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +

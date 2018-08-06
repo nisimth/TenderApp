@@ -58,14 +58,6 @@ public class TendersActivity extends AppCompatActivity
         toolbar.setNavigationIcon(R.mipmap.ic_menu_foreground);
         setSupportActionBar(toolbar);
 
-        /*ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
-
-        List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
-
-        if(taskList.get(0).numActivities == 1 &&
-                taskList.get(0).topActivity.getClassName().equals(this.getClass().getName())) {
-            //Log.i(TAG, "This is last activity in the stack");
-        }*/
 
         if (getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("activity" , "").equals("tabs")
                 || getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("activity" , "").equals("tabs1")){
@@ -73,10 +65,8 @@ public class TendersActivity extends AppCompatActivity
         }
 
 
-
+        ///// if no internet show dialog with message " no internet "
         if (isNetworkConnected() == false) {
-
-
             final Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.dialog4);
 
@@ -84,29 +74,23 @@ public class TendersActivity extends AppCompatActivity
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     finish();
 
                 }
             });
-
             dialog.show();
-
         }
 
         Intent i = new Intent("mybroad.tal");
         Log.e("swipeActivity","mybroad...");
         sendBroadcast(i);
 
-        //Intent i2 = new Intent(this,FireBaseBackgroundService.class);
-        //startService(i2);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        //drawer.openDrawer(Gravity.START);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
