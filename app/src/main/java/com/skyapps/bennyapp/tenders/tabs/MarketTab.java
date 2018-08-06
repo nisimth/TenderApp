@@ -40,6 +40,7 @@ public class MarketTab extends Fragment {
     private TextView dateStart, timeStart, dateEnd, timeEnd, timer , all_prices;
     private EditText editComments;
 
+
     private CustomMarketAdapter customMarketAdapter;
     private ArrayList<ItemMarket> listData;
 
@@ -56,10 +57,11 @@ public class MarketTab extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_market_tab, container, false);
+        final View view = inflater.inflate(R.layout.fragment_market_tab, container, false);
 
         list = view.findViewById(R.id.list);
         listData = new ArrayList<ItemMarket>();
+
 
         dateStart = view.findViewById(R.id.dateStart);
         timeStart = view.findViewById(R.id.timeStart);
@@ -121,6 +123,7 @@ public class MarketTab extends Fragment {
             //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
                 d.setVisibility(View.INVISIBLE);
+                all_prices.setText("זכית במכרז");
 
             }
         } catch (Exception e){
@@ -279,11 +282,23 @@ public class MarketTab extends Fragment {
                 long timerFireBase = calcTimer(dateEnd.getText().toString(),timeEnd.getText().toString());
                 //long timerFireBase = 10000000;
 
+                ;
+
                 if(calcTimer(dateStart.getText().toString(),timeStart.getText().toString())>=0){
                     timer.setText("טרם התחיל");
+                    d.setVisibility(View.INVISIBLE);
+                    //list.setVisibility(View.INVISIBLE);
+                    if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
+                        all_prices.setText("המכרז טרם התחיל");
+                    }
                 }
                 else if(timerFireBase<=0){
                     timer.setText("עבר הזמן");
+                    d.setVisibility(View.INVISIBLE);
+                    //list.setVisibility(View.INVISIBLE);
+                    if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
+                        all_prices.setText("המכרז נגמר");
+                    }
                 }
                 else {
 
