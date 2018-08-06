@@ -103,7 +103,9 @@ public class FireBaseBackgroundService extends IntentService {
             }
             builder = new NotificationCompat.Builder(this, id);
 
-            intent = new Intent(this, MyNotificationsActivity.class); // TODO
+            // TODO open the right fragment form list view
+            
+            intent = new Intent(this, MyNotificationsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
