@@ -38,14 +38,18 @@ public class FireBaseBackgroundService extends IntentService {
         Log.e("test","app in " + "https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         Log.e("Service","mybroad...");
         Firebase.setAndroidContext(this);
-        final Firebase ref = new Firebase("https://tenders-83c71.firebaseio.com/users/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", "")).child("MyNotifications");
+        final Firebase ref = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", "")).child("MyNotifications");
 
-        Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/notification/"
+                + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.e("test","app change in " + "https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+                Log.e("test","app change in " + "https://tenders-83c71.firebaseio.com/notification/"
+                        + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
                 if (dataSnapshot.child("username").getValue()!=null && dataSnapshot.child("message").getValue()!=null) {
 
                         postNotif(dataSnapshot.child("username").getValue()+"" , dataSnapshot.child("message").getValue()+"");
@@ -72,7 +76,7 @@ public class FireBaseBackgroundService extends IntentService {
     }
 
 
-
+                           // company name       the message
     private void postNotif(String notifString , String messageString) {
 
         final int NOTIFY_ID = 1002;
@@ -104,7 +108,7 @@ public class FireBaseBackgroundService extends IntentService {
             builder = new NotificationCompat.Builder(this, id);
 
             // TODO open the right fragment form list view
-            
+
             intent = new Intent(this, MyNotificationsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
