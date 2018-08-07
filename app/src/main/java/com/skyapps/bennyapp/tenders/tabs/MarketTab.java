@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MarketTab extends Fragment {
     private ListView list;
-    private TextView dateStart, timeStart, dateEnd, timeEnd, timer , all_prices;
+    private TextView dateStart, timeStart, dateEnd, timeEnd, timer , all_prices, status;
     private EditText editComments;
 
 
@@ -69,6 +69,7 @@ public class MarketTab extends Fragment {
         timeEnd = view.findViewById(R.id.timeEnd);
         timer = view.findViewById(R.id.timer);
         all_prices = view.findViewById(R.id.all_prices);
+        status = view.findViewById(R.id.status);
         editComments = view.findViewById(R.id.editComments);
 
 
@@ -108,24 +109,43 @@ public class MarketTab extends Fragment {
 */
         final LinearLayout d = view.findViewById(R.id.market_details);
 
+///////////// check if tender is loss hide timer layout /////////////////
+        final Firebase userFirebise1 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        userFirebise1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                 if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                     d.setVisibility(View.INVISIBLE);
+                     status.setText("הפסדת במכרז");
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
-///////////// check if tender is win/loss and hide timer layout /////////////////
-        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+///////////// check if tender is win hide timer layout /////////////////
+        final Firebase userFirebise2 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
                 "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
 
-        userFirebise.addValueEventListener(new ValueEventListener() {
+        userFirebise2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
-                               d.setVisibility(View.INVISIBLE);
-                    all_prices.setText("זכית במכרז");
-
+                    d.setVisibility(View.INVISIBLE);
+                    status.setText("זכית במכרז");
                 } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
                     d.setVisibility(View.INVISIBLE);
-                    all_prices.setText("הפסדת במכרז");
+                    status.setText("הפסדת במכרז");
                 }
             }
 

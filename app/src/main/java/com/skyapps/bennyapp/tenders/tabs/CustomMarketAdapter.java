@@ -73,20 +73,38 @@ public class CustomMarketAdapter extends ArrayAdapter<ItemMarket> {
 
         final ImageView gotoPrice = rowView.findViewById(R.id.gotoPrice);
 
-        ///////////// check if tender is win/loss and hide gotoPrice button/////////////////
-        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+        ///////////// check if tender is loss and hide timer layout /////////////////
+        final Firebase userFirebise1 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        userFirebise1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                    gotoPrice.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        ///////////// check if tender is win and hide gotoPrice button/////////////////
+        final Firebase userFirebise2 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
                 "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
 
-        userFirebise.addValueEventListener(new ValueEventListener() {
+        userFirebise2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
                     gotoPrice.setVisibility(View.INVISIBLE);
 
-                } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
-                    gotoPrice.findViewById(R.id.gotoPrice).setVisibility(View.INVISIBLE);
                 }
             }
 

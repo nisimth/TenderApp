@@ -198,14 +198,37 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
         }
 
+///////////// check if tender is loss and hide timer layout /////////////////
+        final Firebase userFirebise1 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
 
-///////////// check if tender is win/loss and hide buttons /////////////////
-        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+        userFirebise1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                    galleryBtn.setVisibility(View.INVISIBLE);
+                    cameraBtn.setVisibility(View.INVISIBLE);
+                    galleryTxt.setVisibility(View.INVISIBLE);
+                    cameraTxt.setVisibility(View.INVISIBLE);
+                    pdfBtn.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+///////////// check if tender is win and hide buttons /////////////////
+        final Firebase userFirebise2 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
                 "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
 
-        userFirebise.addValueEventListener(new ValueEventListener() {
+        userFirebise2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
@@ -215,12 +238,6 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                     cameraTxt.setVisibility(View.INVISIBLE);
                     pdfBtn.setVisibility(View.INVISIBLE);
 
-                } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
-                    galleryBtn.setVisibility(View.INVISIBLE);
-                    cameraBtn.setVisibility(View.INVISIBLE);
-                    galleryTxt.setVisibility(View.INVISIBLE);
-                    cameraTxt.setVisibility(View.INVISIBLE);
-                    pdfBtn.setVisibility(View.INVISIBLE);
                 }
             }
 

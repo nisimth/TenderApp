@@ -131,7 +131,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         final Tender tender = (Tender) getGroup(groupPosition);
-        final Intent i = new Intent(_context, TabsActivity.class);
+
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
