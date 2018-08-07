@@ -11,14 +11,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.Objects.ItemMarket;
 import com.skyapps.bennyapp.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CustomMarketAdapter extends ArrayAdapter<ItemMarket> {
     private ArrayList<ItemMarket> dataSet;
     Context mContext;
+    private String dateStart, timeStart, dateEnd, timeEnd;
 
     public CustomMarketAdapter(ArrayList<ItemMarket> data, Context context) {
         super(context, R.layout.marketitem, data);
@@ -61,6 +70,81 @@ public class CustomMarketAdapter extends ArrayAdapter<ItemMarket> {
 
         }
 
+
+        final ImageView gotoPrice = rowView.findViewById(R.id.gotoPrice);
+
+        ///////////// check if tender is win/loss and hide gotoPrice button/////////////////
+        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        userFirebise.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
+                    gotoPrice.setVisibility(View.INVISIBLE);
+
+                } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                    gotoPrice.findViewById(R.id.gotoPrice).setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        ///////////// check if tender not started yet/over and hide gotoPrice button /////////////////
+        Firebase.setAndroidContext(getContext());
+        final Firebase tenderFireBase = new Firebase("https://tenders-83c71.firebaseio.com/Tenders/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","") + "/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","") +
+                "/" + "מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        tenderFireBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String startTender = dataSnapshot.child("Info").child("startTender").getValue()+"";
+                String endTender =  dataSnapshot.child("Info").child("endTender").getValue()+"";
+                String timeStart =  dataSnapshot.child("Info").child("timeStart").getValue()+"";
+                String timeEnd =  dataSnapshot.child("Info").child("timeEnd").getValue()+"";
+
+                if(calcTimer(startTender,timeStart) >= 0){
+                    gotoPrice.setVisibility(View.INVISIBLE);
+
+                }
+                else if(calcTimer(endTender,timeEnd) <= 0){
+                    gotoPrice.setVisibility(View.INVISIBLE);
+                }
+
+            }
+            private Long calcTimer(String endDate, String endTime)  {
+                String time = endDate + " " + endTime;
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+                Date d = null;
+                Date currentDate = Calendar.getInstance().getTime();
+                Long diff = null;
+                try {
+                    d = df.parse(time);
+                    diff = d.getTime() - currentDate.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                return diff;
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         rowView.findViewById(R.id.gotoPrice).setOnClickListener(new View.OnClickListener() {
             @Override

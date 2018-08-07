@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -175,6 +174,8 @@ public class privateTenders extends Fragment {
                 for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
                     for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
                         tenderCounter ++;
+                        String status;
+
                         listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
@@ -188,7 +189,10 @@ public class privateTenders extends Fragment {
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("contact").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
                             snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
-                            num));
+                            num ));
+
+
+
                         listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
 
                         i++;

@@ -102,61 +102,31 @@ public class MarketTab extends Fragment {
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from firebase to EditTexts...
         myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
 
-        final Firebase ref = myFirebaseRef.child("Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items");
+        /*final Firebase ref = myFirebaseRef.child("Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items");
         final Firebase ref2 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0));
         final Firebase ref4 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child("TenderWin");
-
+*/
         final LinearLayout d = view.findViewById(R.id.market_details);
 
 
-        try {
-            //// check if it Tender win if yes : hides d layout in TenderWin activity
-            if (TabsActivity.finall.equals("Final")) {
-                d.setVisibility(View.INVISIBLE);
-                all_prices.setText("זכית במכרז");
 
-            }
-        } catch (Exception e){
+///////////// check if tender is win/loss and hide timer layout /////////////////
+        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
 
-        }
-
-        final LinearLayout layoutadd = view.findViewById(R.id.layoutadd);
-        final String username = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", "");
-
-        ref4.addValueEventListener(new ValueEventListener() {
+        userFirebise.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int i = 0;
+                if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
+                               d.setVisibility(View.INVISIBLE);
+                    all_prices.setText("זכית במכרז");
 
-                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                int length = (int) dataSnapshot.getChildrenCount();
-                String[] sampleString = new String[length];
-                while(i < length) {
-                    sampleString[i] = iterator.next().getValue().toString();
-
-
-                    try {
-                        if (sampleString[i].equals(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))) {
-                            Log.e("im here: ", "yes!!!");
-                            d.setVisibility(View.INVISIBLE);
-                            //z.setVisibility(View.VISIBLE);
-
-
-                        } else {
-                            Log.e("im here: ", "no...");
-                            //layoutadd.setVisibility(View.VISIBLE);
-
-                        }
-                    } catch (Exception e){
-
-                    }
-
-                    i++;
-
-
+                } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                    d.setVisibility(View.INVISIBLE);
+                    all_prices.setText("הפסדת במכרז");
                 }
-
-
             }
 
             @Override
@@ -164,6 +134,18 @@ public class MarketTab extends Fragment {
 
             }
         });
+
+
+
+        try {
+            if (TabsActivity.finall.equals("Final")) {
+                d.setVisibility(View.INVISIBLE);
+            }
+        } catch (Exception e){
+
+        }
+
+
 
 
 
@@ -248,7 +230,7 @@ public class MarketTab extends Fragment {
         });
 
 
-
+        ///////////// check if tender not started yet/over and hide timer layout /////////////////
         final Firebase ref3 = myFirebaseRef.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Info");
 
         ref3.addValueEventListener(new ValueEventListener() {
@@ -263,14 +245,12 @@ public class MarketTab extends Fragment {
                 timeEnd.setText(dataSnapshot.child("timeEnd").getValue()+"");
 
                 long timerFireBase = calcTimer(dateEnd.getText().toString(),timeEnd.getText().toString());
-                //long timerFireBase = 10000000;
 
-                ;
+
 
                 if(calcTimer(dateStart.getText().toString(),timeStart.getText().toString())>=0){
                     timer.setText("טרם התחיל");
                     d.setVisibility(View.INVISIBLE);
-                    //list.setVisibility(View.INVISIBLE);
                     if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
                         all_prices.setText("המכרז טרם התחיל");
                     }
@@ -278,7 +258,6 @@ public class MarketTab extends Fragment {
                 else if(timerFireBase<=0){
                     timer.setText("עבר הזמן");
                     d.setVisibility(View.INVISIBLE);
-                    //list.setVisibility(View.INVISIBLE);
                     if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
                         all_prices.setText("המכרז נגמר");
                     }
@@ -382,6 +361,7 @@ public class MarketTab extends Fragment {
 
                         }
 
+
                         if (dataSnapshot.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
                                 .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
                                 .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
@@ -431,7 +411,7 @@ public class MarketTab extends Fragment {
             }
         });
 
-        final View btntyoye = view.findViewById(R.id.tyotaTender);
+
         view.findViewById(R.id.tyotaTender).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

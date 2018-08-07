@@ -3,19 +3,13 @@ package com.skyapps.bennyapp.tenders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
@@ -74,7 +68,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         name.setText(item.getName());
         phone.setText(item.getPhone());
         email.setText(item.getEmail());
-        Log.e("item.getCompany()" , item.getCompany());
 
 
         phone.setOnClickListener(new View.OnClickListener() {
@@ -95,71 +88,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-            //// more DetailsBtn ///
+
             convertView.findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//////////////////////////////////// check if tender is win and send in putExtra "final"  //////////////////////////////////////
+
                     final Intent i = new Intent(_context, TabsActivity.class);
-                    final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
-                            _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +  item.getCompany() +
-                    "/מכרז" + item.getNum());
-
-                    userFirebise.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
-                                i.putExtra("name", item.getName());
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
-
-                                i.putExtra("Final", "Final");
-                                _context.startActivity(i);
-
-                            } else {
-                                i.putExtra("name", item.getName());
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
-                                _context.startActivity(i);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
-
-//////////////////////////////////////// check if tender is loss and send in putExtra "final" ////////////
-                    final Intent u = new Intent(_context, TabsActivity.class);
-                    final Firebase userlossFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
-                            _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +  item.getCompany() +
-                            "/מכרז" + item.getNum());
-
-                    userlossFirebise.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")){
-                                i.putExtra("name", item.getName());
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
-
-                                i.putExtra("Final", "Final");
-                                _context.startActivity(i);
-                            } else {
-                                i.putExtra("name", item.getName());
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
-                                _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
-                                _context.startActivity(i);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
+                    i.putExtra("name", item.getName());
+                    _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
+                    _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", item.getNum()).commit();
+                    _context.startActivity(i);
                 }
+
             });
 
 
@@ -191,8 +131,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         final Tender tender = (Tender) getGroup(groupPosition);
-        //Log.e("count", count + "");
-        //count++;
+        final Intent i = new Intent(_context, TabsActivity.class);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -213,7 +152,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
 
-             CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
+             /*CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
 
                 public void onTick(long millisUntilFinished) {
 
@@ -250,14 +189,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     time.setText("עבר הזמן");
                 }
 
-            };
+            };*/
+
 
 
         if (tender.calcStarts()  >= 0) {
             time.setText("טרם\nהתחיל");
 
+
         } else if (tender.calcEnds() <= 0) {
-            time.setText("עבר הזמן");
+            time.setText("נגמר");
         }
         else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
             time.setText("עומד\n להגמר");
@@ -266,6 +207,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         else if (tender.calcStarts()  <= 0 && tender.calcEnds() >= 0){
             time.setText("פעיל");
             //time.setTextColor(Color.GREEN);
+
         }
         /*if(time.getText().toString().equals("סטטוס")) {
             time.setText("פעיל");
@@ -276,7 +218,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
 
-        Log.e("the tender: " ,tender.getMasad().toString() + " " + time.getText().toString() +"");
+        Log.e("the tender: " ,tender.getMasad().toString() + " " + time.getText().toString() +"" );
         return convertView;
     }
 

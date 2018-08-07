@@ -184,6 +184,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         final ImageButton cameraBtn = view.findViewById(R.id.cam);
         final TextView galleryTxt = view.findViewById(R.id.gallery_txt);
         final TextView cameraTxt = view.findViewById(R.id.cam_txt);
+        final ImageButton pdfBtn = view.findViewById(R.id.uploadPdf);
         try {
             //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
@@ -191,10 +192,103 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                 cameraBtn.setVisibility(View.INVISIBLE);
                 galleryTxt.setVisibility(View.INVISIBLE);
                 cameraTxt.setVisibility(View.INVISIBLE);
+                pdfBtn.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e){
 
         }
+
+
+///////////// check if tender is win/loss and hide buttons /////////////////
+        final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
+                "/מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        userFirebise.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
+                    galleryBtn.setVisibility(View.INVISIBLE);
+                    cameraBtn.setVisibility(View.INVISIBLE);
+                    galleryTxt.setVisibility(View.INVISIBLE);
+                    cameraTxt.setVisibility(View.INVISIBLE);
+                    pdfBtn.setVisibility(View.INVISIBLE);
+
+                } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
+                    galleryBtn.setVisibility(View.INVISIBLE);
+                    cameraBtn.setVisibility(View.INVISIBLE);
+                    galleryTxt.setVisibility(View.INVISIBLE);
+                    cameraTxt.setVisibility(View.INVISIBLE);
+                    pdfBtn.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        ///////////// check if tender not started yet/over and hide buttons/////////////////
+        Firebase.setAndroidContext(getContext());
+        final Firebase tenderFireBase = new Firebase("https://tenders-83c71.firebaseio.com/Tenders/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","") + "/" +
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","") +
+                "/" + "מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num",0));
+
+        tenderFireBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String startTender = dataSnapshot.child("Info").child("startTender").getValue()+"";
+                String endTender =  dataSnapshot.child("Info").child("endTender").getValue()+"";
+                String timeStart =  dataSnapshot.child("Info").child("timeStart").getValue()+"";
+                String timeEnd =  dataSnapshot.child("Info").child("timeEnd").getValue()+"";
+
+                if(calcTimer(startTender,timeStart) >= 0){
+                    galleryBtn.setVisibility(View.INVISIBLE);
+                    cameraBtn.setVisibility(View.INVISIBLE);
+                    galleryTxt.setVisibility(View.INVISIBLE);
+                    cameraTxt.setVisibility(View.INVISIBLE);
+                    pdfBtn.setVisibility(View.INVISIBLE);
+
+                }
+                else if(calcTimer(endTender,timeEnd) <= 0){
+                    galleryBtn.setVisibility(View.INVISIBLE);
+                    cameraBtn.setVisibility(View.INVISIBLE);
+                    galleryTxt.setVisibility(View.INVISIBLE);
+                    cameraTxt.setVisibility(View.INVISIBLE);
+                    pdfBtn.setVisibility(View.INVISIBLE);
+                }
+
+            }
+            private Long calcTimer(String endDate, String endTime)  {
+                String time = endDate + " " + endTime;
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+                Date d = null;
+                Date currentDate = Calendar.getInstance().getTime();
+                Long diff = null;
+                try {
+                    d = df.parse(time);
+                    diff = d.getTime() - currentDate.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                return diff;
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
 /////////////////////////////// retrive image url from fireBase //////////////////////////////////////////
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
