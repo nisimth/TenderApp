@@ -148,13 +148,52 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/status_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dhifut_check">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="סטטוס:"/>
+            <CheckBox
+                android:id="@+id/checkBox_yet_to_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="טרם התחיל" />
+            <CheckBox
+                android:id="@+id/checkbox_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="פעיל" />
+            <CheckBox
+                android:id="@+id/checkbox_isEnding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="עומד להסגר" />
+            <CheckBox
+                android:id="@+id/checkbox_ended"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="נסגר" />
+
+
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/cotertarot"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dhifut_check"
+            android:layout_below="@+id/status_check"
             android:background="@drawable/round"
             >
 

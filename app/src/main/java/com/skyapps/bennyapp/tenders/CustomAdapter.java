@@ -2,7 +2,6 @@ package com.skyapps.bennyapp.tenders;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +51,7 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
 
 
 
-            CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
+            /*CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
@@ -84,7 +83,7 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
                     //mTextField.setText("done!");
                 }
 
-            };
+            };*/
             if (tender.calcStarts()  >= 0) {
                 time.setText("טרם\nהתחיל");
 

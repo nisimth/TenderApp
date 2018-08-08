@@ -198,10 +198,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         } else if (tender.calcEnds() <= 0) {
-            time.setText("נגמר");
+            time.setText("סגור");
         }
-        else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
-            time.setText("עומד\n להגמר");
+        else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2)) && tender.calcEnds()>0) {
+            time.setText("עומד\n להסגר");
             //time.setTextColor(Color.RED);
         }
         else if (tender.calcStarts()  <= 0 && tender.calcEnds() >= 0){

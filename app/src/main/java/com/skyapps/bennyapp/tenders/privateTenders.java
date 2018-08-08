@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class privateTenders extends Fragment {
@@ -58,6 +59,11 @@ public class privateTenders extends Fragment {
 
     CheckBox lowCheckBox;
     CheckBox highCheckBox;
+
+    CheckBox yetToStart;
+    CheckBox active;
+    CheckBox isEnding;
+    CheckBox ended;
 
     long startDateSelcted, endDateSelcted;
 
@@ -85,6 +91,10 @@ public class privateTenders extends Fragment {
         lowCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_low);
         highCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_high);
 
+        yetToStart = (CheckBox) view.findViewById(R.id.checkBox_yet_to_start);
+        active = (CheckBox) view.findViewById(R.id.checkbox_active);
+        isEnding = (CheckBox) view.findViewById(R.id.checkbox_isEnding);
+        ended = (CheckBox) view.findViewById(R.id.checkbox_ended);
 
         filterStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,269 +222,6 @@ public class privateTenders extends Fragment {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
-            }
-        });
-
-
-
-        lowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-            if(lowCheckBox.isChecked()) {
-                highCheckBox.setChecked(false);
-                myFirebaseRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        int i = 0;
-                        listDataHeader.clear();
-                        listDataChild.clear();
-
-
-                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                            for (int num = 1; num <= snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-                                if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("נמוכה") ) {
-                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
-
-
-                                    ));
-
-
-                                    List<Item> list = new ArrayList<Item>();
-                                    list.add(new Item(postSnapshot.getKey() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
-                                            num));
-                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
-                                    i++;
-                                    //ExpandableListAdapter.countAll = i;
-                                }
-                            }
-
-                        }
-
-                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
-                        expListView.setAdapter(listAdapter);
-
-                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
-                        mProgressDialog.dismiss();
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-
-            }
-            }
-        });
-
-        highCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-            if(highCheckBox.isChecked()){
-                lowCheckBox.setChecked(false);
-                myFirebaseRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    int i = 0;
-                    listDataHeader.clear();
-                    listDataChild.clear();
-
-
-                    for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                        for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-                            if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("גבוהה")) {
-                                listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
-
-
-                                ));
-
-
-                                List<Item> list = new ArrayList<Item>();
-                                list.add(new Item(postSnapshot.getKey() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
-                                        num));
-                                listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
-                                i++;
-                                //ExpandableListAdapter.countAll = i;
-
-                            }
-                        }
-                    }
-
-                    listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
-                    expListView.setAdapter(listAdapter);
-
-                    counter.setText(" ( " +listDataHeader.size()+ " ) ");
-                    mProgressDialog.dismiss();
-
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
-            }
-            }
-        });
-
-
-
-
-
-
-        // reset filter
-        resetSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myFirebaseRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        int i = 0;
-                        listDataHeader.clear();
-                        listDataChild.clear();
-
-                        startDateSelcted = 0;
-                        endDateSelcted = 0;
-
-                        lowCheckBox.setChecked(false);
-                        highCheckBox.setChecked(false);
-
-
-                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                            for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-
-                                listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
-
-
-                                ));
-
-
-                                List<Item> list = new ArrayList<Item>();
-                                list.add(new Item(postSnapshot.getKey() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("contact").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
-                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
-                                        num));
-                                listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
-                                i++;
-                                //ExpandableListAdapter.countAll = i;
-
-                            }
-
-                        }
-
-                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
-                        expListView.setAdapter(listAdapter);
-
-                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
-                        mProgressDialog.dismiss();
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-
-                });
-            }
-        });
-
-
-        // search tenders by start and end date selected from the date picker dialogs
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                myFirebaseRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        int i = 0;
-                        listDataHeader.clear();
-                        listDataChild.clear();
-
-                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-
-                            for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-                                Long startCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Long endCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "");
-
-                                Date currentTime  = Calendar.getInstance().getTime();
-                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Log.e("start_current",startCurrent+"" );
-                                Log.e("start_current_d",new Date(startCurrent)+"");
-                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");*/
-
-                                if((startDateSelcted - currentTime.getTime() <= startCurrent - currentTime.getTime()) && endDateSelcted - currentTime.getTime() >= endCurrent - currentTime.getTime()
-                                    || (startDateSelcted == 0 && endDateSelcted- currentTime.getTime() >= endCurrent- currentTime.getTime())
-                                        || (startDateSelcted- currentTime.getTime() <= startCurrent- currentTime.getTime() && endDateSelcted==0)) {
-
-                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
-
-
-                                    ));
-
-
-                                    List<Item> list = new ArrayList<Item>();
-                                    list.add(new Item(postSnapshot.getKey() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
-                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
-                                            num));
-                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
-                                    i++;
-                                    //ExpandableListAdapter.countAll = i;
-                                }
-                            }
-
-                        }
-
-                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
-                        expListView.setAdapter(listAdapter);
-
-                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
-                        mProgressDialog.dismiss();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
             }
         });
 
@@ -630,6 +377,609 @@ public class privateTenders extends Fragment {
             }
         });
 
+
+
+        lowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            if(lowCheckBox.isChecked()) {
+                highCheckBox.setChecked(false);
+                yetToStart.setChecked(false);
+                active.setChecked(false);
+                isEnding.setChecked(false);
+                ended.setChecked(false);
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        int i = 0;
+                        listDataHeader.clear();
+                        listDataChild.clear();
+
+
+                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                            for (int num = 1; num <= snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("נמוכה") ) {
+                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                    ));
+
+
+                                    List<Item> list = new ArrayList<Item>();
+                                    list.add(new Item(postSnapshot.getKey() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                            num));
+                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                    i++;
+                                    //ExpandableListAdapter.countAll = i;
+                                }
+                            }
+
+                        }
+
+                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                        mProgressDialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+            }
+            }
+        });
+
+        highCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            if(highCheckBox.isChecked()){
+                lowCheckBox.setChecked(false);
+                yetToStart.setChecked(false);
+                active.setChecked(false);
+                isEnding.setChecked(false);
+                ended.setChecked(false);
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    int i = 0;
+                    listDataHeader.clear();
+                    listDataChild.clear();
+
+
+                    for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                        for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                            if (snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("dhifot").getValue().equals("גבוהה")) {
+                                listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                ));
+
+
+                                List<Item> list = new ArrayList<Item>();
+                                list.add(new Item(postSnapshot.getKey() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                        num));
+                                listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                i++;
+                                //ExpandableListAdapter.countAll = i;
+
+                            }
+                        }
+                    }
+
+                    listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                    expListView.setAdapter(listAdapter);
+
+                    counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                    mProgressDialog.dismiss();
+
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+            }
+            }
+        });
+
+
+
+        yetToStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(yetToStart.isChecked()){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    active.setChecked(false);
+                    isEnding.setChecked(false);
+                    ended.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long startCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + ""
+                                    );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(startCurrent - currentTime.getTime() >0 ){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+
+
+                }
+            }
+        });
+
+        active.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(active.isChecked()){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    yetToStart.setChecked(false);
+                    isEnding.setChecked(false);
+                    ended.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long startCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + ""
+                                            );
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                            );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(startCurrent - currentTime.getTime() < 0 && endCurrent - currentTime.getTime() > 0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+
+
+                }
+            }
+        });
+
+        isEnding.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(isEnding.isChecked()){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    yetToStart.setChecked(false);
+                    active.setChecked(false);
+                    ended.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                            );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(endCurrent - currentTime.getTime()  <= TimeUnit.HOURS.toMillis(2) && endCurrent - currentTime.getTime()>0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                    Log.e("isending",endCurrent - currentTime.getTime()+ " " + TimeUnit.HOURS.toMillis(2)  +"");
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+
+
+                }
+            }
+        });
+
+        ended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(ended.isChecked()){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    yetToStart.setChecked(false);
+                    active.setChecked(false);
+                    isEnding.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                            );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(endCurrent - currentTime.getTime() < 0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+
+
+                }
+            }
+        });
+
+
+
+        // reset filter
+        resetSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        int i = 0;
+                        listDataHeader.clear();
+                        listDataChild.clear();
+
+                        startDateSelcted = 0;
+                        endDateSelcted = 0;
+
+                        lowCheckBox.setChecked(false);
+                        highCheckBox.setChecked(false);
+                        yetToStart.setChecked(false);
+                        active.setChecked(false);
+                        isEnding.setChecked(false);
+                        ended.setChecked(false);
+                        search.setQuery("",false);
+
+
+
+                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                            for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+
+                                listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                ));
+
+
+                                List<Item> list = new ArrayList<Item>();
+                                list.add(new Item(postSnapshot.getKey() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("contact").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
+                                        snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
+                                        num));
+                                listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                i++;
+                                //ExpandableListAdapter.countAll = i;
+
+                            }
+
+                        }
+
+                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                        mProgressDialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+
+                });
+            }
+        });
+
+
+        // search tenders by start and end date selected from the date picker dialogs
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        int i = 0;
+                        listDataHeader.clear();
+                        listDataChild.clear();
+
+                        lowCheckBox.setChecked(false);
+                        highCheckBox.setChecked(false);
+                        yetToStart.setChecked(false);
+                        active.setChecked(false);
+                        isEnding.setChecked(false);
+                        ended.setChecked(false);
+
+                        for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                            for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                Long startCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Long endCurrent = convertStringToDate(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "");
+
+                                Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                if((startDateSelcted - currentTime.getTime() <= startCurrent - currentTime.getTime()) && endDateSelcted - currentTime.getTime() >= endCurrent - currentTime.getTime()
+                                    || (startDateSelcted == 0 && endDateSelcted- currentTime.getTime() >= endCurrent- currentTime.getTime())
+                                        || (startDateSelcted- currentTime.getTime() <= startCurrent- currentTime.getTime() && endDateSelcted==0)) {
+
+                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                    ));
+
+
+                                    List<Item> list = new ArrayList<Item>();
+                                    list.add(new Item(postSnapshot.getKey() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                            num));
+                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                    i++;
+                                    //ExpandableListAdapter.countAll = i;
+                                }
+                            }
+
+                        }
+
+                        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+
+                        counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                        mProgressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+        });
+
+
+
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
@@ -671,6 +1021,20 @@ public class privateTenders extends Fragment {
 
         try {
             convertedDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return convertedDate.getTime();
+    }
+
+    public long convertStringToDate(String date, String time){
+        String toConvertTime = date + " " + time;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Date convertedDate = null;
+
+        try {
+            convertedDate = dateFormat.parse(toConvertTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
