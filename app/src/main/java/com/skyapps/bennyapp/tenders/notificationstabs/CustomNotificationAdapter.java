@@ -35,11 +35,17 @@ public class CustomNotificationAdapter extends ArrayAdapter<ItemNotification> {
 
         TextView username = (TextView) rowView.findViewById(R.id.username);
         TextView message = (TextView) rowView.findViewById(R.id.message);
+        // TODO
+        TextView tenderNum = (TextView) rowView.findViewById(R.id.tender_num);
+        /////
         TextView date = (TextView) rowView.findViewById(R.id.date);
 
         final ItemNotification item = getItem(position);
         username.setText(item.getUsername()+"");
         message.setText(item.getMessage());
+        // TODO
+        tenderNum.setText(item.getTenderNum());
+        ////
 
         String str1 = item.getType().replace("_", " ");
         String str2 = str1.replace("-", "/");

@@ -60,6 +60,20 @@ public class TabsActivity extends AppCompatActivity {
         Log.e("Testxp" , getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("company" , ""));
 
 
+
+        ///TODO
+        try {
+            /*if (getIntent().getStringExtra("new_msg").equals("new") || getIntent().getStringExtra("win_msg").equals("win") ) {
+                viewPager.setCurrentItem(0);
+            }*/
+            if (getIntent().getStringExtra("send_msg").equals("chat")) {
+                viewPager.setCurrentItem(2);
+            }
+        } catch (Exception e){
+
+        }
+
+
     }
 
 

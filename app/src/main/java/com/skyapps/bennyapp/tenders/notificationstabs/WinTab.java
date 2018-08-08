@@ -1,20 +1,24 @@
 package com.skyapps.bennyapp.tenders.notificationstabs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
 
@@ -32,7 +36,7 @@ public class WinTab extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_list_tabs2, container, false);
-        ((TextView)view.findViewById(R.id.title)).setText("מכרזים שזכיתי בהם");
+        //((TextView)view.findViewById(R.id.title)).setText("מכרזים שזכיתי בהם");
         list = view.findViewById(R.id.list);
         listData = new ArrayList<ItemNotification>();
 
@@ -49,23 +53,22 @@ public class WinTab extends Fragment {
 
                 try {
 
-                    /*long count = dataSnapshot.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
-                            .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items").getChildrenCount();
-                    countFullItems = dataSnapshot.child("Tenders").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
-                            .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items").getChildrenCount();
-*/
-                    for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        //for (int i = 1; i <= dataSnapshot.child(postSnapshot.getKey()).getChildrenCount(); i++) {
+                    for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                             Log.e("whats the key : " , postSnapshot.getKey()+"");
 
-                            //if (postSnapshot.getKey().equals("winners")){
                             String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                             String type = postSnapshot.getKey();
 
-                            listData.add(new ItemNotification(username, message, type));
+                        // TODO
+                        String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
+                        long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
+                        /////
+                        // TODO
+                        listData.add(new ItemNotification(username, message, type,tenderNum,numberTender));
+                        //
                             //}
 
 
@@ -91,6 +94,20 @@ public class WinTab extends Fragment {
 
 
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
+                //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(getContext() , TabsActivity.class);
+                i.putExtra("win_msg" , "win");
+                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();
+                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putInt("num" , Integer.parseInt(""+item.getNumberTender())).commit();
+                startActivity(i);
+
+            }
+        });
 
         return view;
     }

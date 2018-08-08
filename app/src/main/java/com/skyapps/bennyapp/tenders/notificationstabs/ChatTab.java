@@ -2,6 +2,7 @@ package com.skyapps.bennyapp.tenders.notificationstabs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -50,7 +51,7 @@ public class ChatTab extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_list_tabs, container, false);
-        ((TextView)view.findViewById(R.id.title)).setText("הודעות הצ'אטים שלי");
+        //((TextView)view.findViewById(R.id.title)).setText("הודעות הצ'אטים שלי");
         list = view.findViewById(R.id.list);
         listData = new ArrayList<ItemNotification>();
 
@@ -78,18 +79,22 @@ public class ChatTab extends Fragment {
                             String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                             String type = postSnapshot.getKey();
+                            // TODO
+                            String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
 
-                            listData.add(new ItemNotification(username, message, type));
-                            //}
+                            long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-
-                        //}
+                            /////
+                            // TODO
+                            listData.add(new ItemNotification(username, message, type,tenderNum, numberTender));
+                            //
                     }
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 
                 } catch (Exception e){
-
+                    Toast.makeText(getContext(), "ישנה שגיאה", Toast.LENGTH_SHORT).show();
+                    Log.e("the e is : " , e.toString());
                 }
 
 
@@ -103,7 +108,20 @@ public class ChatTab extends Fragment {
         });
 
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
+                //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
 
+                Intent i = new Intent(getContext() , TabsActivity.class);
+                i.putExtra("send_msg" , "chat");
+                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();
+                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putInt("num" , Integer.parseInt(""+item.getNumberTender())).commit();
+                startActivity(i);
+
+            }
+        });
 
 
         return view;
