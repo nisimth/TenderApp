@@ -2,6 +2,7 @@ package com.skyapps.bennyapp.tenders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
 
+
         name.setText(item.getName());
         phone.setText(item.getPhone());
         email.setText(item.getEmail());
@@ -92,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView.findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    //TODO helper.add(new Item("DELTA" , "מכרז1"));
                     final Intent i = new Intent(_context, TabsActivity.class);
                     i.putExtra("name", item.getName());
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
@@ -138,6 +140,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
+
+        //TODO if(helper.isLive(new Tender(tender.getName() , tender.getNum()){
+        //convertView.setBackgroundColor(Color.YELLOW);
 
         TextView masad = (TextView) convertView.findViewById(R.id.masad);
         TextView name = (TextView) convertView.findViewById(R.id.name);

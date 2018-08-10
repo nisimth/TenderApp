@@ -65,9 +65,10 @@ public class WinTab extends Fragment {
                         // TODO
                         String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
-                        /////
-                        // TODO
+
+                        // // TODO problem with numberTender
                         listData.add(new ItemNotification(username, message, type,tenderNum,numberTender));
+                        //listData.add(new ItemNotification(username, message, type,tenderNum));
                         //
                             //}
 
@@ -93,7 +94,7 @@ public class WinTab extends Fragment {
 
 
 
-
+            // TODO
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

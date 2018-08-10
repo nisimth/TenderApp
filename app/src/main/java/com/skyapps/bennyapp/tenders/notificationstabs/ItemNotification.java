@@ -2,14 +2,15 @@ package com.skyapps.bennyapp.tenders.notificationstabs;
 
 public class ItemNotification {
     String username, message, type;
-    String tenderNum;
+    String mqtNum;
     long numberTender;
+    String privateorpublic;
 
     public ItemNotification(String username, String message, String type, String tenderNum) {
         this.username = username;
         this.message = message;
         /////
-        this.tenderNum = tenderNum ;
+        this.mqtNum = tenderNum ;
         ////
         this.type = type;
     }
@@ -18,8 +19,17 @@ public class ItemNotification {
         this.username = username;
         this.message = message;
         this.type = type;
-        this.tenderNum = tenderNum; // mqt
+        this.mqtNum = tenderNum; // mqt
         this.numberTender = numberTender;
+    }
+
+    public ItemNotification(String username, String message, String type, String mqtNum, long numberTender, String privateorpublic) {
+        this.username = username;
+        this.message = message;
+        this.type = type;
+        this.mqtNum = mqtNum;
+        this.numberTender = numberTender;
+        this.privateorpublic = privateorpublic;
     }
 
     public String getUsername() {
@@ -47,11 +57,11 @@ public class ItemNotification {
     }
 
     ////////
-    public String getTenderNum() {
-        return tenderNum;
+    public String getMqtNum() {
+        return mqtNum;
     }
-    public void setTenderNum(String tenderNum) {
-        this.tenderNum = tenderNum;
+    public void setMqtNum(String mqtNum) {
+        this.mqtNum = mqtNum;
     }
 
     public long getNumberTender() {
@@ -60,6 +70,14 @@ public class ItemNotification {
 
     public void setNumberTender(long numberTender) {
         this.numberTender = numberTender;
+    }
+
+    public String getPrivateorpublic() {
+        return privateorpublic;
+    }
+
+    public void setPrivateorpublic(String privateorpublic) {
+        this.privateorpublic = privateorpublic;
     }
 
     ////////

@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.tenders.DetailsPublic;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
@@ -60,20 +62,23 @@ public class NewTab extends Fragment {
                                 String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                                 String type = postSnapshot.getKey();
 
-                        // TODO
+
                         String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
-                        long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
-                        /////
-                        // TODO
-                        listData.add(new ItemNotification(username, message, type,tenderNum,numberTender));
-                        //
+
+                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
+
+                        String privateorpublic = (String) dataSnapshot.child(postSnapshot.getKey()).child("type").getValue();
+
+                        // TODO problem with numberTender
+                        listData.add(new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
 
                     }
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 
                 } catch (Exception e){
-
+                    Log.e("app e is : " , e.toString());
+                    //Toast.makeText(getContext(), "יש בעיה", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -90,13 +95,36 @@ public class NewTab extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
-                //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getContext() , TabsActivity.class);
-                i.putExtra("new_msg" , "new");
-                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();
-                getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putInt("num" , Integer.parseInt(""+item.getNumberTender())).commit();
-                startActivity(i);
+
+                if (item.getPrivateorpublic().equals("private")) {
+
+                    //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
+
+                    Intent i = new Intent(getContext(), TabsActivity.class);
+                    i.putExtra("new_msg", "new");
+                    getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getUsername()).commit();
+                    getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", Integer.parseInt("" + item.getNumberTender())).commit();
+                    startActivity(i);
+
+                } else {
+
+                    if (getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("premium")){
+
+                        Intent i = new Intent(getContext(), DetailsPublic.class);
+                        i.putExtra("name" , item.getUsername());
+                        i.putExtra("tender" , "מכרז" + Integer.parseInt("" + item.getNumberTender()));
+                        startActivity(i);
+
+
+                    } else {
+                        Toast.makeText(getContext(), "אינך רשאי להיכנס לפרטי המכרז מכיוון שאינך ספק פרימיום", Toast.LENGTH_LONG).show();
+                    }
+
+
+
+                }
+
 
             }
         });

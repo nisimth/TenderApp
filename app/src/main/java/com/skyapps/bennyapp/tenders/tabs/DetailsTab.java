@@ -222,6 +222,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
+
 ///////////// check if tender is win and hide buttons /////////////////
         final Firebase userFirebise2 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin/" +

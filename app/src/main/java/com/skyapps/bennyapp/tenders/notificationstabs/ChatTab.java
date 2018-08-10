@@ -80,13 +80,13 @@ public class ChatTab extends Fragment {
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                             String type = postSnapshot.getKey();
                             // TODO
-                            String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
+                            String mqtNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
 
                             long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
                             /////
                             // TODO
-                            listData.add(new ItemNotification(username, message, type,tenderNum, numberTender));
+                            listData.add(new ItemNotification(username, message, type,mqtNum,numberTender));
                             //
                     }
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());

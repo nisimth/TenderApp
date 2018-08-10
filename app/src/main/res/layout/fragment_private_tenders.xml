@@ -149,8 +149,8 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/status_check"
-            android:layout_width="match_parent"
+            android:id="@+id/status_check1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dhifut_check">
 
@@ -170,6 +170,19 @@
                 android:layout_height="wrap_content"
 
                 android:text="פעיל" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/status_check2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/status_check1"
+            >
+            <TextView
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                />
             <CheckBox
                 android:id="@+id/checkbox_isEnding"
                 android:layout_width="wrap_content"
@@ -183,17 +196,15 @@
 
                 android:text="נסגר" />
 
-
-
-
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/cotertarot"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/status_check"
+            android:layout_below="@+id/status_check2"
             android:background="@drawable/round"
             >
 

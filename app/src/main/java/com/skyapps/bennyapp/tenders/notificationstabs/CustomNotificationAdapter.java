@@ -2,19 +2,14 @@ package com.skyapps.bennyapp.tenders.notificationstabs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.skyapps.bennyapp.Objects.ItemMarket;
 import com.skyapps.bennyapp.R;
-import com.skyapps.bennyapp.tenders.tabs.Mifrat;
-import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
 
@@ -44,13 +39,19 @@ public class CustomNotificationAdapter extends ArrayAdapter<ItemNotification> {
         username.setText(item.getUsername()+"");
         message.setText(item.getMessage());
         // TODO
-        tenderNum.setText(item.getTenderNum());
+        tenderNum.setText(item.getMqtNum());
         ////
 
         String str1 = item.getType().replace("_", " ");
         String str2 = str1.replace("-", "/");
 
         date.setText(str2);
+
+       /* if (item.getType().equals("private")){
+
+            rowView.setBackgroundColor(Color.YELLOW);
+
+        }*/
 
 
         return rowView;
