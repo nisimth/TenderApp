@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/p"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="35dp"
             android:text="מכרזים ציבוריים"
@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="35dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_alignParentRight="true"
             android:layout_marginRight="282dp"
             />
@@ -85,7 +86,7 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="זמן שנותר"
+                android:text="סטטוס"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryDark"  />

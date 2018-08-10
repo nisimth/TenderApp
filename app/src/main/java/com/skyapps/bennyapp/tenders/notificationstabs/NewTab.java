@@ -37,14 +37,14 @@ public class NewTab extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_list_tabs3, container, false);
-        //((TextView)view.findViewById(R.id.title)).setText("מכרזים חדשים");
         list = view.findViewById(R.id.list);
         listData = new ArrayList<ItemNotification>();
 
-        Firebase.setAndroidContext(getContext());//FireBase , Upload Data from firebase to EditTexts...
+        Firebase.setAndroidContext(getContext());//FireBase , Upload Data from fireBase to EditTexts...
         // put the message about new income Tender in list view
         myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
-                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", "") + "/MyNotifications/newtenders");
+                getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", "")
+                + "/MyNotifications/newtenders");
 
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,18 +58,13 @@ public class NewTab extends Fragment {
 
                             Log.e("whats the key : " , postSnapshot.getKey()+"");
 
-                                String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
-                                String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
-                                String type = postSnapshot.getKey();
+                            String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
+                            String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
+                            String type = postSnapshot.getKey();
+                            String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
+                            long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
+                            String privateorpublic = (String) dataSnapshot.child(postSnapshot.getKey()).child("type").getValue();
 
-
-                        String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
-
-                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
-
-                        String privateorpublic = (String) dataSnapshot.child(postSnapshot.getKey()).child("type").getValue();
-
-                        // TODO problem with numberTender
                         listData.add(new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
 
                     }
@@ -96,10 +91,8 @@ public class NewTab extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
 
-
+                // checks if the new tender is private
                 if (item.getPrivateorpublic().equals("private")) {
-
-                    //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(getContext(), TabsActivity.class);
                     i.putExtra("new_msg", "new");
@@ -107,8 +100,9 @@ public class NewTab extends Fragment {
                     getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putInt("num", Integer.parseInt("" + item.getNumberTender())).commit();
                     startActivity(i);
 
+                // checks if the new tender is public
                 } else {
-
+                    // check if the current user is premium
                     if (getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("premium")){
 
                         Intent i = new Intent(getContext(), DetailsPublic.class);
@@ -116,7 +110,7 @@ public class NewTab extends Fragment {
                         i.putExtra("tender" , "מכרז" + Integer.parseInt("" + item.getNumberTender()));
                         startActivity(i);
 
-
+                    // if the current user is not premium
                     } else {
                         Toast.makeText(getContext(), "אינך רשאי להיכנס לפרטי המכרז מכיוון שאינך ספק פרימיום", Toast.LENGTH_LONG).show();
                     }

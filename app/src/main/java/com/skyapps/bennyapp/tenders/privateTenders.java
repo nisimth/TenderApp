@@ -430,6 +430,7 @@ public class privateTenders extends Fragment {
                         expListView.setAdapter(listAdapter);
 
                         counter.setText(" ( " +listDataHeader.size()+ " ) ");
+
                         mProgressDialog.dismiss();
 
                     }

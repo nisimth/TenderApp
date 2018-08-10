@@ -2,4 +2,5 @@
 <resources>
     <drawable name="red_color">#ff0000</drawable>
     <drawable name="yellow_color">#ffff1a</drawable>
+    <color name="my">#ffff99</color>
 </resources>

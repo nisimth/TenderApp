@@ -8,11 +8,12 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/a"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="35dp"
             android:text="מכרזים פרטיים"
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="35dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_alignParentRight="true"
             android:layout_marginRight="270dp"
             />
@@ -39,33 +41,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/a"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
 
            <SearchView
                android:focusableInTouchMode="true"
                android:id="@+id/byname"
                android:layout_width="180dp"
-               android:layout_height="45dp"
-               android:layout_alignParentRight="true"/>
+               android:layout_height="35dp"
+               android:layout_alignParentRight="true"
+               android:layout_marginRight="5dp"/>
             <Button
                 android:id="@+id/search_btn"
                 android:layout_width="70dp"
-                android:layout_height="45dp"
+                android:layout_height="35dp"
                 android:text="חפש"
                 android:textColor="#ffffff"
                 android:background="@drawable/rounded_btn"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="182dp"
+                android:layout_marginRight="195dp"
                 />
             <Button
                 android:id="@+id/reset_filter_btn"
                 android:layout_width="70dp"
-                android:layout_height="45dp"
+                android:layout_height="35dp"
                 android:text="אפס"
                 android:textColor="#ffffff"
                 android:background="@drawable/rounded_btn"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="274dp"
+                android:layout_marginRight="280dp"
                 />
 
         </RelativeLayout>
@@ -74,12 +77,15 @@
             android:id="@+id/dates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_bar1">
+            android:layout_below="@+id/search_bar1"
+            android:layout_marginTop="6dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
                 android:text="חיפוש לפי תאריך:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="italic"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"/>
             <TextView
@@ -94,7 +100,7 @@
             <ImageButton
                 android:id="@+id/filter_start_date_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:src="@drawable/calendar"
                 android:background="@drawable/calendar"
                 android:layout_alignRight="@+id/m"
@@ -113,7 +119,7 @@
             <ImageButton
                 android:id="@+id/filter_end_date_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:src="@drawable/calendar"
                 android:background="@drawable/calendar"
                 android:layout_alignRight="@+id/ad"
@@ -131,7 +137,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="רמת דחיפות:"/>
+                android:text="רמת דחיפות:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="12dp"
+                android:textStyle="italic"/>
             <CheckBox
                 android:id="@+id/checkBox_dhifot_low"
                 android:layout_width="wrap_content"
@@ -157,7 +166,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="סטטוס:"/>
+                android:text="סטטוס:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="12dp"
+                android:textStyle="italic"/>
             <CheckBox
                 android:id="@+id/checkBox_yet_to_start"
                 android:layout_width="wrap_content"
@@ -168,33 +180,19 @@
                 android:id="@+id/checkbox_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="פעיל" />
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/status_check2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/status_check1"
-            >
-            <TextView
-                android:layout_width="44dp"
-                android:layout_height="wrap_content"
-                />
             <CheckBox
                 android:id="@+id/checkbox_isEnding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="עומד להסגר" />
             <CheckBox
                 android:id="@+id/checkbox_ended"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="נסגר" />
+                android:text="סגור" />
 
         </LinearLayout>
 
@@ -204,7 +202,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/status_check2"
+            android:layout_below="@+id/status_check1"
             android:background="@drawable/round"
             >
 
@@ -246,6 +244,7 @@
         </LinearLayout>
 
         <ExpandableListView
+            android:layout_marginTop="3dp"
             android:id="@+id/privateList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
