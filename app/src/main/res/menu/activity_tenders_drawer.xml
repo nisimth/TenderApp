@@ -8,7 +8,11 @@
         <item
             android:id="@+id/all_tenders"
             android:icon="@drawable/alltenders"
-            android:title="כל המכרזים" />
+            android:title="מכרזים פרטיים" />
+        <item
+            android:id="@+id/public_tenders"
+            android:icon="@drawable/public_tender"
+            android:title="מכרזים ציבוריים"/>
         <item
             android:id="@+id/tyotot"
             android:icon="@drawable/drafts"
@@ -30,23 +34,23 @@
 
     </group>
 
-    <item android:title="תמיכה">
-        <menu>
-            <item
-                android:id="@+id/support"
-                android:icon="@drawable/support"
-                android:title="תמיכה" />
-            <item
-                android:id="@+id/manage"
-                android:icon="@drawable/details"
-                android:title="עריכת פרטים" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single" >
+        <item
+            android:id="@+id/support"
+            android:icon="@drawable/support"
+            android:title="תמיכה" />
+        <item
+            android:id="@+id/manage"
+            android:icon="@drawable/details"
+            android:title="עריכת פרטים" />
 
-    <item
-        android:id="@+id/disconnect"
-        android:icon="@drawable/logut"
-        android:title="התנתק" />
+
+
+        <item
+            android:id="@+id/disconnect"
+            android:icon="@drawable/logut"
+            android:title="התנתק" />
+    </group>
 
 
 </menu>

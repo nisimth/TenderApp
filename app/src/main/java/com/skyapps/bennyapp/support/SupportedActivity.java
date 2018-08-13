@@ -58,7 +58,9 @@ public class SupportedActivity extends AppCompatActivity   implements Navigation
         navigationView.setNavigationItemSelectedListener(this);
 
         name_user = navigationView.getHeaderView(0).findViewById(R.id.name_user);
-        name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        //name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("firstname", "") + " "
+                + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("lastname", ""));
 
         ////// setup the current date of the day //////
         editDate = findViewById(R.id.editDate);
@@ -175,6 +177,11 @@ public class SupportedActivity extends AppCompatActivity   implements Navigation
 
         if (id == R.id.all_tenders) {
             startActivity(new Intent(this , TendersActivity.class));finish();
+        }else if( id == R.id.public_tenders ){
+            Intent i = new Intent(this, TendersActivity.class);
+            i.putExtra("to_public", "public");
+            startActivity(i); finish();
+            ///////////////////////////////////////////////////////////////////
         } else if (id == R.id.tyotot) {
             startActivity(new Intent(this , TyototActivity.class)); finish();
         } else if (id == R.id.my_tenders) {

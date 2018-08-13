@@ -99,7 +99,9 @@ public class TendersActivity extends AppCompatActivity
 
 
         name_user = navigationView.getHeaderView(0).findViewById(R.id.name_user);
-        name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        //name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("firstname", "") + " "
+                + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("lastname", ""));
         image_user = navigationView.getHeaderView(0).findViewById(R.id.image_user);
 
 
@@ -107,6 +109,16 @@ public class TendersActivity extends AppCompatActivity
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        //////////////// 13.08.2018 //////////////////
+        try {
+            if(getIntent().getStringExtra("to_public").equals("public")){
+                mViewPager.setCurrentItem(1);
+            }
+        } catch (Exception e){
+
+        }
+
+
     }
 
 
@@ -135,7 +147,13 @@ public class TendersActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.all_tenders) {
-            drawer.closeDrawer(Gravity.START);
+            //drawer.closeDrawer(Gravity.START);
+            startActivity(new Intent(this , TendersActivity.class)); finish();
+        } else if( id == R.id.public_tenders ){
+            Intent i = new Intent(this, TendersActivity.class);
+            i.putExtra("to_public", "public");
+            startActivity(i); finish();
+            ///////////////////////////////////////////////////////////////////
         } else if (id == R.id.tyotot) {
             startActivity(new Intent(this , TyototActivity.class)); finish();
 

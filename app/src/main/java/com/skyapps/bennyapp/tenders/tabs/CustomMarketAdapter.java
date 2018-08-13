@@ -55,7 +55,7 @@ public class CustomMarketAdapter extends ArrayAdapter<ItemMarket> {
 
         Log.e("the price : " , item.getPrice()+"");
         if (!item.getPrice().equals("")){
-            price.setText(item.getPrice() + "₪");
+            price.setText( " ₪"+item.getPrice());
         } else {
             price.setText("לא תומחר");
         }
