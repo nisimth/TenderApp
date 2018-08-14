@@ -29,6 +29,7 @@ public class FireBaseBackgroundService extends IntentService {
     private Firebase f;
     private ValueEventListener handler;
     private String tal, user2;
+    private String typeNO ;
 
     private NotificationManager notifManager;
 
@@ -54,12 +55,21 @@ public class FireBaseBackgroundService extends IntentService {
                 Log.e("test","app change in " + "https://tenders-83c71.firebaseio.com/notification/"
                         + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
                 if (dataSnapshot.child("username").getValue()!=null && dataSnapshot.child("message").getValue()!=null) {
-
                         postNotif(dataSnapshot.child("username").getValue()+"" , dataSnapshot.child("message").getValue()+"");
-
                 }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
 
-
+            }
+        });
+       /* /////////////////////////new///////////////////////// TODO
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if( dataSnapshot.child("username").getValue() != null ){
+                    typeNO = dataSnapshot.child("type").getValue()+"";
+                }
             }
 
             @Override
@@ -67,7 +77,7 @@ public class FireBaseBackgroundService extends IntentService {
 
             }
         });
-
+        //////////////////////////////////////////////////////// */
         return START_STICKY;
 
     }
