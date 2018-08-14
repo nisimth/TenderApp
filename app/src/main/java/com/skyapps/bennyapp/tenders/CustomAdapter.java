@@ -37,7 +37,7 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
         final TextView time = (TextView) rowView.findViewById(R.id.time);
 
         masad.setText(tender.getMasad());
-
+        name.setText(tender.getName());
         project.setText(tender.getEmail());
 
 
@@ -45,9 +45,11 @@ public class CustomAdapter extends ArrayAdapter<Tender> {
 
         if (mContext.getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("")){
             time.setText("למינויים בלבד");
-            name.setText("למינויים בלבד");
+            //name.setText("למינויים בלבד");
+            project.setText("למינויים בלבד");
         } else{
-            name.setText(tender.getName());
+            //name.setText(tender.getName());
+            project.setText(tender.getEmail());
 
 
 

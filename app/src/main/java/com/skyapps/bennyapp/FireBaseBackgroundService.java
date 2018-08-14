@@ -7,6 +7,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -76,7 +79,7 @@ public class FireBaseBackgroundService extends IntentService {
     }
 
 
-                           // company name       the message
+                           // company name       the message from fireBase -> address -> notification
     private void postNotif(String notifString , String messageString) {
 
         final int NOTIFY_ID = 1002;
@@ -113,10 +116,12 @@ public class FireBaseBackgroundService extends IntentService {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")  // required
+            //builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")
+            builder.setContentTitle("התראה חדשה מ-WIZBIZ")// required
                     .setSmallIcon(android.R.drawable.ic_popup_reminder) // required
                     .setContentText(messageString)  // required
                     .setDefaults(Notification.DEFAULT_ALL)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(messageString))
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent)
                     .setTicker(notifString)
@@ -129,15 +134,23 @@ public class FireBaseBackgroundService extends IntentService {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")                           // required
+            Bitmap arrowDown = BitmapFactory.decodeResource(getResources(),R.drawable.arrow_down_notifiation);
+            //builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")
+            builder.setContentTitle("התראה חדשה מ-WIZBIZ")// required
                     .setSmallIcon(android.R.drawable.ic_popup_reminder) // required
-                    .setContentText(messageString)  // required
+                    .setContentText(notifString)  // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent)
                     .setTicker(notifString)
                     .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
-                    .setPriority(Notification.PRIORITY_HIGH);
+                    .setPriority(Notification.PRIORITY_HIGH)
+                    /////// new //////
+                    .setLargeIcon(arrowDown)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .setColor(Color.GREEN)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(messageString)).build() ;
+            //////////////////;
         } // else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
         Notification notification = builder.build();
