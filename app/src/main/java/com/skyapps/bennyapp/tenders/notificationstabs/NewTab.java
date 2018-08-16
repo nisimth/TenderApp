@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -22,6 +21,7 @@ import com.skyapps.bennyapp.tenders.DetailsPublic;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class NewTab extends Fragment {
@@ -68,6 +68,10 @@ public class NewTab extends Fragment {
                         listData.add(new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
 
                     }
+
+
+                    Collections.reverse(listData);
+
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 
@@ -126,6 +130,4 @@ public class NewTab extends Fragment {
 
         return view;
     }
-
-
 }

@@ -37,6 +37,7 @@ public class FireBaseBackgroundService extends IntentService {
         super("");
     }
 
+
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         Log.e("test","app in " + "https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));

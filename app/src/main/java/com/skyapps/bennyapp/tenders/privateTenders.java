@@ -1029,6 +1029,11 @@ public class privateTenders extends Fragment {
         return convertedDate.getTime();
     }
 
+    /**
+     * @param date
+     * @param time
+     * @return
+     */
     public long convertStringToDate(String date, String time){
         String toConvertTime = date + " " + time;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");

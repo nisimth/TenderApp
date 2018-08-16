@@ -2,7 +2,6 @@ package com.skyapps.bennyapp.tenders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;

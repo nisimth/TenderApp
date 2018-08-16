@@ -1,41 +1,26 @@
 package com.skyapps.bennyapp.tenders.notificationstabs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.skyapps.bennyapp.Objects.ItemMarket;
 import com.skyapps.bennyapp.R;
-import com.skyapps.bennyapp.tenders.tabs.CustomMarketAdapter;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
+import java.util.Collections;
 
 
 public class ChatTab extends Fragment {
@@ -89,6 +74,7 @@ public class ChatTab extends Fragment {
                             listData.add(new ItemNotification(username, message, type,mqtNum,numberTender));
                             //
                     }
+                    Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 
