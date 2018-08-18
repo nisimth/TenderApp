@@ -38,9 +38,8 @@ public class CustomNotificationAdapter extends ArrayAdapter<ItemNotification> {
         final ItemNotification item = getItem(position);
         username.setText(item.getUsername()+"");
         message.setText(item.getMessage());
-        // TODO
         tenderNum.setText(item.getMqtNum());
-        ////
+
 
         String str1 = item.getType().replace("_", " ");
         String str2 = str1.replace("-", "/");

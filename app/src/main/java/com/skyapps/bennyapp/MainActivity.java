@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -20,7 +20,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.skyapps.bennyapp.Objects.Suppliers;
 import com.skyapps.bennyapp.tenders.TendersActivity;
+import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TextView register_text; // message for user abaut  username & password
@@ -35,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         register_text = (TextView) findViewById(R.id.register_text);
-        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים <a href='http://beta.wizbiz.co.il/Login/restore'>לחץ כאן</a></p>"));
+        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים או אינך רשום במערכת <a href='http://walla.co.il'>לחץ כאן</a></p>"));
         register_text.setMovementMethod(LinkMovementMethod.getInstance());
 
-        //// check if username & password are not empty - if not moves him to Tender activity
+        //// check if the current user is sign-in : if yes -> tenderActivity opens immediately
         if (!getSharedPreferences("BennyApp", MODE_PRIVATE).getString("username", "").equals("")){
             Log.e("the user : ",getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
             getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("activity" , "").commit();
@@ -57,11 +59,9 @@ public class MainActivity extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (username.getText().toString().equals("") && password.getText().toString().equals("")){
-
-                    Toast.makeText(MainActivity.this, "שם המשתמש או הסיסמא שגויים, אנא נסה שנית", Toast.LENGTH_SHORT).show();
-                    
+                ///// in original was && 15.08.2018
+                if (username.getText().toString().equals("") || password.getText().toString().equals("")){
+                    Toast.makeText(MainActivity.this, "שדה שם המשתמש או הסימסא ריקים אנא נסה שנית", Toast.LENGTH_SHORT).show();
                 } else {
                     mProgressDialog = new ProgressDialog(MainActivity.this);
                     mProgressDialog.setCancelable(false);
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(new Intent(MainActivity.this, TendersActivity.class));
                                     getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("username", username.getText().toString()).commit();
                                     getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("category", snapshot.child(username.getText().toString()).child("category").getValue()+"").commit();
-                                   // Toast.makeText(MainActivity.this, "Your Category : " + snapshot.child(username.getText().toString()).child("category").getValue(), Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(MainActivity.this, "Your Category : " + snapshot.child(username.getText().toString()).child("category").getValue(), Toast.LENGTH_SHORT).show();
                                     finish();
 
                                     break;
@@ -124,17 +124,17 @@ public class MainActivity extends AppCompatActivity {
 
                             }
 
-
+                            // TODO change the dioalog function -> message to user that one of the details wrong !
                             final Dialog deleteDialog = new Dialog(MainActivity.this);
                             deleteDialog.setContentView(R.layout.dialog7);
                             deleteDialog.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     deleteDialog.dismiss();
-                                    String url = "https://wizbiz.co.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/";
+                                   /* String url = "http://www.walla.co.il";
                                     Intent i = new Intent(Intent.ACTION_VIEW);
                                     i.setData(Uri.parse(url));
-                                    startActivity(i);
+                                    startActivity(i);*/
 
                                 }
                             });

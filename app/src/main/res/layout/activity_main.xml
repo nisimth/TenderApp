@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,10 +14,21 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/main"
+                android:background="@drawable/main"/>
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="5dp"
             android:text="ברוך הבא"
             android:textSize="30dp"
             android:textStyle="bold"
@@ -24,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="לאפליקציית המכרזים"
+            android:text="לאפליקציית WIZBIZ"
             android:textSize="30dp"
             android:textStyle="bold"
             android:textColor="#000099"/>
@@ -56,11 +68,15 @@
 
         <TextView
             android:id="@+id/register_text"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:textColor="#000000"
             android:layout_marginTop="10dp"
-            android:text="שכחת את הסיסמא שלך ?"
-            android:textSize="15dp" />
+            android:text="במידה ושכחת את אחד הפרטים או אינך רשום במערכת לחץ כאן"
+            android:textSize="15dp"
+            android:layout_gravity="center_horizontal"/>
+
 
 
     </LinearLayout>

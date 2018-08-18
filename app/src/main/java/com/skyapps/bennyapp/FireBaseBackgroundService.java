@@ -129,7 +129,8 @@ public class FireBaseBackgroundService extends IntentService {
 
             //builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")
             builder.setContentTitle("התראה חדשה מ-WIZBIZ")// required
-                    .setSmallIcon(android.R.drawable.ic_popup_reminder) // required
+                    //.setSmallIcon(android.R.drawable.ic_popup_reminder) // required
+                    .setSmallIcon(R.mipmap.app_logo_round)
                     .setContentText(messageString)  // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(messageString))
@@ -145,10 +146,10 @@ public class FireBaseBackgroundService extends IntentService {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            Bitmap arrowDown = BitmapFactory.decodeResource(getResources(),R.drawable.arrow_down_notifiation);
+            Bitmap appLogo = BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo_round);
             //builder.setContentTitle("הודעה חדשה מ" + notifString + " מאפליקציית המכרזים!")
             builder.setContentTitle("התראה חדשה מ-WIZBIZ")// required
-                    .setSmallIcon(android.R.drawable.ic_popup_reminder) // required
+                    .setSmallIcon(R.mipmap.app_logo_round) // required
                     .setContentText(notifString)  // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
@@ -157,9 +158,9 @@ public class FireBaseBackgroundService extends IntentService {
                     .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
                     .setPriority(Notification.PRIORITY_HIGH)
                     /////// new //////
-                    .setLargeIcon(arrowDown)
+                    .setLargeIcon(appLogo)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .setColor(Color.GREEN)
+                    //.setColor(Color.GREEN)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(messageString)).build() ;
             //////////////////;
         } // else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

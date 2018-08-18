@@ -101,11 +101,11 @@ public class WinTab extends Fragment {
                 ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
                 //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getContext() , TabsActivity.class);
-                i.putExtra("win_msg" , "win");
+                Intent in = new Intent(getContext() , TabsActivity.class);
+                in.putExtra("win_msg" , "win");
                 getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();
                 getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putInt("num" , Integer.parseInt(""+item.getNumberTender())).commit();
-                startActivity(i);
+                startActivity(in);
 
             }
         });
