@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ///// in original was && 15.08.2018
+                // if username or password are empty -> showing Toast
                 if (username.getText().toString().equals("") || password.getText().toString().equals("")){
                     Toast.makeText(MainActivity.this, "שדה שם המשתמש או הסימסא ריקים אנא נסה שנית", Toast.LENGTH_SHORT).show();
                 } else {
@@ -124,18 +124,13 @@ public class MainActivity extends AppCompatActivity {
 
                             }
 
-                            // TODO change the dioalog function -> message to user that one of the details wrong !
+                            // Dialog message to user that one of the details are wrong !
                             final Dialog deleteDialog = new Dialog(MainActivity.this);
                             deleteDialog.setContentView(R.layout.dialog7);
                             deleteDialog.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     deleteDialog.dismiss();
-                                   /* String url = "http://www.walla.co.il";
-                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                    i.setData(Uri.parse(url));
-                                    startActivity(i);*/
-
                                 }
                             });
                             final Handler handler = new Handler();
@@ -151,10 +146,7 @@ public class MainActivity extends AppCompatActivity {
                             }, 1500);
 
                             mProgressDialog.dismiss();
-
-
-
-                        }
+                            }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {

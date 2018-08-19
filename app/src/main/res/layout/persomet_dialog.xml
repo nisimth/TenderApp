@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="400dp"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
+    android:background="@drawable/round">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:background="@drawable/new_pirsomet"
+       >
+        <ImageView
+            android:id="@+id/pirsomet_image"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/new_pirsomet"
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_marginTop="7dp"
+        android:id="@+id/close_pirsomet"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:background="@drawable/rounded3"
+        android:clickable="true"
+        android:text="סגור"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_below="@+id/k"
+        android:layout_centerHorizontal="true"
+        />
+
+
+</LinearLayout>

@@ -40,7 +40,8 @@ public class FireBaseBackgroundService extends IntentService {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        Log.e("test","app in " + "https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        Log.e("test","app in " + "https://tenders-83c71.firebaseio.com/notification/" +
+                getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         Log.e("Service","mybroad...");
         Firebase.setAndroidContext(this);
         final Firebase ref = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
@@ -90,7 +91,7 @@ public class FireBaseBackgroundService extends IntentService {
     }
 
 
-                           // company name       the message from fireBase -> address -> notification
+                           // company name       the message from fireBase -> tenders-83c71 -> notification
     private void postNotif(String notifString , String messageString) {
 
         final int NOTIFY_ID = 1002;
@@ -168,7 +169,8 @@ public class FireBaseBackgroundService extends IntentService {
         Notification notification = builder.build();
         notifManager.notify(NOTIFY_ID, notification);
 
-        Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/notification/" + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
+        Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/notification/"
+                + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         myFirebaseRef.removeValue();
 
 

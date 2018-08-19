@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
 
@@ -95,6 +98,46 @@ public class publicTenders extends Fragment {
 
             }
         });
+
+        /////////////// pirsomet /////////////////////
+
+        if(getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("premium")){
+
+        }else{
+            final Dialog pirsometDialog = new Dialog(getContext());
+            pirsometDialog.setContentView(R.layout.persomet_dialog);
+            pirsometDialog.findViewById(R.id.close_pirsomet).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pirsometDialog.dismiss();
+                }
+            });
+            pirsometDialog.findViewById(R.id.pirsomet_image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "http://www.wizbiz.co.il";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+            });
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        pirsometDialog.show();
+                    } catch (Exception e){
+
+                    }
+                }
+            }, 2800);
+
+            mProgressDialog.dismiss();
+
+        }
+
+        //////////////////////////////////////////////
 
 
 

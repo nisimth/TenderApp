@@ -68,6 +68,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
     String pdfUrlString  = null;
     private static final int FILES_PERMISSION_CODE = 9 ;
     private static final int FILES_REQUEST_CODE = 100 ;
+    /////////////////////////////////////
     private ImageButton pdfWebViewBtn;
     /////////////////////////////////////
     private TextView amountOftenders;
@@ -306,7 +307,8 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
             }
         });
 
-
+        // TODO this is new from 19/08/2018
+        final ImageButton w = view.findViewById(R.id.pdf_icon);
 /////////////////////////////// retrive image url from fireBase //////////////////////////////////////////
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -323,6 +325,11 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
                                 .getString("username", ""))) {
                             pdfUrlString = postSnapshot.child(companyName).child("מכרז" + getContext().getSharedPreferences("BennyApp",
                                     Context.MODE_PRIVATE).getInt("num", 0)).child("Pdf").getValue()+"";
+
+                            // TODO this is new from 19/08/2018
+                            if(pdfUrlString.equals("empty") || pdfUrlString == null){
+                                w.setVisibility(View.INVISIBLE);
+                            }
 
 
                         }
