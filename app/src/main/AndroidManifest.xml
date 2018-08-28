@@ -62,6 +62,7 @@
         <activity
             android:name=".tenders.notificationstabs.MyNotificationsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".StatisticActivity"></activity>
     </application>
 
 </manifest>

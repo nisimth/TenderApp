@@ -109,7 +109,7 @@ public class FireBaseBackgroundService extends IntentService {
             notifManager =
                     (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         }
-
+        ///// the first IF condition is for Android Oreo version only !!!
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = notifManager.getNotificationChannel(id);

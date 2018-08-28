@@ -220,7 +220,7 @@ public class ExpandableListTyotaAdapter extends BaseExpandableListAdapter {
             time.setText("עומד\n להגמר");
             //time.setTextColor(Color.RED);
         }
-        if(time.getText().toString().equals("סטטוס")) {
+        if(tender.calcStarts() <= 0 && tender.calcEnds() >= 0) {
             time.setText("פעיל");
             //time.setTextColor(Color.GREEN);
             //c.start();

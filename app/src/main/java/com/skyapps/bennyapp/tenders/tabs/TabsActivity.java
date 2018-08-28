@@ -63,6 +63,9 @@ public class TabsActivity extends AppCompatActivity {
 
         ///TODO
         try {
+            /*if (getIntent().getExtras()!=null){
+
+            }*/
             /*if (getIntent().getStringExtra("new_msg").equals("new") || getIntent().getStringExtra("win_msg").equals("win") ) {
                 viewPager.setCurrentItem(0);
             }*/
@@ -71,7 +74,7 @@ public class TabsActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(2);
             }
         } catch (Exception e){
-
+            //Toast.makeText(this, "הוא קורס כי הוא לא מוצא intent", Toast.LENGTH_SHORT).show();
         }
 
 

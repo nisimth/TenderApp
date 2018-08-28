@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.support.ManageActivity;
 import com.skyapps.bennyapp.support.SupportedActivity;
 import com.skyapps.bennyapp.tenders.notificationstabs.MyNotificationsActivity;
@@ -53,7 +56,6 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_tenders);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_menu_foreground);
         setSupportActionBar(toolbar);
@@ -159,7 +161,6 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
 
                 tenderCounter.setText("(" +listDataHeader.size()+ ")");
                 mProgressDialog.dismiss();
-
             }
 
             @Override

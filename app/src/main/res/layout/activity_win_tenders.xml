@@ -51,7 +51,6 @@
                 android:layout_marginRight="288dp"
                 />
         </RelativeLayout>
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

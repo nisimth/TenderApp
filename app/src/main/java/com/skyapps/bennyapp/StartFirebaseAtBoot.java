@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-
+/// broadcastReceiver that listening all the time background
 public class StartFirebaseAtBoot extends BroadcastReceiver {
 
     @Override
