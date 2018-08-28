@@ -61,20 +61,13 @@ public class WinTab extends Fragment {
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                             String type = postSnapshot.getKey();
 
-                        // TODO
+
                         String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-                        // // TODO problem with numberTender
+
                         listData.add(new ItemNotification(username, message, type,tenderNum,numberTender));
-                        //listData.add(new ItemNotification(username, message, type,tenderNum));
-                        //
-                            //}
 
-
-
-
-                        //}
                     }
                     Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
@@ -101,8 +94,6 @@ public class WinTab extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
-                //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
-
                 Intent in = new Intent(getContext() , TabsActivity.class);
                 in.putExtra("win_msg" , "win");
                 getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();

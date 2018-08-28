@@ -27,7 +27,7 @@ public class Mifrat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mifrat);
-
+        //// gets items details from customMarketAdapter Intent
         final int num = getIntent().getIntExtra("num" , 0);
         final long price = getIntent().getLongExtra("price" , 0);
         ((TextView)findViewById(R.id.title)).setText("מפרט - פריט מס' " + num );
@@ -111,7 +111,7 @@ public class Mifrat extends AppCompatActivity {
 
 
 
-
+        /// pass data onclick priceitemsBtn to PriceItem
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

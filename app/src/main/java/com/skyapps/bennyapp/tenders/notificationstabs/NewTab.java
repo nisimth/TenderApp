@@ -69,7 +69,7 @@ public class NewTab extends Fragment {
 
                     }
 
-
+                    /// order notifications by income date ( descending order )
                     Collections.reverse(listData);
 
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());

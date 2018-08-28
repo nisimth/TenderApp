@@ -38,8 +38,8 @@ import java.util.concurrent.TimeUnit;
 
 public class privateTenders extends Fragment {
 
-    ////////////new/////////////
-    private int tenderCounter = 0;
+    //////////// counter of all tenders/////////////
+    //private int tenderCounter = 0;
     private TextView counter;
     ////////////////////////////
 
@@ -51,7 +51,7 @@ public class privateTenders extends Fragment {
     private ProgressDialog mProgressDialog;
 
     int lastPosition = -1;
-
+    //// filters ///
     ImageButton filterStartDate;
     ImageButton filterEndDate;
     Button searchBtn;
@@ -64,9 +64,8 @@ public class privateTenders extends Fragment {
     CheckBox active;
     CheckBox isEnding;
     CheckBox ended;
-
     long startDateSelcted, endDateSelcted;
-
+    /////////////////////////////////////////////////////
     private DatePickerDialog.OnDateSetListener start_dateListener, end_dateListener;
 
 
@@ -183,7 +182,7 @@ public class privateTenders extends Fragment {
 
                 for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
                     for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
-                        tenderCounter ++;
+                        //tenderCounter ++;
                         String status;
 
                         listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
@@ -225,8 +224,8 @@ public class privateTenders extends Fragment {
             }
         });
 
+        /// search by company name
         final android.widget.SearchView search = (android.widget.SearchView) view.findViewById(R.id.byname);
-
         search.setQueryHint("שם חברה");
         search.setFocusable(false);
         search.setIconified(false);
@@ -378,7 +377,7 @@ public class privateTenders extends Fragment {
         });
 
 
-
+        ////////// search by urgency
         lowCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -510,7 +509,7 @@ public class privateTenders extends Fragment {
         });
 
 
-
+        ////////// search by Tender status /////////////
         yetToStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

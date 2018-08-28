@@ -41,7 +41,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skyapps.bennyapp.R;
-import com.skyapps.bennyapp.SelectPhotoDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 import static android.app.Activity.RESULT_OK;
 
 
-public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
+public class DetailsTab extends Fragment  {
 
     private EditText editMqt, editName, editNameProject, editAddress, editContact, editPhone,
             editEmail, editCredit, editMaam, editDhifot, editHovala;
@@ -78,25 +77,14 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
 
     private ImageView image; /// now using this
-    private Button btn;
     private String companyName;
     private ProgressDialog mProgressDialog;
 
-
-    private Uri mImageUri;
     DatabaseReference dRef;
     String url;
     static EditText editComments, editAddressForSend;
 
-    @Override
-    public void getImagePath(Uri path) {
 
-    }
-
-    @Override
-    public void getImageBitmap(Bitmap bitmap) {
-
-    }
 
 
     @Override
@@ -142,7 +130,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
         ((EditText)view.findViewById(R.id.category)).setText(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
                 .getString("category",""));
 
-
+        /// loads Tender details by checking company name
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -199,7 +187,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
         }
 
-///////////// check if tender is loss and hide timer layout /////////////////
+///////////// check if tender is loss and hide buttons layout /////////////////
         final Firebase userFirebise1 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/Tenders/" +
                 getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company","")+
@@ -309,7 +297,7 @@ public class DetailsTab extends Fragment implements SelectPhotoDialog.OnPhotoSel
 
         // TODO this is new from 19/08/2018
         final ImageButton w = view.findViewById(R.id.pdf_icon);
-/////////////////////////////// retrive image url from fireBase //////////////////////////////////////////
+/////////////////////////////// retrive image & Pdf url from fireBase //////////////////////////////////////////
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

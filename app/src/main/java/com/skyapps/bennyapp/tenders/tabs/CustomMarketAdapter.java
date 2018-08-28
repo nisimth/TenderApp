@@ -27,7 +27,7 @@ import java.util.Date;
 public class CustomMarketAdapter extends ArrayAdapter<ItemMarket> {
     private ArrayList<ItemMarket> dataSet;
     Context mContext;
-    private String dateStart, timeStart, dateEnd, timeEnd;
+    //private String dateStart, timeStart, dateEnd, timeEnd;
 
     public CustomMarketAdapter(ArrayList<ItemMarket> data, Context context) {
         super(context, R.layout.marketitem, data);

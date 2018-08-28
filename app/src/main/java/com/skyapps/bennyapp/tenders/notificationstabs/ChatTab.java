@@ -36,7 +36,6 @@ public class ChatTab extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_list_tabs, container, false);
-        //((TextView)view.findViewById(R.id.title)).setText("הודעות הצ'אטים שלי");
         list = view.findViewById(R.id.list);
         listData = new ArrayList<ItemNotification>();
 
@@ -56,10 +55,6 @@ public class ChatTab extends Fragment {
 
                     for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        //for (int i = 1; i <= dataSnapshot.child(postSnapshot.getKey()).getChildrenCount(); i++) {
-
-
-                            //if (postSnapshot.getKey().equals("chats")){
                                 Log.e("whats the key : " , postSnapshot.getKey()+"");
                             String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
@@ -98,8 +93,6 @@ public class ChatTab extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemNotification item = (ItemNotification) parent.getItemAtPosition(position);
-                //Toast.makeText(getContext(), item.getUsername(), Toast.LENGTH_SHORT).show();
-
                 Intent i = new Intent(getContext() , TabsActivity.class);
                 i.putExtra("send_msg" , "chat");
                 getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).edit().putString("company" , item.getUsername()).commit();

@@ -93,7 +93,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView.findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO helper.add(new Item("DELTA" , "מכרז1"));
+
                     final Intent i = new Intent(_context, TabsActivity.class);
                     i.putExtra("name", item.getName());
                     _context.getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("company", item.getCompany()).commit();
@@ -140,9 +140,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
-        //TODO if(helper.isLive(new Tender(tender.getName() , tender.getNum()){
-        //convertView.setBackgroundColor(Color.YELLOW);
-
         TextView masad = (TextView) convertView.findViewById(R.id.masad);
         TextView name = (TextView) convertView.findViewById(R.id.name);
         TextView project = (TextView) convertView.findViewById(R.id.project);
@@ -154,49 +151,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         project.setText(tender.getProject());
 
 
-
-
-             /*CountDownTimer c = new CountDownTimer(tender.calcEnds(), 1000) {
-
-                public void onTick(long millisUntilFinished) {
-
-
-                    long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
-                    millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
-
-                    long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                    millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
-
-                    long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-                    millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
-
-                    long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-
-
-                    if (days == 0) {
-                        if (hours == 0) {
-                            time.setText(minutes + ":" + seconds);
-                        } else {
-                            time.setText(hours + ":" + minutes + ":" + seconds);
-                        }
-                    } else if (hours == 0) {
-                        time.setText(minutes + ":" + seconds);
-                    } else {
-                        time.setText(days + " ימים , " + hours + ":" + minutes + ":" + seconds);
-                    }
-
-
-                }
-
-                public void onFinish() {
-
-                    time.setText("עבר הזמן");
-                }
-
-            };*/
-
-
-
         if (tender.calcStarts()  >= 0) {
             time.setText("טרם\nהתחיל");
 
@@ -206,20 +160,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
         else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2)) && tender.calcEnds()>0) {
             time.setText("עומד\nלהיסגר");
-            //time.setTextColor(Color.RED);
+
         }
         else if (tender.calcStarts()  <= 0 && tender.calcEnds() >= 0){
             time.setText("פעיל");
-            //time.setTextColor(Color.GREEN);
+
 
         }
-        /*if(time.getText().toString().equals("סטטוס")) {
-            time.setText("פעיל");
-            //time.setTextColor(Color.GREEN);
-            //c.start();
-        }*/
-
-
 
 
         Log.e("the tender: " ,tender.getMasad().toString() + " " + time.getText().toString() +"" );

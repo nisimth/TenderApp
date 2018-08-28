@@ -23,7 +23,7 @@ public class PriceItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_price_item);
-
+        //// gets items details from Mifrat Intent
         final int num = getIntent().getIntExtra("num" , 0);
         ((TextView)findViewById(R.id.title)).setText("הצעת מחיר - פריט מס' " + num);
 
@@ -78,9 +78,6 @@ public class PriceItem extends AppCompatActivity {
         findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                //MarketTab.counter++;
-
                 if (editPrice.getText().toString().equals("") || editPrice.getText().toString().equals("0")){
                     Toast.makeText(PriceItem.this, "אנא הזן מחיר תקין", Toast.LENGTH_SHORT).show();
                 } else {

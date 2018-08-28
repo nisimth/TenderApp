@@ -57,6 +57,8 @@ public class publicTenders extends Fragment {
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
 
+
+        //// loading all public tenders
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -155,6 +157,7 @@ public class publicTenders extends Fragment {
                             Log.e("premium is: ", "premium");
                             getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("premium", "premium").commit();
                         } else {
+                            ////// if the user is not premium hide search layout
                             Log.e("premium is: ", "null");
                             getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).edit().putString("premium", "").commit();
                             searchLayout.setVisibility(View.INVISIBLE);
@@ -175,7 +178,7 @@ public class publicTenders extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Primium
+                //if the user premium
                 if (getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("premium" , "").equals("premium")){
                     Tender t = (Tender) parent.getItemAtPosition(position);
                     Intent i = new Intent(getContext(),DetailsPublic.class);
@@ -183,6 +186,7 @@ public class publicTenders extends Fragment {
                     i.putExtra("tender" , "מכרז" + t.getNum());
                     startActivity(i);
                 } else {
+                    //// if the user not premium
                     final Dialog dialog = new Dialog(getContext());
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
@@ -207,8 +211,8 @@ public class publicTenders extends Fragment {
             }
         });
 
+        ///// search tender by company name
         final android.widget.SearchView search = (android.widget.SearchView) view.findViewById(R.id.bynamepublic);
-
         search.setQueryHint("שם חברה");
         search.setFocusable(false);
         search.setIconified(false);

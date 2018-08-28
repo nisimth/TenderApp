@@ -57,7 +57,6 @@ public class ManageActivity extends AppCompatActivity  implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
 
         name_user = navigationView.getHeaderView(0).findViewById(R.id.name_user);
-        //name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("firstname", "") + " "
                 + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("lastname", ""));
 

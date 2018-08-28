@@ -166,48 +166,6 @@ public class ExpandableListTyotaAdapter extends BaseExpandableListAdapter {
         name.setText(tender.getName());
         project.setText(tender.getProject());
 
-        //Log.e("isExpanded" , isExpanded+"");
-
-        CountDownTimer c = new CountDownTimer(tender.getTime(), 1000) {
-
-            public void onTick(long millisUntilFinished) {
-
-
-
-                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
-
-                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
-
-                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
-
-                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-
-
-                if (days == 0) {
-                    if (hours == 0) {
-                        time.setText(minutes + ":" + seconds);
-                    } else {
-                        time.setText(hours + ":" + minutes + ":" + seconds);
-                    }
-                } else if (hours == 0) {
-                    time.setText(minutes + ":" + seconds);
-                } else {
-                    time.setText(days + " ימים , " + hours + ":" + minutes + ":" + seconds);
-                }
-
-
-
-            }
-
-            public void onFinish() {
-
-                time.setText("עבר הזמן");
-            }
-
-        };
 
 
         if (tender.calcStarts()  >= 0) {
@@ -218,12 +176,11 @@ public class ExpandableListTyotaAdapter extends BaseExpandableListAdapter {
         }
         else if ((tender.calcEnds() <= TimeUnit.HOURS.toMillis(2))) {
             time.setText("עומד\n להגמר");
-            //time.setTextColor(Color.RED);
+
         }
         if(tender.calcStarts() <= 0 && tender.calcEnds() >= 0) {
             time.setText("פעיל");
-            //time.setTextColor(Color.GREEN);
-            //c.start();
+
         }
 
 

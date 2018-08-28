@@ -53,7 +53,7 @@ public class ChatFragment extends Fragment {
                 adapter.clear();
 
 
-
+                /// create new object of Chat ( companyName, companyMessage )
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     Chat post = postSnapshot.getValue(Chat.class);
@@ -77,10 +77,11 @@ public class ChatFragment extends Fragment {
 
 
 
-
+        /// onclick sendMessageBtn send the user string from editText
         view.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /// the user message
                 String m = ((EditText) view.findViewById(R.id.messageInput)).getText().toString();
 
                 if (m.equals("")){

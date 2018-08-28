@@ -103,11 +103,7 @@ public class MarketTab extends Fragment {
         Firebase.setAndroidContext(getContext());//FireBase , Upload Data from firebase to EditTexts...
         myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/");
 
-        /*final Firebase ref = myFirebaseRef.child("Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("Items");
-        final Firebase ref2 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child(getContext().getSharedPreferences("BennyApp",Context.MODE_PRIVATE).getString("company","")).child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0));
-        final Firebase ref4 = myFirebaseRef.child("users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","")).child("TenderWin");
-*/
-        final LinearLayout d = view.findViewById(R.id.market_details);
+        final LinearLayout TenderTimeAndButtons = view.findViewById(R.id.market_details);
 
 ///////////// check if tender is loss hide timer layout /////////////////
         final Firebase userFirebise1 = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
@@ -119,7 +115,7 @@ public class MarketTab extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                  if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
-                     d.setVisibility(View.INVISIBLE);
+                     TenderTimeAndButtons.setVisibility(View.INVISIBLE);
                      status.setText("הפסדת במכרז");
                 }
             }
@@ -141,10 +137,10 @@ public class MarketTab extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("win")){
-                    d.setVisibility(View.INVISIBLE);
+                    TenderTimeAndButtons.setVisibility(View.INVISIBLE);
                     status.setText("זכית במכרז");
                 } else if (dataSnapshot.getValue()!=null && dataSnapshot.getValue().equals("loss")) {
-                    d.setVisibility(View.INVISIBLE);
+                    TenderTimeAndButtons.setVisibility(View.INVISIBLE);
                     status.setText("הפסדת במכרז");
                 }
             }
@@ -159,7 +155,7 @@ public class MarketTab extends Fragment {
 
         try {
             if (TabsActivity.finall.equals("Final")) {
-                d.setVisibility(View.INVISIBLE);
+                TenderTimeAndButtons.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e){
 
@@ -168,7 +164,7 @@ public class MarketTab extends Fragment {
 
 
 
-
+        /// count the number of items & calc the total price
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -270,14 +266,14 @@ public class MarketTab extends Fragment {
 
                 if(calcTimer(dateStart.getText().toString(),timeStart.getText().toString())>=0){
                     timer.setText("טרם התחיל");
-                    d.setVisibility(View.INVISIBLE);
+                    TenderTimeAndButtons.setVisibility(View.INVISIBLE);
                     if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
                         all_prices.setText("המכרז טרם התחיל");
                     }
                 }
                 else if(timerFireBase<=0){
                     timer.setText("עבר הזמן");
-                    d.setVisibility(View.INVISIBLE);
+                    TenderTimeAndButtons.setVisibility(View.INVISIBLE);
                     if (all_prices.getText().toString().equals("לא תומחרו פריטים")) {
                         all_prices.setText("המכרז נגמר");
                     }
@@ -355,7 +351,7 @@ public class MarketTab extends Fragment {
 
             }
         });
-
+        //// set comments/image/pdf or load them
         myFirebaseRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -431,7 +427,7 @@ public class MarketTab extends Fragment {
             }
         });
 
-
+        // add Tender to Tyotot
         view.findViewById(R.id.tyotaTender).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -495,6 +491,7 @@ public class MarketTab extends Fragment {
             }
         });
 
+        //// checks if all items are pricing & discount 3 (comments,image,pdf)
         Firebase refcounter = new Firebase("https://tenders-83c71.firebaseio.com/users/" +
                 getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("username","")
                 + "/" + getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getString("company","")
@@ -513,13 +510,10 @@ public class MarketTab extends Fragment {
             }
         });
 
-
+        /// submit Tender & if the Tender exist in Tyotot removes him from their
         view.findViewById(R.id.addTender).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 if (counter!=countFullItems){
                     Log.e("trying the sp : " , "מכרז"+getContext().getSharedPreferences("BennyApp" , Context.MODE_PRIVATE).getInt("num",0)+"");
                     Log.e("trying countFullItems :" , countFullItems+"");

@@ -91,6 +91,7 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
 
+        ///// checks if the category & username correct and load the tender
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -159,6 +160,7 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
                 listAdapter = new ExpandableListAdapter(MyTendersActivity.this, listDataHeader, listDataChild);
                 listTenders.setAdapter(listAdapter);
 
+                /// the counter of the all tenders
                 tenderCounter.setText("(" +listDataHeader.size()+ ")");
                 mProgressDialog.dismiss();
 

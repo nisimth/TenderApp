@@ -14,7 +14,7 @@ public class ItemNotification {
         ////
         this.type = type;
     }
-
+    /// chat/win notification constructor
     public ItemNotification(String username, String message, String type, String tenderNum, long numberTender) {
         this.username = username;
         this.message = message;
@@ -22,7 +22,7 @@ public class ItemNotification {
         this.mqtNum = tenderNum; // mqt
         this.numberTender = numberTender;
     }
-
+    /// new Tender notification constructor
     public ItemNotification(String username, String message, String type, String mqtNum, long numberTender, String privateorpublic) {
         this.username = username;
         this.message = message;

@@ -45,7 +45,7 @@ public class TabsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-
+        /// get the string "final" from WinTendersActivity
         finall = getIntent().getStringExtra("Final");
 
         getSharedPreferences("BennyApp" , MODE_PRIVATE).edit().putString("activity" , "tabs").commit();

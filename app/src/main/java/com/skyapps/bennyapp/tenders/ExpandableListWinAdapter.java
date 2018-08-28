@@ -84,7 +84,7 @@ public class ExpandableListWinAdapter extends BaseExpandableListAdapter {
                 _context.startActivity(Intent.createChooser(emailIntent, "Send email..."));;
             }
         });
-
+        //// send using Intent "final" to TabActivity for hide some layouts
         convertView.findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +146,7 @@ public class ExpandableListWinAdapter extends BaseExpandableListAdapter {
         name.setText(tender.getName());
         project.setText(tender.getProject());
 
-        time.setText("נגמר");
+        time.setText("זכית!");
 
 
 

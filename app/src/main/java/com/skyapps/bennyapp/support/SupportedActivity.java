@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SupportedActivity extends AppCompatActivity   implements NavigationView.OnNavigationItemSelectedListener{
+public class SupportedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private String dahof = "";
     private EditText editDate, editHour, title, pirot;
     private DrawerLayout drawer;
