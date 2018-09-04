@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         register_text = (TextView) findViewById(R.id.register_text);
-        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים או אינך רשום במערכת <a href='http://walla.co.il'>לחץ כאן</a></p>"));
+        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים או אינך רשום במערכת <a href='http://secured.wizbiz.co.il/login/restore'>לחץ כאן</a></p>"));
         register_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         //// check if the current user is sign-in : if yes -> tenderActivity opens immediately
