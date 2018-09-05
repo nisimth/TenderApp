@@ -63,7 +63,6 @@ public class ChatTab extends Fragment {
 
                             long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-
                             // add the notification object on top of the array list - index 0
                             listData.add(new ItemNotification(username, message, type,mqtNum,numberTender));
 

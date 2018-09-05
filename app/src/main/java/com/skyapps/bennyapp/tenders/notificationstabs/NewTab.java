@@ -67,6 +67,7 @@ public class NewTab extends Fragment {
                             long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
                             String privateorpublic = (String) dataSnapshot.child(postSnapshot.getKey()).child("type").getValue();
 
+
                             // add the notification object on top of the array list - index 0
                         listData.add(0,new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
 
