@@ -15,6 +15,8 @@ import com.skyapps.bennyapp.R;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+
+///////// adapter for public tenders
 public class CustomAdapter extends ArrayAdapter<Tender> {
     private ArrayList<Tender> dataSet;
     Context mContext;

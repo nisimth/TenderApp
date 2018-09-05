@@ -6,6 +6,7 @@ public class ItemNotification {
     long numberTender;
     String privateorpublic;
 
+
     public ItemNotification(String username, String message, String type, String tenderNum) {
         this.username = username;
         this.message = message;
@@ -79,6 +80,4 @@ public class ItemNotification {
     public void setPrivateorpublic(String privateorpublic) {
         this.privateorpublic = privateorpublic;
     }
-
-    ////////
 }

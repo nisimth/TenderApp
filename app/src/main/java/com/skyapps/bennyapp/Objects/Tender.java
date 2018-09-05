@@ -14,7 +14,7 @@ public class Tender {
 
     int num;
 
-
+    // private tender constructor
     public Tender(String masad, String name, String project, String startTender, String endTender, String startTime, String endTime) {
         this.masad = masad;
         this.name = name;
@@ -32,6 +32,7 @@ public class Tender {
         this.phone = phone;
     }
 
+    // public tender constructor
     public Tender(String masad, String name, String email,String startTender, String endTender, String startTime, String endTime, int num) {
         this.masad = masad;
         this.name = name;

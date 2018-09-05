@@ -20,7 +20,6 @@ import com.skyapps.bennyapp.R;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class ChatTab extends Fragment {
@@ -59,17 +58,17 @@ public class ChatTab extends Fragment {
                             String username = (String) dataSnapshot.child(postSnapshot.getKey()).child("username").getValue();
                             String message = (String) dataSnapshot.child(postSnapshot.getKey()).child("message").getValue();
                             String type = postSnapshot.getKey();
-                            // TODO
+
                             String mqtNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
 
                             long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-                            /////
-                            // TODO
+
+                            // add the notification object on top of the array list - index 0
                             listData.add(new ItemNotification(username, message, type,mqtNum,numberTender));
-                            //
+
                     }
-                    Collections.reverse(listData);
+                    //Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 

@@ -19,7 +19,6 @@ import com.skyapps.bennyapp.R;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class WinTab extends Fragment {
@@ -65,11 +64,11 @@ public class WinTab extends Fragment {
                         String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-
-                        listData.add(new ItemNotification(username, message, type,tenderNum,numberTender));
+                        // add the notification object on top of the array list - index 0
+                        listData.add(0,new ItemNotification(username, message, type,tenderNum,numberTender));
 
                     }
-                    Collections.reverse(listData);
+                    //Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 

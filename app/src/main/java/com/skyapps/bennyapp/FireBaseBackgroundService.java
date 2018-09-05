@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -28,7 +27,6 @@ public class FireBaseBackgroundService extends IntentService {
 
     private Firebase f;
     private ValueEventListener handler;
-    private String tal, user2;
     private String typeNO ;
 
     private NotificationManager notifManager;
@@ -110,6 +108,9 @@ public class FireBaseBackgroundService extends IntentService {
                     (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         }
         ///// the first IF condition is for Android Oreo version only !!!
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        //you must create the notification channel before posting any notifications on Android 8.0 and higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = notifManager.getNotificationChannel(id);

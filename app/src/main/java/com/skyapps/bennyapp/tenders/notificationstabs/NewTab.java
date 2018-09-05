@@ -20,8 +20,10 @@ import com.skyapps.bennyapp.R;
 import com.skyapps.bennyapp.tenders.DetailsPublic;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Date;
 
 
 public class NewTab extends Fragment {
@@ -32,7 +34,7 @@ public class NewTab extends Fragment {
     private long countFullItems;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
 
@@ -65,16 +67,30 @@ public class NewTab extends Fragment {
                             long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
                             String privateorpublic = (String) dataSnapshot.child(postSnapshot.getKey()).child("type").getValue();
 
-                        listData.add(new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
+                            // add the notification object on top of the array list - index 0
+                        listData.add(0,new ItemNotification(username, message, type,tenderNum,numberTender,privateorpublic));
 
                     }
 
                     /// order notifications by income date ( descending order )
-                    Collections.reverse(listData);
+                    //Collections.reverse(listData);
+                    /*Collections.sort(listData, new Comparator<ItemNotification>() {
+                        @Override
+                        public int compare(ItemNotification itemNotification, ItemNotification t1) {
+                           return itemNotification.getDate().compareTo(t1.getDate());
+                        }
+                    });*/
+
+
+                    /*Collections.sort(listData, new Comparator<ItemNotification>() {
+                        @Override
+                        public int compare(ItemNotification itemNotification, ItemNotification t1) {
+                            return converStringToDate(itemNotification.getType()).compareTo(converStringToDate(t1.getType()));
+                        }
+                    });*/
 
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
-
                 } catch (Exception e){
                     Log.e("app e is : " , e.toString());
                     //Toast.makeText(getContext(), "יש בעיה", Toast.LENGTH_SHORT).show();
@@ -130,4 +146,21 @@ public class NewTab extends Fragment {
 
         return view;
     }
+
+    private Date converStringToDate(String date){
+        date.replace("_", " ");
+        date.replace("-", "/");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        Date d =null;
+        try {
+            d = df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d;
+    }
+
+
+
+
 }
