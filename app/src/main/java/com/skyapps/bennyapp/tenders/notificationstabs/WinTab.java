@@ -64,7 +64,6 @@ public class WinTab extends Fragment {
                         String tenderNum = (String) dataSnapshot.child(postSnapshot.getKey()).child("mqt").getValue();
                         long numberTender = (long) dataSnapshot.child(postSnapshot.getKey()).child("num").getValue();
 
-
                         // add the notification object on top of the array list - index 0
                         listData.add(0,new ItemNotification(username, message, type,tenderNum,numberTender));
 

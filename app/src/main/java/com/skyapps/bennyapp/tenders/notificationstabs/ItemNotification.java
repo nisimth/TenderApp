@@ -57,7 +57,7 @@ public class ItemNotification {
         this.type = type;
     }
 
-    ////
+    ///
     public String getMqtNum() {
         return mqtNum;
     }
