@@ -3,9 +3,10 @@ package com.skyapps.bennyapp;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -19,7 +20,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.skyapps.bennyapp.Objects.Suppliers;
 import com.skyapps.bennyapp.tenders.TendersActivity;
+import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TextView register_text; // message for user abaut  username & password
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         register_text = (TextView) findViewById(R.id.register_text);
-        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים או אינך רשום במערכת <a href='http://http://beta.wizbiz.co.il/Login/restore'>לחץ כאן</a></p>"));
+        register_text.setText(Html.fromHtml("<p>במידה ושכחת את אחד הפרטים או אינך רשום במערכת <a href='http://secured.wizbiz.co.il/login/restore'>לחץ כאן</a></p>"));
         register_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         //// check if the current user is sign-in : if yes -> tenderActivity opens immediately
