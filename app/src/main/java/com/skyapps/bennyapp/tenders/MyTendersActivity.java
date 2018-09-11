@@ -119,11 +119,6 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
                         for (DataSnapshot postSnapshot3 : snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
                                 .child(postSnapshot.getKey()).getChildren()) {
 
-
-                            //Toast.makeText(MyTendersActivity.this, postSnapshot3.getKey().equals(snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
-                            //        .child(postSnapshot.getKey()).child(postSnapshot2.getKey()).getKey())+"", Toast.LENGTH_SHORT).show();
-
-
                             if (postSnapshot3.getKey().equals(snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
                                     .child(postSnapshot.getKey()).child(postSnapshot2.getKey()).getKey())){
 
@@ -134,8 +129,7 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
                                         snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", "")).child(postSnapshot.getKey()).child(postSnapshot2.getKey()).child("Info").child("timeStart").getValue() + "",
                                         snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", "")).child(postSnapshot.getKey()).child(postSnapshot2.getKey()).child("Info").child("timeEnd").getValue() + ""
                                 ));
-                                //TODO "הזמן נגמר"
-                                //TODO PUTEXTRA DELETE THE PENCILE , TIME , COMMENTS , SEND , TYOYA...
+
                                 List<Item> list = new ArrayList<Item>();
                                 list.add(new Item(postSnapshot.getKey() + "",
                                         snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", "")).child(postSnapshot.getKey()).child(postSnapshot2.getKey()).child("contact").getValue() + "",

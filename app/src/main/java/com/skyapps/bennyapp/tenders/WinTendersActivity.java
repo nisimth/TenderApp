@@ -50,6 +50,8 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
     private TextView name_user;
 
     private TextView tenderCounter;
+    //TODO
+    private Button statBtn;
 
 
     @Override
@@ -59,6 +61,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_menu_foreground);
         setSupportActionBar(toolbar);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,8 +78,16 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
         //name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("firstname", "") + " "
                 + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("lastname", ""));
+        // TODO
+        statBtn = (Button) findViewById(R.id.gotostat);
+        statBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WinTendersActivity.this,StatisticActivity.class);
+                startActivity(i);
 
-
+            }
+        });
         listWin = findViewById(R.id.listWin);
 
         listDataHeader = new ArrayList<Tender>();

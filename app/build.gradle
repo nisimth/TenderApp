@@ -22,6 +22,9 @@ android {
         exclude 'META-INF/NOTICE'
     }
 }
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -36,5 +39,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }
 apply plugin: 'com.google.gms.google-services'
