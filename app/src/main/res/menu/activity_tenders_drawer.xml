@@ -31,6 +31,10 @@
             android:id="@+id/notifications"
             android:icon="@drawable/mynotifications"
             android:title="ההתראות שלי" />
+        <item
+            android:id="@+id/my_stats"
+            android:icon="@drawable/stat1"
+            android:title="הפעילות שלי" />
 
     </group>
 

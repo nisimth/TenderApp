@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.tenders.MyTendersActivity;
 import com.skyapps.bennyapp.tenders.TendersActivity;
 import com.skyapps.bennyapp.tenders.TyototActivity;
@@ -190,6 +191,9 @@ public class SupportedActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(this , WinTendersActivity.class)); finish();
         } else if (id == R.id.notifications) {
             startActivity(new Intent(this , MyNotificationsActivity.class)); finish();
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.support) {
             drawer.closeDrawer(Gravity.START);

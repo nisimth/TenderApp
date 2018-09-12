@@ -27,6 +27,7 @@ import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.Objects.Item;
 import com.skyapps.bennyapp.Objects.Tender;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.support.ManageActivity;
 import com.skyapps.bennyapp.support.SupportedActivity;
 import com.skyapps.bennyapp.tenders.notificationstabs.MyNotificationsActivity;
@@ -202,6 +203,9 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.notifications) {
             startActivity(new Intent(this , MyNotificationsActivity.class)); finish();
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.support) {
             startActivity(new Intent(this , SupportedActivity.class)); finish();

@@ -49,11 +49,13 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout drawer;
     private TextView name_user;
 
+
+
     private TextView tenderCounter;
     // used for the statistics, send as data by intent
-    private Long tendersCount;
+    /*private Long tendersCount;
     //TODO
-    private Button statBtn;
+    private Button statBtn;*/
 
 
     @Override
@@ -80,7 +82,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
         //name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("username", ""));
         name_user.setText(getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("firstname", "") + " "
                 + getSharedPreferences("BennyApp" , MODE_PRIVATE).getString("lastname", ""));
-        // TODO
+        /*// TODO
         statBtn = (Button) findViewById(R.id.gotostat);
         statBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +92,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
                 startActivity(i);
 
             }
-        });
+        });*/
         listWin = findViewById(R.id.listWin);
 
         listDataHeader = new ArrayList<Tender>();
@@ -174,7 +176,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
                 listWin.setAdapter(listAdapter);
 
                 tenderCounter.setText("(" +listDataHeader.size()+ ")");
-                tendersCount = Long.valueOf(listDataHeader.size());
+                // TODO tendersCount = Long.valueOf(listDataHeader.size());
                 mProgressDialog.dismiss();
             }
 
@@ -218,6 +220,9 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
             drawer.closeDrawer(Gravity.START);
         } else if (id == R.id.notifications) {
             startActivity(new Intent(this , MyNotificationsActivity.class)); finish();
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.support) {
             startActivity(new Intent(this , SupportedActivity.class)); finish();

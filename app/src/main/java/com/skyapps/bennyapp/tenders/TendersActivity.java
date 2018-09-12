@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.skyapps.bennyapp.FireBaseBackgroundService;
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.support.ManageActivity;
 import com.skyapps.bennyapp.support.SupportedActivity;
 import com.skyapps.bennyapp.tenders.notificationstabs.MyNotificationsActivity;
@@ -165,6 +166,9 @@ public class TendersActivity extends AppCompatActivity
 
         } else if (id == R.id.notifications) {
             startActivity(new Intent(this , MyNotificationsActivity.class)); finish();
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.support) {
             startActivity(new Intent(this , SupportedActivity.class)); finish();

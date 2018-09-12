@@ -24,6 +24,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.tenders.MyTendersActivity;
 import com.skyapps.bennyapp.tenders.TendersActivity;
 import com.skyapps.bennyapp.tenders.TyototActivity;
@@ -167,6 +168,9 @@ public class ManageActivity extends AppCompatActivity  implements NavigationView
             startActivity(new Intent(this , SupportedActivity.class)); finish();
         } else if (id == R.id.notifications) {
             startActivity(new Intent(this , MyNotificationsActivity.class)); finish();
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.manage) {
             drawer.closeDrawer(Gravity.START);

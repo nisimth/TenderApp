@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.skyapps.bennyapp.MainActivity;
 import com.skyapps.bennyapp.R;
+import com.skyapps.bennyapp.StatisticActivity;
 import com.skyapps.bennyapp.support.ManageActivity;
 import com.skyapps.bennyapp.support.SupportedActivity;
 import com.skyapps.bennyapp.tenders.MyTendersActivity;
@@ -183,6 +184,9 @@ public class MyNotificationsActivity extends AppCompatActivity implements Naviga
 
         } else if (id == R.id.notifications) {
             drawer.closeDrawer(Gravity.START);
+
+        } else if (id == R.id.my_stats) {
+            startActivity(new Intent(this , StatisticActivity.class)); finish();
 
         } else if (id == R.id.support) {
             startActivity(new Intent(this , SupportedActivity.class)); finish();
