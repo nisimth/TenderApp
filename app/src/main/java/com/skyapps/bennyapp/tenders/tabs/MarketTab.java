@@ -39,7 +39,6 @@ public class MarketTab extends Fragment {
     private ListView list;
     private TextView dateStart, timeStart, dateEnd, timeEnd, timer , all_prices, status;
     private EditText editComments;
-    private long totalSend = 0;
 
 
     private CustomMarketAdapter customMarketAdapter;
@@ -535,12 +534,7 @@ public class MarketTab extends Fragment {
                     myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
                             .child("Tyotot").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
                             .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).removeValue();
-                    /// TODO 11.09.2018
-                    totalSend ++ ;
-                    myFirebaseRef.child("users").child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", "")).
-                            child("Tenders").child("TotalSend").
-                            setValue(totalSend);
-                    /// TODO 11.09.2018
+
                     Toast.makeText(getContext(), "ההצעה הוגשה לחברה!", Toast.LENGTH_SHORT).show();
                 }
 

@@ -50,6 +50,8 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
     private TextView name_user;
 
     private TextView tenderCounter;
+    // used for the statistics, send as data by intent
+    private Long tendersCount;
     //TODO
     private Button statBtn;
 
@@ -84,6 +86,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(WinTendersActivity.this,StatisticActivity.class);
+                i.putExtra("winCount", tendersCount);
                 startActivity(i);
 
             }
@@ -171,6 +174,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
                 listWin.setAdapter(listAdapter);
 
                 tenderCounter.setText("(" +listDataHeader.size()+ ")");
+                tendersCount = Long.valueOf(listDataHeader.size());
                 mProgressDialog.dismiss();
             }
 
