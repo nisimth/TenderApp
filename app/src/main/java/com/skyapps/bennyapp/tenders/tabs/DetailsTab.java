@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +86,9 @@ public class DetailsTab extends Fragment  {
     String url;
     static EditText editComments, editAddressForSend;
 
+    private LinearLayout waze ;
 
+    // TODO private String ad ;
 
 
     @Override
@@ -111,11 +115,17 @@ public class DetailsTab extends Fragment  {
         editComments = view.findViewById(R.id.editComments);
         editAddressForSend = view.findViewById(R.id.editAddressForSend);
         amountOftenders = view.findViewById(R.id.numtender);
+
+        waze = view.findViewById(R.id.waze);
+
+
         image = view.findViewById(R.id.image);
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("אנא המתן...");
         mProgressDialog.show();
+
+
 
         /// get the company name  ////
         companyName = getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", "");
@@ -154,7 +164,7 @@ public class DetailsTab extends Fragment  {
                         editComments.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("comments").getValue() + "");
                         amountOftenders.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
 
-
+                        // TODO ad = editAddress.getText().toString();
 
                         break;
                     }
@@ -166,6 +176,28 @@ public class DetailsTab extends Fragment  {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
+        // TODO change the address
+        waze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    // Launch Waze to look for Hawaii:
+                    //String url = "https://waze.com/ul?q=אשוח 2 נצרת עילית";
+                    String url = "https://waze.com/ul?q=";
+                    //String adress = "דליה 8 נצרת עילית";
+                    url = url.concat("הסחלב 12 ראשון לציון");
+                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
+                    startActivity( intent );
+                }
+                catch ( ActivityNotFoundException ex  )
+                {
+                    // If Waze is not installed, open it in Google Play:
+                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "market://details?id=com.waze" ) );
+                    startActivity(intent);
+                }
             }
         });
 
