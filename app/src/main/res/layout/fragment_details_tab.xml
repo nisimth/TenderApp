@@ -686,7 +686,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="22dp"
                     android:layout_marginTop="60dp"
-                    android:text="גלריה" />
+                    android:text="גלריה"
+                    android:textColor="#000099"/>
 
                 <ImageView
                     android:id="@+id/image"
@@ -713,7 +714,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="17dp"
                     android:layout_marginTop="140dp"
-                    android:text="מצלמה" />
+                    android:text="מצלמה"
+                    android:textColor="#000099"/>
 
                 <ImageButton
                     android:id="@+id/uploadPdf"
@@ -725,6 +727,15 @@
                     android:src="@drawable/pdf_one"
                     android:background="@drawable/pdf_one"
                      />
+                <TextView
+                    android:id="@+id/pdf_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="62dp"
+                    android:text="מסמכים"
+                    android:textColor="#000099"/>
 
                 <ImageButton
                     android:id="@+id/pdf_icon"

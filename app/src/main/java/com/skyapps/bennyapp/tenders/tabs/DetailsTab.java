@@ -204,6 +204,7 @@ public class DetailsTab extends Fragment  {
         final TextView galleryTxt = view.findViewById(R.id.gallery_txt);
         final TextView cameraTxt = view.findViewById(R.id.cam_txt);
         final ImageButton pdfBtn = view.findViewById(R.id.uploadPdf);
+        final TextView pdfTxt = view.findViewById(R.id.pdf_txt);
         try {
             //// check if it Tender win if yes : hides d layout
             if (TabsActivity.finall.equals("Final")) {
@@ -212,6 +213,7 @@ public class DetailsTab extends Fragment  {
                 galleryTxt.setVisibility(View.INVISIBLE);
                 cameraTxt.setVisibility(View.INVISIBLE);
                 pdfBtn.setVisibility(View.INVISIBLE);
+                pdfTxt.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e){
 
@@ -232,6 +234,7 @@ public class DetailsTab extends Fragment  {
                     galleryTxt.setVisibility(View.INVISIBLE);
                     cameraTxt.setVisibility(View.INVISIBLE);
                     pdfBtn.setVisibility(View.INVISIBLE);
+                    pdfTxt.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -257,6 +260,7 @@ public class DetailsTab extends Fragment  {
                     galleryTxt.setVisibility(View.INVISIBLE);
                     cameraTxt.setVisibility(View.INVISIBLE);
                     pdfBtn.setVisibility(View.INVISIBLE);
+                    pdfTxt.setVisibility(View.INVISIBLE);
 
                 }
             }
@@ -289,6 +293,7 @@ public class DetailsTab extends Fragment  {
                     galleryTxt.setVisibility(View.INVISIBLE);
                     cameraTxt.setVisibility(View.INVISIBLE);
                     pdfBtn.setVisibility(View.INVISIBLE);
+                    pdfTxt.setVisibility(View.INVISIBLE);
 
                 }
                 else if(calcTimer(endTender,timeEnd) <= 0){
@@ -297,6 +302,7 @@ public class DetailsTab extends Fragment  {
                     galleryTxt.setVisibility(View.INVISIBLE);
                     cameraTxt.setVisibility(View.INVISIBLE);
                     pdfBtn.setVisibility(View.INVISIBLE);
+                    pdfTxt.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -667,7 +673,7 @@ public class DetailsTab extends Fragment  {
             if ( c ){
                 try {
                     pdfLoader(pdfUrl);
-                    Toast.makeText(getContext(),"הקובץ עלה בהצלחה",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"הקובץ עלה בהצלחה,בעוד מס' רגעים יטען על המסך",Toast.LENGTH_LONG).show();
                 }catch (Exception e){
                     Toast.makeText(getContext(), "ישנה שגיאה, נסה שנית", Toast.LENGTH_SHORT).show();
                 }
