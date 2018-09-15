@@ -623,11 +623,28 @@
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
                     android:clickable="true"/>
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/waze"
-                    android:background="@drawable/waze"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/waze"
+                        android:background="@drawable/waze"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="נווט"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textColor="#000099"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

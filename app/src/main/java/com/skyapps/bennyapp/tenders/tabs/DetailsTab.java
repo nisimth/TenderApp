@@ -86,10 +86,10 @@ public class DetailsTab extends Fragment  {
     String url;
     static EditText editComments, editAddressForSend;
 
+    //// related to WAZE application
     private LinearLayout waze ;
-
-    // TODO private String ad ;
-
+    private String ad ;
+    ////////////////////////////////
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -164,8 +164,28 @@ public class DetailsTab extends Fragment  {
                         editComments.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("comments").getValue() + "");
                         amountOftenders.setText(postSnapshot.child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0)).child("mqt").getValue() + "");
 
-                        // TODO ad = editAddress.getText().toString();
+                        // pulling the addressForSend String to --> ad //
+                        ad = editAddressForSend.getText().toString();
+                        //Toast.makeText(getContext(), ad, Toast.LENGTH_SHORT).show();
 
+                        waze.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try
+                                {   // If Waze is installed, open it with address for send //
+                                    String url = "https://waze.com/ul?q=";
+                                    url = url.concat(ad);
+                                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
+                                    startActivity( intent );
+                                }
+                                catch ( ActivityNotFoundException ex  )
+                                {
+                                    // If Waze is not installed, open it in Google Play //
+                                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "market://details?id=com.waze" ) );
+                                    startActivity(intent);
+                                }
+                            }
+                        });
                         break;
                     }
                 }
@@ -176,28 +196,6 @@ public class DetailsTab extends Fragment  {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
-            }
-        });
-        // TODO change the address
-        waze.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try
-                {
-                    // Launch Waze to look for Hawaii:
-                    //String url = "https://waze.com/ul?q=אשוח 2 נצרת עילית";
-                    String url = "https://waze.com/ul?q=";
-                    //String adress = "דליה 8 נצרת עילית";
-                    url = url.concat("הסחלב 12 ראשון לציון");
-                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
-                    startActivity( intent );
-                }
-                catch ( ActivityNotFoundException ex  )
-                {
-                    // If Waze is not installed, open it in Google Play:
-                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "market://details?id=com.waze" ) );
-                    startActivity(intent);
-                }
             }
         });
 
