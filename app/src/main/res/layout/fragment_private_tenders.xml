@@ -78,14 +78,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_bar1"
-            android:layout_marginTop="6dp">
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
                 android:text="חיפוש לפי תאריך:"
                 android:textColor="@color/colorPrimaryDark"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"/>
             <TextView
@@ -96,7 +97,7 @@
                 android:textSize="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="95dp"/>
+                android:layout_marginRight="100dp"/>
             <ImageButton
                 android:id="@+id/filter_start_date_btn"
                 android:layout_width="wrap_content"
@@ -104,7 +105,7 @@
                 android:src="@drawable/calendar"
                 android:background="@drawable/calendar"
                 android:layout_alignRight="@+id/m"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="25dp"
                 />
             <TextView
                 android:id="@+id/ad"
@@ -113,7 +114,7 @@
                 android:text="עד-"
                 android:textSize="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="170dp"
+                android:layout_marginRight="175dp"
                 android:layout_centerVertical="true"
                 />
             <ImageButton
@@ -123,7 +124,7 @@
                 android:src="@drawable/calendar"
                 android:background="@drawable/calendar"
                 android:layout_alignRight="@+id/ad"
-                android:layout_marginRight="27dp"
+                android:layout_marginRight="32dp"
                 />
 
         </RelativeLayout>
@@ -140,18 +141,21 @@
                 android:text="רמת דחיפות:"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp"
-                android:textStyle="italic"/>
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+
+                />
             <CheckBox
                 android:id="@+id/checkBox_dhifot_low"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginRight="10dp"
                 android:text="נמוכה" />
             <CheckBox
                 android:id="@+id/checkBox_dhifot_high"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginRight="10dp"
                 android:text="גבוהה" />
 
 
@@ -200,21 +204,29 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_below="@+id/dhifut_check">
+    android:layout_below="@+id/dhifut_check"
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="סטטוס:"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="12dp"
-        android:textStyle="italic"/>
-
-    <Spinner
-        android:id="@+id/spinner"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"/>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
+        android:layout_marginRight="12dp"
+        android:background="@drawable/round">
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
 </LinearLayout>
 
         <LinearLayout
@@ -224,6 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/status_check2"
             android:background="@drawable/round"
+            android:layout_marginTop="5dp"
             >
 
 
