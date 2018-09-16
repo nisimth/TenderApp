@@ -17,4 +17,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="dialog_select_photo">SelectPhoto</string>
+    
+    <string-array name="status">
+        <item>"הכל"</item>
+        <item>"טרם התחיל"</item>
+        <item>"עומד להסגר"</item>
+        <item>"פעיל"</item>
+        <item>"סגור"</item>
+    </string-array>
 </resources>

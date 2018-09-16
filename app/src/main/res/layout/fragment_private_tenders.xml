@@ -157,7 +157,7 @@
 
 
         </LinearLayout>
-        <LinearLayout
+<!--        <LinearLayout
             android:id="@+id/status_check1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,15 +194,35 @@
                 android:layout_height="wrap_content"
                 android:text="סגור" />
 
-        </LinearLayout>
+        </LinearLayout>-->
+<LinearLayout
+    android:id="@+id/status_check2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/dhifut_check">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="סטטוס:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12dp"
+        android:textStyle="italic"/>
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+</LinearLayout>
 
         <LinearLayout
             android:id="@+id/cotertarot"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/status_check1"
+            android:layout_below="@+id/status_check2"
             android:background="@drawable/round"
             >
 

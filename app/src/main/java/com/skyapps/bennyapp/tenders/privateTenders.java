@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -16,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -60,13 +63,15 @@ public class privateTenders extends Fragment {
     CheckBox lowCheckBox;
     CheckBox highCheckBox;
 
-    CheckBox yetToStart;
+    /*CheckBox yetToStart;
     CheckBox active;
     CheckBox isEnding;
-    CheckBox ended;
+    CheckBox ended;*/
     long startDateSelcted, endDateSelcted;
     /////////////////////////////////////////////////////
     private DatePickerDialog.OnDateSetListener start_dateListener, end_dateListener;
+    ////////////
+    Spinner statusSpinner;
 
 
 
@@ -90,10 +95,361 @@ public class privateTenders extends Fragment {
         lowCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_low);
         highCheckBox = (CheckBox) view.findViewById(R.id.checkBox_dhifot_high);
 
-        yetToStart = (CheckBox) view.findViewById(R.id.checkBox_yet_to_start);
+        /*yetToStart = (CheckBox) view.findViewById(R.id.checkBox_yet_to_start);
         active = (CheckBox) view.findViewById(R.id.checkbox_active);
         isEnding = (CheckBox) view.findViewById(R.id.checkbox_isEnding);
-        ended = (CheckBox) view.findViewById(R.id.checkbox_ended);
+        ended = (CheckBox) view.findViewById(R.id.checkbox_ended);*/
+
+        statusSpinner = (Spinner) view.findViewById(R.id.spinner);
+
+        Firebase.setAndroidContext(getContext());
+        final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","") + "/");
+
+/////////////// tender status spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.status,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(adapter);
+        statusSpinner.setSelected(false);
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                String text = parent.getItemAtPosition(position).toString();
+
+                if (text.equals("הכל")){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    //tenderCounter ++;
+                                    String status;
+
+                                    listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("name").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                    ));
+                                    List<Item> list = new ArrayList<Item>();
+
+                                    list.add(new Item(postSnapshot.getKey() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("contact").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("phone").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("mail").getValue() + "",
+                                            num ));
+
+
+
+                                    listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+
+                                    i++;
+
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText("(" +listDataHeader.size()+ ")");
+                            mProgressDialog.dismiss();
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+
+                else if(text.equals("פעיל")){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long startCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + ""
+                                    );
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                    );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(startCurrent - currentTime.getTime() < 0 && endCurrent - currentTime.getTime() > 0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+                else if (text.equals("עומד להסגר")){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                    );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(endCurrent - currentTime.getTime()  <= TimeUnit.HOURS.toMillis(2) && endCurrent - currentTime.getTime()>0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                    Log.e("isending",endCurrent - currentTime.getTime()+ " " + TimeUnit.HOURS.toMillis(2)  +"");
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+
+                else if (text.equals("טרם התחיל")){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long startCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeStart").getValue() + ""
+                                    );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(startCurrent - currentTime.getTime() >0 ){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+
+                else if (text.equals("סגור")){
+                    lowCheckBox.setChecked(false);
+                    highCheckBox.setChecked(false);
+                    myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            int i = 0;
+                            listDataHeader.clear();
+                            listDataChild.clear();
+
+                            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                for (int num=1; num<=snapshot.child(postSnapshot.getKey()).getChildrenCount(); num++) {
+                                    Long endCurrent = convertStringToDate(
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("endTender").getValue() + "",
+                                            snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("timeEnd").getValue() + ""
+                                    );
+
+                                    Date currentTime  = Calendar.getInstance().getTime();
+                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
+                                Log.e("start_current",startCurrent+"" );
+                                Log.e("start_current_d",new Date(startCurrent)+"");
+                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
+                                Log.e("start_selcted",startDateSelcted+"");*/
+
+                                    if(endCurrent - currentTime.getTime() < 0){
+
+                                        listDataHeader.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mqt").getValue() + "", postSnapshot.getKey(),
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("name").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("startTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("endTender").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeStart").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("Info").child("timeEnd").getValue() + ""
+
+
+                                        ));
+
+
+                                        List<Item> list = new ArrayList<Item>();
+                                        list.add(new Item(postSnapshot.getKey() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("contact").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
+                                                snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
+                                                num));
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        i++;
+                                        //ExpandableListAdapter.countAll = i;
+                                    }
+                                }
+
+                            }
+
+                            listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            expListView.setAdapter(listAdapter);
+
+                            counter.setText(" ( " +listDataHeader.size()+ " ) ");
+                            mProgressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         filterStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,8 +518,6 @@ public class privateTenders extends Fragment {
         listDataHeader = new ArrayList<Tender>();
         listDataChild = new HashMap<Tender, List<Item>>();
 
-        Firebase.setAndroidContext(getContext());
-        final Firebase myFirebaseRef = new Firebase("https://tenders-83c71.firebaseio.com/Tenders/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category","") + "/");
         final Firebase userFirebise = new Firebase("https://tenders-83c71.firebaseio.com/users/" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username","") + "/TenderWin");
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
@@ -384,10 +738,10 @@ public class privateTenders extends Fragment {
 
             if(lowCheckBox.isChecked()) {
                 highCheckBox.setChecked(false);
-                yetToStart.setChecked(false);
+                /*yetToStart.setChecked(false);
                 active.setChecked(false);
                 isEnding.setChecked(false);
-                ended.setChecked(false);
+                ended.setChecked(false);*/
                 myFirebaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -450,10 +804,10 @@ public class privateTenders extends Fragment {
 
             if(highCheckBox.isChecked()){
                 lowCheckBox.setChecked(false);
-                yetToStart.setChecked(false);
+                /*yetToStart.setChecked(false);
                 active.setChecked(false);
                 isEnding.setChecked(false);
-                ended.setChecked(false);
+                ended.setChecked(false);*/
                 myFirebaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -510,6 +864,7 @@ public class privateTenders extends Fragment {
 
 
         ////////// search by Tender status /////////////
+/*
         yetToStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -536,11 +891,7 @@ public class privateTenders extends Fragment {
                                     );
 
                                     Date currentTime  = Calendar.getInstance().getTime();
-                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Log.e("start_current",startCurrent+"" );
-                                Log.e("start_current_d",new Date(startCurrent)+"");
-                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");*/
+
 
                                     if(startCurrent - currentTime.getTime() >0 ){
 
@@ -561,9 +912,8 @@ public class privateTenders extends Fragment {
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
                                                 num));
-                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data
                                         i++;
-                                        //ExpandableListAdapter.countAll = i;
                                     }
                                 }
 
@@ -618,11 +968,7 @@ public class privateTenders extends Fragment {
                                             );
 
                                     Date currentTime  = Calendar.getInstance().getTime();
-                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Log.e("start_current",startCurrent+"" );
-                                Log.e("start_current_d",new Date(startCurrent)+"");
-                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");*/
+
 
                                     if(startCurrent - currentTime.getTime() < 0 && endCurrent - currentTime.getTime() > 0){
 
@@ -643,9 +989,8 @@ public class privateTenders extends Fragment {
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
                                                 num));
-                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data
                                         i++;
-                                        //ExpandableListAdapter.countAll = i;
                                     }
                                 }
 
@@ -696,11 +1041,7 @@ public class privateTenders extends Fragment {
                                             );
 
                                     Date currentTime  = Calendar.getInstance().getTime();
-                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Log.e("start_current",startCurrent+"" );
-                                Log.e("start_current_d",new Date(startCurrent)+"");
-                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");*/
+
 
                                     if(endCurrent - currentTime.getTime()  <= TimeUnit.HOURS.toMillis(2) && endCurrent - currentTime.getTime()>0){
 
@@ -721,9 +1062,9 @@ public class privateTenders extends Fragment {
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
                                                 num));
-                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data
                                         i++;
-                                        //ExpandableListAdapter.countAll = i;
+
                                     }
                                     Log.e("isending",endCurrent - currentTime.getTime()+ " " + TimeUnit.HOURS.toMillis(2)  +"");
                                 }
@@ -776,11 +1117,7 @@ public class privateTenders extends Fragment {
                                             );
 
                                     Date currentTime  = Calendar.getInstance().getTime();
-                                /*Log.e("start_current_date",snapshot.child(postSnapshot.getKey()).child("מכרז"+num).child("Info").child("startTender").getValue() + "");
-                                Log.e("start_current",startCurrent+"" );
-                                Log.e("start_current_d",new Date(startCurrent)+"");
-                                Log.e("start_selcted_date", new Date(startDateSelcted)+"");
-                                Log.e("start_selcted",startDateSelcted+"");*/
+
 
                                     if(endCurrent - currentTime.getTime() < 0){
 
@@ -801,9 +1138,8 @@ public class privateTenders extends Fragment {
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("phone").getValue() + "",
                                                 snapshot.child(postSnapshot.getKey()).child("מכרז" + num).child("mail").getValue() + "",
                                                 num));
-                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data*/
+                                        listDataChild.put(listDataHeader.get(i), list); // Header, Child data
                                         i++;
-                                        //ExpandableListAdapter.countAll = i;
                                     }
                                 }
 
@@ -827,6 +1163,7 @@ public class privateTenders extends Fragment {
                 }
             }
         });
+*/
 
 
 
@@ -834,6 +1171,8 @@ public class privateTenders extends Fragment {
         resetSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //// set status spinner to default
+                statusSpinner.setSelection(0);
                 myFirebaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -846,10 +1185,10 @@ public class privateTenders extends Fragment {
 
                         lowCheckBox.setChecked(false);
                         highCheckBox.setChecked(false);
-                        yetToStart.setChecked(false);
+                        /*yetToStart.setChecked(false);
                         active.setChecked(false);
                         isEnding.setChecked(false);
-                        ended.setChecked(false);
+                        ended.setChecked(false);*/
                         search.setQuery("",false);
 
 
@@ -915,10 +1254,10 @@ public class privateTenders extends Fragment {
 
                         lowCheckBox.setChecked(false);
                         highCheckBox.setChecked(false);
-                        yetToStart.setChecked(false);
+                        /*yetToStart.setChecked(false);
                         active.setChecked(false);
                         isEnding.setChecked(false);
-                        ended.setChecked(false);
+                        ended.setChecked(false);*/
 
                         for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
 
