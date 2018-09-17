@@ -146,7 +146,7 @@ public class ExpandableListWinAdapter extends BaseExpandableListAdapter {
         name.setText(tender.getName());
         project.setText(tender.getProject());
 
-        time.setText("זכית!");
+        time.setText("סגור");
 
 
 

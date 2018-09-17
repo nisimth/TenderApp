@@ -592,11 +592,11 @@ public class DetailsTab extends Fragment  {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        mProgressDialog = new ProgressDialog(getContext());
+        /*mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
         mProgressDialog.setTitle("אנא המתן...");
         mProgressDialog.setMessage("מעלה את התמונה שלך ושומר אותה...");
-        mProgressDialog.show();
+        mProgressDialog.show();*/
 
         /////// onActivityResult for camera & gallery ////////
         if( (requestCode == CAMERA_REQUEST_CODE &&  resultCode == RESULT_OK)
