@@ -414,7 +414,7 @@ public class MarketTab extends Fragment {
                         }
 
                     } catch (Exception e){
-                        Log.e("taltestme" , e.toString());
+                        Log.e("test" , e.toString());
 
                     }
 

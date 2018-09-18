@@ -129,7 +129,7 @@ public class WinTendersActivity extends AppCompatActivity implements NavigationV
                         int i = 0;
                         Log.e("tyota : " , snapshot.child("Tenders").child(getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))
                                 .child(postSnapshot.getKey()).child(postSnapshot2.getKey()).getKey()+"");
-                        Log.e("taltal" , (i + 1)+"");
+                        Log.e("test" , (i + 1)+"");
 
                         int num = 0;
                         for (DataSnapshot postSnapshot3 : snapshot.child("Tenders/" + getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("category", ""))

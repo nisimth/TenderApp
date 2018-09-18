@@ -354,6 +354,8 @@ public class DetailsTab extends Fragment  {
                             // TODO this is new from 19/08/2018
                             if(pdfUrlString.equals("empty") || pdfUrlString == null){
                                 w.setVisibility(View.INVISIBLE);
+                            }else{
+                                w.setVisibility(View.VISIBLE);
                             }
 
 

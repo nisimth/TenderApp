@@ -80,7 +80,7 @@ public class ManageActivity extends AppCompatActivity  implements NavigationView
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("talhere : " , dataSnapshot.child("firstname").hasChildren()+"");
+                Log.e("test : " , dataSnapshot.child("firstname").hasChildren()+"");
                 if (dataSnapshot.child("firstname").getValue()!=null)
                     editFirstName.setText(dataSnapshot.child("firstname").getValue()+"");
 

@@ -54,7 +54,7 @@
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:hint="הזן את הסיסמא שברשותך"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:singleLine="true" />
 
         <Button

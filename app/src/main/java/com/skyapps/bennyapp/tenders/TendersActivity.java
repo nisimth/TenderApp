@@ -83,7 +83,7 @@ public class TendersActivity extends AppCompatActivity
             dialog.show();
         }
 
-        Intent i = new Intent("mybroad.tal");
+        Intent i = new Intent("mybroad.tender");
         Log.e("swipeActivity","mybroad...");
         sendBroadcast(i);
 

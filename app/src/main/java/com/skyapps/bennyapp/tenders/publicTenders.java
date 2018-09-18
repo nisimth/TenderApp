@@ -69,7 +69,7 @@ public class publicTenders extends Fragment {
 
                     for (int j = 0 ; j < snapshot.child(postSnapshot.getKey()).getChildrenCount() ; j++) {
 
-                        Log.e("publictal", postSnapshot.child("מכרז" + (j + 1)).child("name").getValue() + "");
+                        Log.e("test", postSnapshot.child("מכרז" + (j + 1)).child("name").getValue() + "");
 
                         tenderArrayList.add(new Tender(snapshot.child(postSnapshot.getKey()).child("מכרז" + (j + 1)).child("mqt").getValue() + "",
                                 postSnapshot.getKey(),

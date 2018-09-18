@@ -34,7 +34,7 @@
 
         <receiver android:name=".StartFirebaseAtBoot">
             <intent-filter>
-                <action android:name="mybroad.tal" />
+                <action android:name="mybroad.tender" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
