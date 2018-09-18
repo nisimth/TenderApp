@@ -62,11 +62,10 @@
         <activity
             android:name=".tenders.notificationstabs.MyNotificationsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".StatisticActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-
-
+        <activity
+            android:name=".StatisticActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PdfViewerActivity"></activity>
     </application>
 
 </manifest>

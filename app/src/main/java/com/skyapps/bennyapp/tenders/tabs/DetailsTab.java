@@ -42,6 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.skyapps.bennyapp.PdfViewerActivity;
 import com.skyapps.bennyapp.R;
 
 import java.io.ByteArrayOutputStream;
@@ -592,11 +593,11 @@ public class DetailsTab extends Fragment  {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        /*mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setCancelable(false);
         mProgressDialog.setTitle("אנא המתן...");
         mProgressDialog.setMessage("מעלה את התמונה שלך ושומר אותה...");
-        mProgressDialog.show();*/
+        mProgressDialog.show();
 
         /////// onActivityResult for camera & gallery ////////
         if( (requestCode == CAMERA_REQUEST_CODE &&  resultCode == RESULT_OK)
@@ -614,7 +615,30 @@ public class DetailsTab extends Fragment  {
                 if (imageUri != null) {
                     String imagePath = imageUri.getPath();
                     image.setImageURI(imageUri);
-                    try {
+
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReferenceFromUrl("gs://tenders-83c71.appspot.com/");
+                    final StorageReference myStorageRef = storageRef.child("Pictures/" +
+                            getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("name", "") + "/" + getContext()
+                            .getSharedPreferences("BennyApp", Context.MODE_PRIVATE)
+                            .getString("company", "") + "/" + System.currentTimeMillis() + ".jpg");
+                    myStorageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mProgressDialog.dismiss();
+                            Uri downUrl = taskSnapshot.getDownloadUrl();
+                            dRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+                            dRef.child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("username", ""))
+                                    .child(getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getString("company", ""))
+                                    .child("מכרז" + getContext().getSharedPreferences("BennyApp", Context.MODE_PRIVATE).getInt("num", 0))
+                                    .child("Image")
+                                    .setValue(downUrl.toString());
+
+                            Glide.with(getContext()).load(downUrl.toString()).into(image);
+                        }
+                    });
+                    /*try {
                         Bitmap bitmapdata = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
 
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -631,7 +655,7 @@ public class DetailsTab extends Fragment  {
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Log.e("hmmmmm filed... ", exception.toString());
+                                Log.e("Error : ", exception.toString());
                             }
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -651,7 +675,7 @@ public class DetailsTab extends Fragment  {
                         });
                     }catch (IOException e) {
                         Toast.makeText(getContext(), "ישנה שגיאה, נסה שנית", Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
             }
         } else {
@@ -686,7 +710,9 @@ public class DetailsTab extends Fragment  {
     private void selectPdf(){
         Intent pdfIntent = new Intent();
         pdfIntent.setType("application/pdf");
+
         pdfIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //pdfIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(pdfIntent,FILES_REQUEST_CODE);
     }
     ///////////////////////// loading process of PDF file //////////////////////
@@ -717,15 +743,18 @@ public class DetailsTab extends Fragment  {
                         .setValue(downloadUri.toString());
             }
         });
-
-
     }
     ///////// opens webView //////////////
     public void openWebPage(String url) {
         if(url != null) {
+
             Uri webPage = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
             startActivity(intent);
+            /*Intent i = new Intent(getActivity(), PdfViewerActivity.class);
+            i.putExtra("D",url);
+            startActivity(i);*/
+
         }
         else {
             Toast.makeText(getContext(),"לא נבחר קובץ",Toast.LENGTH_SHORT).show();
@@ -733,22 +762,5 @@ public class DetailsTab extends Fragment  {
 
 
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
-                                   boolean filter) {
-        float ratio = Math.min(
-                maxImageSize / realImage.getWidth(),
-                maxImageSize / realImage.getHeight());
-        int width = Math.round(ratio * realImage.getWidth());
-        int height = Math.round(ratio * realImage.getHeight());
-
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, 550,
-                300, filter);
-        realImage.recycle();
-        return newBitmap;
-    }
-
-
 
 }
