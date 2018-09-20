@@ -1374,7 +1374,7 @@ public class privateTenders extends Fragment {
      */
     public long convertStringToDate(String date, String time){
         String toConvertTime = date + " " + time;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date convertedDate = null;
 
         try {

@@ -128,7 +128,7 @@ public class DetailsPublic extends AppCompatActivity {
             }
             private Long calcTimer(String endDate, String endTime)  {
                 String time = endDate + " " + endTime;
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                 Date d = null;
                 Date currentDate = Calendar.getInstance().getTime();

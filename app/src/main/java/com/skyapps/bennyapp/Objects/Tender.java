@@ -1,5 +1,7 @@
 package com.skyapps.bennyapp.Objects;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -158,7 +160,7 @@ public class Tender {
     }*/
     public Long calcEnds()  {
         String time = endTender + " " + endTime;
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         Date d = null;
         Date currentDate = Calendar.getInstance().getTime();
@@ -172,16 +174,18 @@ public class Tender {
         try {
 
             diff = d.getTime() - currentDate.getTime();
+            Log.e("diff", diff +", " + masad + ", "+ d.toString() + "(" +d.getTime() +")" + " - "+ currentDate + "(" +currentDate.getTime()+ ")"  +"");
         } catch (Exception e){
 
         }
 
         return diff;
+
     }
 
     public Long calcStarts()  {
         String time = startTender + " " + startTime;
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         Date d = null;
         Date currentDate = Calendar.getInstance().getTime();

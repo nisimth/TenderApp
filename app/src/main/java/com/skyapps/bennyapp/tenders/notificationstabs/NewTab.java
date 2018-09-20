@@ -150,7 +150,7 @@ public class NewTab extends Fragment {
     private Date converStringToDate(String date){
         date.replace("_", " ");
         date.replace("-", "/");
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date d =null;
         try {
             d = df.parse(date);

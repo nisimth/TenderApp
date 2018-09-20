@@ -8,7 +8,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -42,11 +41,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.skyapps.bennyapp.PdfViewerActivity;
 import com.skyapps.bennyapp.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,6 +50,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static android.app.Activity.RESULT_OK;
+
+//import com.skyapps.bennyapp.PdfViewerActivity;
 
 
 public class DetailsTab extends Fragment  {
@@ -309,7 +307,7 @@ public class DetailsTab extends Fragment  {
             }
             private Long calcTimer(String endDate, String endTime)  {
                 String time = endDate + " " + endTime;
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                 Date d = null;
                 Date currentDate = Calendar.getInstance().getTime();
@@ -537,7 +535,7 @@ public class DetailsTab extends Fragment  {
             }
             private Long calcTimer(String endDate, String endTime)  {
                 String time = endDate + " " + endTime;
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                 Date d = null;
                 Date currentDate = Calendar.getInstance().getTime();
