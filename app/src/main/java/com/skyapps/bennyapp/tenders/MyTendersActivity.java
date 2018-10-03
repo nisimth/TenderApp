@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,9 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tenders);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         listTenders = findViewById(R.id.listTenders);
 
@@ -239,5 +243,12 @@ public class MyTendersActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this, TendersActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 }

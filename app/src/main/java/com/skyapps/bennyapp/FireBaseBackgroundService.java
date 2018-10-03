@@ -63,21 +63,6 @@ public class FireBaseBackgroundService extends IntentService {
 
             }
         });
-       /* /////////////////////////new///////////////////////// TODO
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if( dataSnapshot.child("username").getValue() != null ){
-                    typeNO = dataSnapshot.child("type").getValue()+"";
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-        //////////////////////////////////////////////////////// */
         return START_STICKY;
 
     }

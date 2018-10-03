@@ -199,5 +199,13 @@ public class ManageActivity extends AppCompatActivity  implements NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this, TendersActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
 

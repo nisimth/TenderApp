@@ -147,7 +147,11 @@ public class MyNotificationsActivity extends AppCompatActivity implements Naviga
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Intent intent = new Intent(this, TendersActivity.class);
+            startActivity(intent);
+            finish();
+
         }
     }
 
@@ -219,4 +223,5 @@ public class MyNotificationsActivity extends AppCompatActivity implements Naviga
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -246,4 +246,11 @@ public class StatisticActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this, TendersActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
