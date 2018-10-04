@@ -23,6 +23,7 @@ import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -73,7 +74,7 @@ public class NewTab extends Fragment {
                     }
 
                     /// order notifications by income date ( descending order )
-                    //Collections.reverse(listData);
+                    Collections.reverse(listData);
                     /*Collections.sort(listData, new Comparator<ItemNotification>() {
                         @Override
                         public int compare(ItemNotification itemNotification, ItemNotification t1) {

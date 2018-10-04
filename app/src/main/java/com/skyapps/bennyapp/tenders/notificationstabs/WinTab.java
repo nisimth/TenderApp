@@ -19,6 +19,7 @@ import com.skyapps.bennyapp.R;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class WinTab extends Fragment {
@@ -68,7 +69,7 @@ public class WinTab extends Fragment {
                         listData.add(0,new ItemNotification(username, message, type,tenderNum,numberTender));
 
                     }
-                    //Collections.reverse(listData);
+                    Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 

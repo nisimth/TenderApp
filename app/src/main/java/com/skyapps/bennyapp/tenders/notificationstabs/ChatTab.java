@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -20,6 +19,7 @@ import com.skyapps.bennyapp.R;
 import com.skyapps.bennyapp.tenders.tabs.TabsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class ChatTab extends Fragment {
@@ -68,12 +68,12 @@ public class ChatTab extends Fragment {
                             listData.add(new ItemNotification(username, message, type,mqtNum,numberTender));
 
                     }
-                    //Collections.reverse(listData);
+                    Collections.reverse(listData);
                     customNotificationAdapter = new CustomNotificationAdapter(listData , getContext());
                     list.setAdapter(customNotificationAdapter);
 
                 } catch (Exception e){
-                    Toast.makeText(getContext(), "ישנה שגיאה", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "ישנה שגיאה", Toast.LENGTH_SHORT).show();
                     Log.e("the e is : " , e.toString());
                 }
 
